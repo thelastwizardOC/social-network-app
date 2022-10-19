@@ -1,0 +1,15 @@
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/bin/Debug/net6.0/SingleTon
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/bin/Debug/net6.0/SingleTon.deps.json
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/bin/Debug/net6.0/SingleTon.runtimeconfig.json
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/bin/Debug/net6.0/SingleTon.dll
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/bin/Debug/net6.0/SingleTon.pdb
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/SingleTon.csproj.AssemblyReference.cache
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/SingleTon.GeneratedMSBuildEditorConfig.editorconfig
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/SingleTon.AssemblyInfoInputs.cache
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/SingleTon.AssemblyInfo.cs
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/SingleTon.csproj.CoreCompileInputs.cache
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/SingleTon.dll
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/refint/SingleTon.dll
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/SingleTon.pdb
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/SingleTon.genruntimeconfig.cache
+/Users/hoang.truong/RiderProjects/DesignPatterns/SingleTon/obj/Debug/net6.0/ref/SingleTon.dll
