@@ -1,6 +1,6 @@
 namespace DotNetCoreApi.Interfaces;
 
-public interface IAnimal
+public interface IAnimalFunction
 {
     string GetIdCode();
     void SetMoving(string moving);

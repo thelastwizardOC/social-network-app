@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/dat.nguyenthanh/Projects/DotNet/DesignPatern/DesignPattern/DesignPattern/DesignPattern.csproj",
+      "projectUniqueName": "/Users/dat.nguyenthanh/Downloads/untitled folder/Nw2batch2022/Dat_Nguyen/DesignPattern/DesignPattern.csproj",
       "projectName": "DesignPattern",
-      "projectPath": "/Users/dat.nguyenthanh/Projects/DotNet/DesignPatern/DesignPattern/DesignPattern/DesignPattern.csproj",
+      "projectPath": "/Users/dat.nguyenthanh/Downloads/untitled folder/Nw2batch2022/Dat_Nguyen/DesignPattern/DesignPattern.csproj",
       "packagesPath": "/Users/dat.nguyenthanh/.nuget/packages/",
-      "outputPath": "/Users/dat.nguyenthanh/Projects/DotNet/DesignPatern/DesignPattern/DesignPattern/obj/",
+      "outputPath": "/Users/dat.nguyenthanh/Downloads/untitled folder/Nw2batch2022/Dat_Nguyen/DesignPattern/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/dat.nguyenthanh/.nuget/NuGet/NuGet.Config"
