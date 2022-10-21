@@ -1,5 +1,0 @@
-E:\Training\C#\Exercise\obj\Debug\net6.0\Exercise.csproj.AssemblyReference.cache
-E:\Training\C#\Exercise\obj\Debug\net6.0\Exercise.GeneratedMSBuildEditorConfig.editorconfig
-E:\Training\C#\Exercise\obj\Debug\net6.0\Exercise.AssemblyInfoInputs.cache
-E:\Training\C#\Exercise\obj\Debug\net6.0\Exercise.AssemblyInfo.cs
-E:\Training\C#\Exercise\obj\Debug\net6.0\Exercise.csproj.CoreCompileInputs.cache
