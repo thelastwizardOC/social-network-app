@@ -1,0 +1,41 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- task: PowerShell@2
+  displayName: 'Install Yarn'
+  inputs:
+    targetType: 'inline'
+    script: npm i -g yarn@latest
+
+- task: PowerShell@2
+  displayName: 'Resolve yarn packages'
+  inputs:
+    targetType: 'inline'
+    script: yarn restore-cache
+    workingDirectory: $(System.DefaultWorkingDirectory)/NwInternApp/Web/NwIntern
+- task: PowerShell@2
+  displayName: 'Lint'
+  inputs:
+    targetType: 'inline'
+    script: yarn lint
+    workingDirectory: $(System.DefaultWorkingDirectory)/NwInternApp/Web/NwIntern
+- task: PowerShell@2
+  displayName: 'Build'
+  inputs:
+    targetType: 'inline'
+    script: yarn build --prod
+    workingDirectory: $(System.DefaultWorkingDirectory)/NwInternApp/Web/NwIntern
