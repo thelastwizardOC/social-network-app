@@ -7,7 +7,7 @@ public class GetUserInfoQuery : IRequest<UserDto>
 }
 
 
-public class GetWeatherForecastQueryHandler : IRequestHandler<GetUserInfoQuery, UserDto>
+public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserDto>
 {
     public Task<UserDto> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
     {

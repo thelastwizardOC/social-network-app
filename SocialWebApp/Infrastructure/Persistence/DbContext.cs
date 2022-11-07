@@ -1,12 +1,15 @@
 using Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SocialWebApp.Models;
 
 
-public class StudentContext : DbContext
+public class AppDbContext : DbContext,IApplicationDbContext
 {
-    public StudentContext()
+    private IConfiguration _configuration;
+    public AppDbContext(IConfiguration configuration)
     {
+        _configuration = configuration;
     }
      
 
@@ -20,7 +23,7 @@ public class StudentContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=12345OHdf%e;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer(_configuration.GetConnectionString("SqlServer"));
     }
     protected override void OnModelCreating(ModelBuilder modelbuilder)
     {

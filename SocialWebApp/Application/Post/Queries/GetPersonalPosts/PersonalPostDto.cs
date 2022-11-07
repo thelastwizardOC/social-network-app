@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
+using SocialWebApp.Models;
 
-namespace SocialWebApp.Models;
+namespace Application.Post.Queries.GetPersonalPosts;
 
-public class Post
+public class PersonalPostDto
 {
     public int Id { get; set; }
     public bool Status { get; set; }
@@ -16,7 +16,5 @@ public class Post
     public List<Comment>?  Comments { get; set; }
 
     public int UserId { get; set; }
-    public User User { get; set; }
-
-
+    public SocialWebApp.Models.User User { get; set; }
 }
