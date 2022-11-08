@@ -6,10 +6,8 @@ using SocialWebApp.Models;
 
 public class AppDbContext : DbContext,IApplicationDbContext
 {
-    private IConfiguration _configuration;
-    public AppDbContext(IConfiguration configuration)
+    public AppDbContext()
     {
-        _configuration = configuration;
     }
      
 
@@ -23,7 +21,7 @@ public class AppDbContext : DbContext,IApplicationDbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(_configuration.GetConnectionString("SqlServer"));
+        optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=12345OHdf%e;TrustServerCertificate=True");
     }
     protected override void OnModelCreating(ModelBuilder modelbuilder)
     {

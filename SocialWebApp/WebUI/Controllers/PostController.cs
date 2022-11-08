@@ -9,6 +9,7 @@ public class PostController:ApiControllerBase
     [HttpGet("{userId}")]
     public async Task<ActionResult<PersonalPostVm>> GetUserPosts(int userId,int offset=0, int limit=100 )
     {
+        if (userId == null) return NotFound();
         return await Mediator.Send(new GetPersonalPostsQuery()
         {
             UserId = userId,
