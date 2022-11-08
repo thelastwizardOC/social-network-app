@@ -1,0 +1,21 @@
+<ng-container>
+  <div class="auth-container">
+    <tui-island class="tui-container tui-container_adaptive">
+      <div class="tui-row tui-row_adaptive tui-row_align_center">
+        <div class="tui-col_xs-12 tui-col_md-12 tui-col_lg-4">
+          <app-brand-logo [authTitle]="!newUser ? 'Register' : 'Login'" authDescription="Welcome to OriTalk"></app-brand-logo>
+        </div>
+
+        <div class="tui-col_xs-12 tui-col_md-12 tui-col_lg-8" *ngIf="!newUser; else login">
+          <app-register></app-register>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </tui-island>
+  </div>
+</ng-container>
+
+<ng-template #login>
+  <!--Login page-->
+  <h1>Login</h1>
+</ng-template>

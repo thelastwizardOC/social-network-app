@@ -11,44 +11,39 @@ import { AuthGuard } from './guard/auth.guard';
 const routes: Routes = [
   {
     path: 'newsfeed',
-    loadChildren: async () =>
-      (await import('./pages/newsfeed-page/newsfeed-page.module'))
-        .NewsfeedPageModule,
+    loadChildren: async () => (await import('./pages/newsfeed-page/newsfeed-page.module')).NewsfeedPageModule
   },
   {
     path: 'profile',
-    loadChildren: async () =>
-      (await import('./pages/personal-page/personal-page.module'))
-        .PersonalPageModule,
-    canActivate: [AccessGuard],
+    loadChildren: async () => (await import('./pages/personal-page/personal-page.module')).PersonalPageModule,
+    canActivate: [AccessGuard]
   },
   {
     path: 'auth',
-    loadChildren: async () =>
-      (await import('./pages/auth/auth.module')).AuthModule,
-    canActivate: [AuthGuard],
+    loadChildren: async () => (await import('./pages/auth/auth.module')).AuthModule,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginComponent
   },
   {
     path: 'register',
-    component: RegisterComponent,
+    component: RegisterComponent
   },
   {
     path: 'message',
-    component: MessageComponent,
+    component: MessageComponent
   },
   {
     path: 'notification',
-    component: NotificationComponent,
+    component: NotificationComponent
   },
-  { path: '**', component: ErrorComponent },
+  { path: '**', component: ErrorComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

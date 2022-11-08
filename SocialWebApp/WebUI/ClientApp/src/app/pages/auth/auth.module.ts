@@ -10,8 +10,7 @@ import {
   TuiLabelModule,
   TuiLinkModule,
   TuiPrimitiveTextfieldModule,
-  TuiTextfieldComponent,
-  TuiTextfieldControllerModule,
+  TuiTextfieldControllerModule
 } from '@taiga-ui/core';
 import {
   TuiCheckboxLabeledModule,
@@ -25,7 +24,7 @@ import {
   TuiIslandModule,
   TuiRadioBlockModule,
   TuiRadioLabeledModule,
-  TuiSelectModule,
+  TuiSelectModule
 } from '@taiga-ui/kit';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
@@ -61,7 +60,7 @@ import { LoginComponent } from './components/login/login.component';
     TuiLinkModule,
     TuiValidatorModule,
     TuiHintModule,
-    TuiPrimitiveTextfieldModule,
-  ],
+    TuiPrimitiveTextfieldModule
+  ]
 })
 export class AuthModule {}

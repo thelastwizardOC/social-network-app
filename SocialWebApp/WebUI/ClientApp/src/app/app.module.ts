@@ -1,12 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  TuiAlertModule,
-  TuiDialogModule,
-  TuiRootModule,
-  TUI_SANITIZER,
-} from '@taiga-ui/core';
+import { TuiAlertModule, TuiDialogModule, TuiRootModule, TUI_SANITIZER } from '@taiga-ui/core';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -37,7 +32,7 @@ export function tokenGetter() {
     RegisterComponent,
     MessageComponent,
     NotificationComponent,
-    ErrorComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -53,11 +48,11 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
         allowedDomains: ['localhost:7108'],
-        disallowedRoutes: [],
-      },
-    }),
+        disallowedRoutes: []
+      }
+    })
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
