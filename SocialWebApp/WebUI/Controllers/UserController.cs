@@ -7,11 +7,16 @@ namespace WebUI.Controllers;
 
 public class UserController :ApiControllerBase 
 {
-    [Authorize]
-    [HttpGet]
-    public async Task<ActionResult<UserDto>> GetUserInfo()
+    [HttpGet("{userId}")]
+    public async Task<ActionResult<UserDto>> GetUserInfo(int userId)
     {
-        return await Mediator.Send(new GetUserInfoQuery());
+        if (userId == null) return NotFound();
+        var foundUser= await Mediator.Send(new GetUserInfoQuery()
+        {
+            UserId = userId
+        });
+        if (foundUser == null) return NotFound();
+        return Ok(foundUser);
 
     }
     

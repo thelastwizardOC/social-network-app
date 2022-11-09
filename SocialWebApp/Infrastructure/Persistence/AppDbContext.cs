@@ -6,10 +6,10 @@ using SocialWebApp.Models;
 
 public class AppDbContext : DbContext,IApplicationDbContext
 {
-    public AppDbContext()
-    {
-    }
-     
+    
+    public AppDbContext() {}
+  
+
 
     public DbSet<User> User { get; set; }
     public DbSet<UserFriends> UserFriends { get; set; }
@@ -21,6 +21,7 @@ public class AppDbContext : DbContext,IApplicationDbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=12345OHdf%e;TrustServerCertificate=True");
     }
     protected override void OnModelCreating(ModelBuilder modelbuilder)

@@ -5,7 +5,7 @@ namespace Application.Post.Queries.GetPersonalPosts;
 public class PersonalPostDto
 {
     public int Id { get; set; }
-    public bool Status { get; set; }
+    public string Status { get; set; }
     public string Photo { get; set; }
     public int NumberOfLikes { get; set; }
     public int NumberOfComments { get; set; }

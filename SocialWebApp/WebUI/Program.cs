@@ -1,5 +1,9 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Application;
 using Infrastructure;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using WebUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +14,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddControllers().AddJsonOptions(options => 
+{ 
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

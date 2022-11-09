@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Post.Queries.GetPersonalPosts;
 
@@ -24,11 +25,12 @@ public class GetPersonalPostsQueryHandler : IRequestHandler<GetPersonalPostsQuer
 
     public Task<PersonalPostVm> Handle(GetPersonalPostsQuery request, CancellationToken cancellationToken)
     {
-        var post = _appDb.Post.Where(p=>p.UserId==request.UserId).Skip(request.Offset).Take(request.Limit);
+        var post = _appDb.Post.Where(p=>p.User.Id==request.UserId).Include(p=>p.User).Skip(request.Offset).Take(request.Limit).AsNoTrackingWithIdentityResolution();
+        
         List<PersonalPostDto> postDtos = _mapper.Map<List<PersonalPostDto>>(post.ToList());
         int totalCount = postDtos.Count();
 
-        bool hasNextPage = _appDb.Post.Count(p=>p.UserId==request.UserId) > request.Offset  + request.Limit ;  
+        bool hasNextPage = _appDb.Post.Count(p=>p.User.Id==request.UserId) > request.Offset  + request.Limit ;  
 
 
         return Task.FromResult(new PersonalPostVm()
