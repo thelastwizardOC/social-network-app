@@ -2,8 +2,22 @@
   font-size: 0.8rem;
   color: var(--tui-base-05);
 
-  span {
-    color: var(--tui-accent);
-    font-size: 1rem;
+}
+
+.label {
+  color: var(--tui-text-02);
+  font: var(--tui-font-text-s);
+}
+
+.tui-required {
+  color: var(--tui-accent);
+}
+
+.tui-form__button._disabled {
+  width: 100%;
+
+  > div {
+    background: var(--tui-base-07);
   }
 }
+
