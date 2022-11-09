@@ -1,7 +1,18 @@
 .navigation-bar_container {
-  height: 5%;
+  height: 50px;
+  box-shadow: 0px 5px 5px gray;
   div {
     height: 100%;
+  }
+}
+
+.menu-container {
+  a {
+    color: var(--tui-base-09);
+  }
+
+  a.active {
+    color: var(--tui-primary-active);
   }
 }
 
@@ -9,4 +20,49 @@
   .tui-row {
     justify-content: center;
   }
+  tui-svg {
+    cursor: pointer;
+  }
+}
+
+.menu-btn-container {
+  justify-content: center;
+}
+
+.logo-container {
+  padding: 5px 0px;
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.search-input-container {
+  display: flex;
+  width: 70%;
+  height: 60% !important;
+  align-items: center;
+  .search-icon {
+    position: absolute;
+    margin-left: 5px;
+  }
+  input {
+    height: 100%;
+    padding-left: 30px;
+    padding-right: 10px;
+    border-radius: 5px;
+  }
+}
+
+.hosted-dropdown {
+  height: 80%;
+  align-items: center;
+}
+
+.profile-icon-container {
+  height: 100%;
+  align-items: center;
+  display: flex;
 }

@@ -1,13 +1,21 @@
 import { Component } from '@angular/core';
-import {TUI_ARROW} from '@taiga-ui/kit';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  constructor(private route: Router) {}
   title = 'ClientApp';
-  readonly arrow = TUI_ARROW;
 
+  isNavBarVisible = false;
+
+  ngDoCheck(): void {
+    const currentRoute = this.route.url;
+    currentRoute == '/login' || currentRoute == '/register'
+      ? (this.isNavBarVisible = false)
+      : (this.isNavBarVisible = true);
+  }
 }

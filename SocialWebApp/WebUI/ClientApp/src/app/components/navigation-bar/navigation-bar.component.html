@@ -1,48 +1,68 @@
-<div
-  class="navigation-bar_container tui-container_fullwidth"
-  style="background-color: red"
->
+<div class="navigation-bar_container tui-container_fullwidth">
   <div class="tui-row">
-    <div class="tui-col_1">
-      <img
-        style="width: 100%; height: 100%; object-fit: contain"
-        src="assets/images/Logo_Transparent.png"
-      />
+    <div class="logo-container tui-col_1">
+      <a routerLink="/newsfeed">
+        <img src="assets/images/Logo_Transparent.png" />
+      </a>
     </div>
-    <div class="tui-col_8">
-      <div class="tui-row tui-row_align_center" style="background-color: blue">
-        <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
-        <input type="text" placeholder="Search" />
+    <div class="tui-col_9">
+      <div class="tui-row tui-row_align_center">
+        <div class="search-input-container">
+          <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
+          <input type="text" placeholder="Search" />
+        </div>
       </div>
     </div>
     <div class="menu-container tui-col_2">
-      <div class="tui-row" style="background-color: white">
+      <div class="tui-row">
         <div class="tui-col_3">
           <div class="tui-row tui-row_align_center">
-            <tui-svg src="assets/images/home-icon.svg"></tui-svg>
+            <a routerLink="newsfeed" routerLinkActive="active">
+              <tui-svg src="assets/images/home-icon.svg"></tui-svg>
+            </a>
           </div>
         </div>
         <div class="tui-col_3">
           <div class="tui-row tui-row_align_center">
-            <tui-svg src="assets/images/message-icon.svg"></tui-svg>
+            <a routerLink="message" routerLinkActive="active">
+              <tui-svg src="assets/images/message-icon.svg"></tui-svg>
+            </a>
           </div>
         </div>
         <div class="tui-col_3">
           <div class="tui-row tui-row_align_center">
-            <tui-svg src="assets/images/bell-icon.svg"></tui-svg>
+            <a routerLink="notification" routerLinkActive="active">
+              <tui-svg src="assets/images/bell-icon.svg"></tui-svg>
+            </a>
           </div>
         </div>
         <div class="tui-col_3">
           <div class="tui-row tui-row_align_center">
-            <tui-svg src="assets/images/profile-icon.svg"></tui-svg>
-          </div>
-        </div>
-        <div class="tui-col_1">
-          <div class="tui-row tui-row_align_center">
-            <tui-svg
-              src="../../../assets/images/dropdown-icon.svg"
-              class="dropdown-icon"
-            ></tui-svg>
+            <tui-hosted-dropdown
+              class="hosted-dropdown"
+              [content]="dropdown"
+              [(open)]="open"
+            >
+              <div class="profile-icon-container">
+                <tui-svg
+                  src="assets/images/profile-icon.svg"
+                  [style.color]="profileIconColor"
+                ></tui-svg>
+              </div>
+            </tui-hosted-dropdown>
+
+            <ng-template #dropdown>
+              <tui-data-list>
+                <a
+                  *ngFor="let item of profileItems"
+                  tuiOption
+                  (click)="toggleDropDown()"
+                  [routerLink]="item.link"
+                >
+                  {{ item.label }}
+                </a>
+              </tui-data-list>
+            </ng-template>
           </div>
         </div>
       </div>
