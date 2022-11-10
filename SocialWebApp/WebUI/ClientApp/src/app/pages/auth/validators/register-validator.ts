@@ -1,7 +1,7 @@
 import {AbstractControl, ValidatorFn, Validators} from "@angular/forms";
 
-const nameChars = /^[A-Za-z][a-zA-Z ]*/
-const userNameChars = /^[A-Za-z][a-zA-Z0-9]*/
+const nameChars = /^[A-Za-z][a-zA-Z\s]+$/
+const userNameChars = /^[A-Za-z][a-zA-Z0-9]+$/
 const emailChars = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 const passwordChars = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
 /*
@@ -39,7 +39,7 @@ export function passwordValidator(field: AbstractControl): Validators | null {
   if (!field.value)
     return {other: `Please enter your password`};
   if (!passwordChars.test(field.value))
-    return {other: `Please enter your password with at least 1 uppercase and 1 number `};
+    return {other: `Please enter your password with at least 1 uppercase, 1 lowercase and 1 number `};
   if (field.value.length < 8)
     return {other: `The password must be at least 8 characters long. Please use another one`};
   if (field.value.length > 32)

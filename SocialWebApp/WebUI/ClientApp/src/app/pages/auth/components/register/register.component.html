@@ -36,7 +36,7 @@
             Password <span class="tui-required"></span></label>
           <tui-input-password formControlName="passwordValue" tuiTextfieldSize="m" tuiHintContent=""
                               tuiHintAppearance="onDark"
-          >Enter password with at least 1 uppercase and 1 number
+          >Enter password with at least 1 uppercase, 1 lowercase and 1 number
           </tui-input-password>
           <tui-error formControlName="passwordValue" [error]="[] | tuiFieldError | async"></tui-error>
         </div>
@@ -52,7 +52,7 @@
         </div>
 
         <div class="tui-form__row">
-          <label>Phone Number</label>
+          <label class="label">Phone Number</label>
           <tui-input-phone-international
             formControlName="phoneValue"
             tuiTextfieldSize="m"
@@ -65,7 +65,7 @@
         </div>
 
         <div tuiGroup class="tui-form__row" [adaptive]="true" [collapsed]="true">
-          <label>Gender</label>
+          <label class="label">Gender</label>
           <tui-radio-labeled formControlName="genderValue" [item]="gender[0]"> Male</tui-radio-labeled>
           <tui-radio-labeled formControlName="genderValue" [item]="gender[1]"> Female</tui-radio-labeled>
         </div>
@@ -74,7 +74,6 @@
           <tui-checkbox-labeled formControlName="conditionValue" size="m" class="tui-space_top-3">
             I agree with <a href="#" tuiLink mode="positive"> terms and conditions </a>
           </tui-checkbox-labeled>
-          <tui-error formControlName="conditionValue" [error]="[] | tuiFieldError | async"></tui-error>
 
           <div class="tui-space_top-1">
             <span class="note">Note: (<span class="tui-required"></span>) is the required field</span>
