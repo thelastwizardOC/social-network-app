@@ -1,68 +1,86 @@
-.navigation-bar_container {
-  height: 50px;
-  box-shadow: 0px 5px 5px gray;
-  div {
-    height: 100%;
-  }
-}
+$primary-color: #379cf3;
 
-.menu-container {
-  a {
-    color: var(--tui-base-09);
-  }
-
-  a.active {
-    color: var(--tui-primary-active);
-  }
-}
-
-.menu-container {
-  .tui-row {
-    justify-content: center;
-  }
-  tui-svg {
-    cursor: pointer;
-  }
-}
-
-.menu-btn-container {
-  justify-content: center;
+.navigation-bar-container {
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  box-shadow: 0px 5px 5px var(--tui-base-04);
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .logo-container {
-  padding: 5px 0px;
-  cursor: pointer;
+  height: 100%;
+  width: 30%;
+  min-width: 150px;
+  max-width: 200px;
+  padding: 5px 10px;
   img {
-    width: 100%;
     height: 100%;
     object-fit: contain;
   }
 }
 
-.search-input-container {
+.search-box-container {
   display: flex;
-  width: 70%;
-  height: 60% !important;
-  align-items: center;
-  .search-icon {
-    position: absolute;
-    margin-left: 5px;
-  }
-  input {
-    height: 100%;
-    padding-left: 30px;
-    padding-right: 10px;
-    border-radius: 5px;
-  }
-}
-
-.hosted-dropdown {
-  height: 80%;
-  align-items: center;
-}
-
-.profile-icon-container {
   height: 100%;
   align-items: center;
+  flex-grow: 1;
+  tui-svg {
+    position: absolute;
+    margin-left: 10px;
+  }
+  input {
+    height: 60%;
+    padding-left: 40px;
+    padding-right: 20px;
+    border-radius: 20px;
+    width: 30%;
+    min-width: 200px;
+  }
+}
+
+@mixin menu-btn($bg) {
   display: flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background-color: $bg;
+  cursor: pointer;
+}
+
+.menu-btn-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+  width: 15%;
+  min-width: 200px;
+  justify-content: space-evenly;
+}
+
+.menu-btn {
+  @include menu-btn(var(--tui-base-02));
+  &:hover {
+    background-color: var(--tui-base-04);
+  }
+  &.active {
+    background-color: $primary-color;
+    tui-svg {
+      color: var(--tui-base-01);
+    }
+  }
+}
+
+.profile-btn-active {
+  @include menu-btn($primary-color);
+  tui-svg {
+    color: var(--tui-base-01);
+  }
+}
+
+::ng-deep tui-dropdown {
+  margin-top: 5px;
 }

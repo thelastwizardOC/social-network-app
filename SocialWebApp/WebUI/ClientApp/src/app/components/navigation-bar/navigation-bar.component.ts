@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiHostedDropdownComponent } from '@taiga-ui/core';
-import { TUI_ARROW } from '@taiga-ui/kit';
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
@@ -24,21 +23,19 @@ export class NavigationBarComponent implements OnInit {
     { label: 'Log Out', link: '/' },
   ];
 
-  readonly arrow = TUI_ARROW;
+  isDropDownVisible = false;
 
-  open = false;
+  isOnProfilePage = false;
 
   toggleDropDown() {
-    this.open = !this.open;
+    this.isDropDownVisible = !this.isDropDownVisible;
   }
-
-  profileIconColor = 'black';
 
   ngDoCheck(): void {
     const currentRoute = this.route.url;
     currentRoute == '/personal-wall'
-      ? (this.profileIconColor = 'var(--tui-primary-active)')
-      : (this.profileIconColor = 'var(--tui-base-09)');
+      ? (this.isOnProfilePage = true)
+      : (this.isOnProfilePage = false);
   }
 
   ngOnInit(): void {}
