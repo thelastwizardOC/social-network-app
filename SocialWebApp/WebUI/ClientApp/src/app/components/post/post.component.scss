@@ -1,0 +1,20 @@
+@import "../../../../node_modules/@taiga-ui/core/styles/mixins/mixins.scss";
+
+.post-container {
+  border-radius: 10px;
+  overflow: hidden;
+  @include shadow(1);
+  .post-title {
+    margin: 1rem;
+    font-weight: 700;
+  }
+  .post-img {
+    width: 100%;
+    aspect-ratio: 2;
+  }
+
+  .t-icon {
+    width: 5rem !important;
+    aspect-ratio: 1;
+  }
+}

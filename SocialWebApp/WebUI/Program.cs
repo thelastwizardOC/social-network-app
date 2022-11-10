@@ -1,4 +1,11 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Application;
+using Infrastructure;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using WebUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +16,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddControllers().AddNewtonsoftJson(option => {
+    option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    option.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+    option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+});
+
 
 var app = builder.Build();
 
@@ -18,6 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors(policy=>policy.AllowAnyHeader().AllowAnyOrigin());
 
 app.UseHttpsRedirection();
 

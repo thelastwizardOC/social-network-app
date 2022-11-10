@@ -20,22 +20,22 @@ public class User
     public DateTime UpdatedAt { get; set; }
     
     [InverseProperty("Sender")]
-    public List<Message> MessagesSend { get; set; }
+    public List<Message>? MessagesSend { get; set; }
 
     [InverseProperty("Receiver")]
-    public List<Message> MessagesReceive { get; set; }
+    public List<Message>? MessagesReceive { get; set; }
 
     [InverseProperty("Friend")]
-    public List<UserFriends> Friends { get; set; }
+    public List<UserFriends>? Friends { get; set; }
     
-    public List<Comment> Comments { get; set; }
+    public List<Comment>? Comments { get; set; }
 
-    public List<Post> Posts { get; set; }
+    public List<Post>? Posts { get; set; }
     
     [InverseProperty("User")]
-    public List<Notification> UserNotifications { get; set; }
+    public List<Notification>? UserNotifications { get; set; }
     
     [InverseProperty("TriggerUser")]
-    public List<Notification> UserTriggerNotifications { get; set; }
+    public List<Notification>? UserTriggerNotifications { get; set; }
 
 }
