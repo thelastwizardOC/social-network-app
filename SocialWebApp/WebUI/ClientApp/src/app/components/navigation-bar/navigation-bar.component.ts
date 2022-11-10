@@ -19,7 +19,7 @@ export class NavigationBarComponent implements OnInit {
   component?: TuiHostedDropdownComponent;
 
   readonly profileItems = [
-    { label: 'See Your Profile', link: '/personal-wall' },
+    { label: 'See Your Profile', link: '/profile/1' },
     { label: 'Log Out', link: '/' },
   ];
 
@@ -33,7 +33,7 @@ export class NavigationBarComponent implements OnInit {
 
   ngDoCheck(): void {
     const currentRoute = this.route.url;
-    currentRoute == '/personal-wall'
+    currentRoute.includes('/profile') == true
       ? (this.isOnProfilePage = true)
       : (this.isOnProfilePage = false);
   }

@@ -20,7 +20,6 @@ import { MessageComponent } from './pages/message/message.component';
 import { NewsfeedComponent } from './pages/newsfeed/newsfeed.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { PersonalPageModule } from './pages/personal-page/personal-page.module';
-import { PersonalWallComponent } from './pages/personal-wall/personal-wall.component';
 import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
@@ -31,7 +30,6 @@ import { RegisterComponent } from './pages/register/register.component';
     LoginComponent,
     RegisterComponent,
     NewsfeedComponent,
-    PersonalWallComponent,
     MessageComponent,
     NotificationComponent,
   ],
