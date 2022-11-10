@@ -13,15 +13,15 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class PersonalContainerComponent implements OnInit {
   userNotFound: boolean = false;
-  userId: number = 0;
-  personalPosts: IPersonalPost[] = [];
-  userInfo: IUser | undefined;
   hasNextPage: boolean = false;
-  activeItemIndex = 0;
+  isLoading: boolean = false;
+  activeItemIndex: number = 0;
+  userId: number = 0;
   limit: number = 1;
   offset: number = 0;
-  isLoading: boolean = false;
 
+  personalPosts: IPersonalPost[] = [];
+  userInfo: IUser | undefined;
   constructor(
     private route: ActivatedRoute,
     private personalPostService: PersonalPostService,
@@ -45,10 +45,9 @@ export class PersonalContainerComponent implements OnInit {
       .subscribe({
         next: (value) => {
           this.personalPosts = [...this.personalPosts, ...value.items];
-          console.log(this.personalPosts);
-
           this.hasNextPage = value.hasNextPage;
           this.isLoading = false;
+          this.offset += this.limit;
         },
         error: (error) => {
           console.log({ error });
@@ -56,7 +55,6 @@ export class PersonalContainerComponent implements OnInit {
         },
       });
   }
-
   fetchUserInfo(): void {
     this.userService.getUserInfo(this.userId).subscribe({
       next: (value) => {
@@ -72,7 +70,6 @@ export class PersonalContainerComponent implements OnInit {
 
   handleOnScroll() {
     if (this.hasNextPage) {
-      this.offset += this.limit;
       this.fetchPosts();
     }
   }

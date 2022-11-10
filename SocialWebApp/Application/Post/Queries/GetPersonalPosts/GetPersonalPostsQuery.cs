@@ -25,7 +25,7 @@ public class GetPersonalPostsQueryHandler : IRequestHandler<GetPersonalPostsQuer
 
     public Task<PersonalPostVm> Handle(GetPersonalPostsQuery request, CancellationToken cancellationToken)
     {
-        var post = _appDb.Post.Where(p=>p.User.Id==request.UserId).Include(p=>p.User).Skip(request.Offset).Take(request.Limit).AsNoTrackingWithIdentityResolution();
+        var post = _appDb.Post.Where(p=>p.User.Id==request.UserId).OrderByDescending(p=>p.CreatedAt).Include(p=>p.User).Skip(request.Offset).Take(request.Limit);
         
         List<PersonalPostDto> postDtos = _mapper.Map<List<PersonalPostDto>>(post.ToList());
         int totalCount = postDtos.Count();

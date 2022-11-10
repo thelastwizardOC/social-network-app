@@ -26,8 +26,6 @@ import { PersonalPageModule } from './pages/personal-page/personal-page.module';
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule,
-    TuiSvgModule,
-    TuiAvatarModule,
     HttpClientModule,
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],

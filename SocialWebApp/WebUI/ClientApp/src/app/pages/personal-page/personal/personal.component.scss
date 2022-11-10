@@ -4,7 +4,7 @@
   width: 940px;
 }
 .cover-image {
-  height: 240px;
+  height: 300px;
   position: relative;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -17,8 +17,11 @@
 
   .btn-add-cover {
     position: absolute;
-    right: 10px;
-    bottom: 10px;
+    right: 20px;
+    bottom: 20px;
+    ::ng-deep span {
+      color: var(--tui-base-09);
+    }
   }
 }
 
@@ -30,8 +33,7 @@
   .btn-upload-avatar {
     position: absolute;
     bottom: 0;
-    right: 0;
-    transform: translateY(10%);
+    right: 10px;
     cursor: pointer;
   }
 }
@@ -40,13 +42,17 @@
   display: block;
   margin-left: auto;
   margin-right: 35px;
+  ::ng-deep span {
+    color: var(--tui-base-09);
+  }
 }
 
 .user-bio-container {
-  border: 1px solid #eff3f4;
+  border: 1px solid var(--tui-base-03);
   border-bottom-left-radius: 10px;
   padding: 1.5rem;
 }
+
 .posts-container {
   min-height: 500px;
   display: flex;
