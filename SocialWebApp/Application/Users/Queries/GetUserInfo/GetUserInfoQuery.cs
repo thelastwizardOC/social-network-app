@@ -7,33 +7,33 @@ namespace Application.Users.Queries.GetUserInfo;
 
 public class GetUserInfoQuery : IRequest<UserDto>
 {
-    public int UserId { get; set; }
+  public int UserId { get; set; }
 }
 
 
 public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserDto>
 {
-    private IApplicationDbContext _appDb;
-    private readonly IMapper _mapper;
+  private IApplicationDbContext _appDb;
+  private readonly IMapper _mapper;
 
-    public GetUserInfoQueryHandler(IApplicationDbContext appDb ,IMapper mapper )
+  public GetUserInfoQueryHandler(IApplicationDbContext appDb, IMapper mapper)
+  {
+    _appDb = appDb;
+    _mapper = mapper;
+  }
+  public async Task<UserDto> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
+  {
+    try
     {
-        _appDb = appDb;
-        _mapper = mapper;
+      var user = await _appDb.User.FirstOrDefaultAsync(u => u.Id == request.UserId);
+      var userDto = _mapper.Map<UserDto>(user);
+      return userDto;
     }
-    public async Task<UserDto> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
+    catch (Exception e)
     {
-        try
-        {
-            var user =await _appDb.User.FirstOrDefaultAsync(u=>u.Id==request.UserId);
-            var userDto = _mapper.Map<UserDto>(user);
-            return userDto;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-      
+      Console.WriteLine(e);
+      throw;
     }
+
+  }
 }
