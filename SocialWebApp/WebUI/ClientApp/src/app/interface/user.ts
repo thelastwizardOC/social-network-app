@@ -9,8 +9,6 @@ export interface IUser {
   cover: string;
   gender: number;
   phoneNo: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 export enum Gender {
   male,

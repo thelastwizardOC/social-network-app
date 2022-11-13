@@ -1,7 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SocialWebApp.Models;
+namespace Domain.Entities;
 
 public class User
 {
@@ -9,7 +8,8 @@ public class User
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string UserName { get; set; }
-    public string HashedPassword { get; set; }
+    public byte[]? PasswordHash { get; set; }
+    public byte[]? PasswordSalt { get; set; }
     public DateTime Dob { get; set; }
     public string Email { get; set; }
     public string Avatar { get; set; }
@@ -37,5 +37,10 @@ public class User
     
     [InverseProperty("TriggerUser")]
     public List<Notification>? UserTriggerNotifications { get; set; }
+<<<<<<< HEAD
 
+=======
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpiryTime { get; set; }
+>>>>>>> fd830e6 (feat: add refresh token and integrate API)
 }

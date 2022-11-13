@@ -21,6 +21,11 @@ import { NewsfeedComponent } from './pages/newsfeed/newsfeed.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { PersonalPageModule } from './pages/personal-page/personal-page.module';
 import { RegisterComponent } from './pages/register/register.component';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem('jwt');
+}
 
 @NgModule({
   declarations: [
@@ -43,6 +48,13 @@ import { RegisterComponent } from './pages/register/register.component';
     PersonalPageModule,
     HttpClientModule,
     NavigationBarModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:7108'],
+        disallowedRoutes: [],
+      },
+    }),
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
   bootstrap: [AppComponent],

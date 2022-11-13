@@ -1,0 +1,41 @@
+.center {
+  text-align: center;
+}
+
+::ng-deep tui-input-password {
+  tui-svg {
+    color: var(--tui-primary);
+  }
+}
+
+::ng-deep a {
+  span {
+    color: var(--tui-primary);
+  }
+}
+
+::ng-deep ._focused {
+  --tui-focused: red;
+  border-color: red;
+}
+
+::ng-deep ._invalid {
+  --tui-focus: red !important;
+  // box-shadow: none !important;
+  // ._invalid {
+  //   input {
+  //     border: 3px solid red !important;
+  //   }
+  // }
+}
+
+::ng-deep .t-message-text {
+  color: red;
+  white-space: pre-line !important;
+}
+
+.submit-btn {
+  margin: 0;
+  width: 100%;
+  margin-top: 50px;
+}

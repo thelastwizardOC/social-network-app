@@ -1,14 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SocialWebApp.Models;
-
+namespace Domain.Entities;
 public class UserFriends
 {
     public int Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public bool IsDeleted { get; set; }
-    
-    
+
     public int SourceUserId { get; set; }
     public User SourceUser { get; set; }
 
