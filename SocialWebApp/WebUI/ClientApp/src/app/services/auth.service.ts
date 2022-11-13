@@ -35,7 +35,6 @@ export class AuthService {
       accessToken: token,
       refreshToken: refreshToken,
     });
-    let isRefreshSuccess: boolean;
     const refreshRes = await new Promise<IAuthenticationResponse>(
       (resolve, reject) => {
         this.http
@@ -52,14 +51,13 @@ export class AuthService {
             next: (res: IAuthenticationResponse) => resolve(res),
             error: (_) => {
               reject;
-              isRefreshSuccess = false;
+              return false;
             },
           });
       }
     );
     localStorage.setItem('jwt', refreshRes.accessToken);
     localStorage.setItem('refreshToken', refreshRes.refreshToken);
-    isRefreshSuccess = true;
-    return isRefreshSuccess;
+    return true;
   }
 }

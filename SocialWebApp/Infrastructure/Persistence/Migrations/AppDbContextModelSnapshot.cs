@@ -169,11 +169,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Post");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialWebApp.Models.User", b =>
-=======
             modelBuilder.Entity("Domain.Entities.User", b =>
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -206,39 +202,26 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
-                    b.Property<string>("HashedPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-=======
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-=======
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                     b.Property<string>("PhoneNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-=======
                     b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
                         .HasColumnType("datetime2");
 
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -251,11 +234,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("User");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialWebApp.Models.UserFriends", b =>
-=======
             modelBuilder.Entity("Domain.Entities.UserFriends", b =>
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -284,25 +263,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("UserFriends");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialWebApp.Models.Comment", b =>
-                {
-                    b.HasOne("SocialWebApp.Models.Post", "Post")
-=======
             modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
                     b.HasOne("Domain.Entities.Post", "Post")
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-<<<<<<< HEAD
-                    b.HasOne("SocialWebApp.Models.User", "User")
-=======
                     b.HasOne("Domain.Entities.User", "User")
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -313,25 +282,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialWebApp.Models.Message", b =>
-                {
-                    b.HasOne("SocialWebApp.Models.User", "Receiver")
-=======
             modelBuilder.Entity("Domain.Entities.Message", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Receiver")
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                         .WithMany("MessagesReceive")
                         .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-<<<<<<< HEAD
-                    b.HasOne("SocialWebApp.Models.User", "Sender")
-=======
                     b.HasOne("Domain.Entities.User", "Sender")
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                         .WithMany("MessagesSend")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -342,25 +301,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Sender");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialWebApp.Models.Notification", b =>
-                {
-                    b.HasOne("SocialWebApp.Models.User", "TriggerUser")
-=======
             modelBuilder.Entity("Domain.Entities.Notification", b =>
                 {
                     b.HasOne("Domain.Entities.User", "TriggerUser")
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                         .WithMany("UserTriggerNotifications")
                         .HasForeignKey("TriggerUserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-<<<<<<< HEAD
-                    b.HasOne("SocialWebApp.Models.User", "User")
-=======
                     b.HasOne("Domain.Entities.User", "User")
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                         .WithMany("UserNotifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -371,15 +320,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialWebApp.Models.Post", b =>
-                {
-                    b.HasOne("SocialWebApp.Models.User", "User")
-=======
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -388,25 +331,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialWebApp.Models.UserFriends", b =>
-                {
-                    b.HasOne("SocialWebApp.Models.User", "Friend")
-=======
             modelBuilder.Entity("Domain.Entities.UserFriends", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Friend")
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                         .WithMany("Friends")
                         .HasForeignKey("FriendId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-<<<<<<< HEAD
-                    b.HasOne("SocialWebApp.Models.User", "SourceUser")
-=======
                     b.HasOne("Domain.Entities.User", "SourceUser")
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                         .WithMany()
                         .HasForeignKey("SourceUserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -417,20 +350,12 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("SourceUser");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialWebApp.Models.Post", b =>
-=======
             modelBuilder.Entity("Domain.Entities.Post", b =>
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                 {
                     b.Navigation("Comments");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SocialWebApp.Models.User", b =>
-=======
             modelBuilder.Entity("Domain.Entities.User", b =>
->>>>>>> fd830e6 (feat: add refresh token and integrate API)
                 {
                     b.Navigation("Comments");
 
