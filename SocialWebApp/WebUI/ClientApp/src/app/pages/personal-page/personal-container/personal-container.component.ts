@@ -1,11 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IPost } from 'src/app/interface/personal-post';
+import { ActivatedRoute } from '@angular/router';
+import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
+import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
+import { IPersonalPost } from 'src/app/interface/personal-post';
 import { IUser } from 'src/app/interface/user';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
-
 @Component({
   selector: 'app-personal-container',
   templateUrl: './personal-container.component.html',
@@ -19,14 +20,16 @@ export class PersonalContainerComponent implements OnInit {
   userId: number = 0;
   limit: number = 1;
   offset: number = 0;
+  file!: File;
+  avatar: any;
 
   personalPosts: IPost[] = [];
   userInfo: IUser | undefined;
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private postService: PostService,
-    private userService: UserService
+    private personalPostService: PersonalPostService,
+    private userService: UserService,
+    private  dialogService: TuiDialogService,
   ) {}
 
   ngOnInit(): void {
@@ -72,5 +75,21 @@ export class PersonalContainerComponent implements OnInit {
     if (this.hasNextPage) {
       this.fetchPosts();
     }
+  }
+
+  showDialog(content: PolymorpheusContent<TuiDialogContext>): void {
+    this.dialogService
+      .open(content)
+      .subscribe();
+  }
+
+  handleAvatarUploaded(event: any) {
+    let reader = new FileReader();
+    this.file = event.target.files[0];
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = () => {
+      this.avatar = reader.result;
+      console.log(this.avatar);
+    };
   }
 }

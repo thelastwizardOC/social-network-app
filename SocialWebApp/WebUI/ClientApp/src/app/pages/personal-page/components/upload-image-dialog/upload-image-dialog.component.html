@@ -1,0 +1,16 @@
+<div style="display: flex; flex-direction: row; align-items: center">
+  <h1 style="flex: 1">Upload Image</h1>
+  <tui-svg src="tuiIconClose" (click)="handleCloseDialog(observer)"></tui-svg>
+</div>
+<div>
+  <div>
+    <input type="file" accept="image/*" (change)="processFile($event)" />
+    <img
+      style="width: 100%; height: 200px; object-fit: contain"
+      [src]="imageURL"
+    />
+  </div>
+</div>
+<div>
+  <button type="button">Proceed Upload</button>
+</div>
