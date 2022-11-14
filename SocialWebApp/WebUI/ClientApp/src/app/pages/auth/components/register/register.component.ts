@@ -18,10 +18,9 @@ import {
 })
 
 export class RegisterComponent implements OnInit {
-  gender = [{name: `Male`}, {name: `Female`}];
+  gender = [{name: `Male`}, {name: `Female`},{name: `Other`}];
   countries: TuiCountryIsoCode[] = Object.values(TuiCountryIsoCode);
   countryIsoCode = TuiCountryIsoCode.VN;
-  readonly emailValidator = Validators.email;
   sendingState:boolean = false;
 
 
