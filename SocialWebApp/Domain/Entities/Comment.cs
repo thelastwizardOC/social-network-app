@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+using System.ComponentModel.DataAnnotations;
+>>>>>>> 9388498 (fix: remove unnecessary validation login form + config returned access token with user id + fix nav bar)
 
 namespace Domain.Entities;
 
