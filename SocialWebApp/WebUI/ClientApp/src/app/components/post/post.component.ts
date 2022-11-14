@@ -1,5 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IPersonalPost } from 'src/app/interface/personal-post';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { IPost } from 'src/app/interface/personal-post';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -7,10 +15,28 @@ import { environment } from 'src/environments/environment';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
 })
-export class PostComponent {
+export class PostComponent implements OnChanges {
+  @ViewChild('postStatus')
+  postStatus!: ElementRef;
   @Input()
-  post!: IPersonalPost;
+  post!: IPost;
 
   mockImg: string = environment.mockImg;
+  hasSeeMore: boolean = false;
+
+  onSeeMore(): void {
+    this.hasSeeMore = false;
+    this.postStatus.nativeElement.style.setProperty('--line-to-show', 0);
+    console.log(this.hasSeeMore);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hasOwnProperty('post')) {
+      if (changes['post'].firstChange) {
+        this.hasSeeMore = this.post.status.length > 250;
+        console.log(this.hasSeeMore);
+      }
+    }
+  }
   constructor() {}
 }

@@ -17,6 +17,11 @@ public class AppDbContext : DbContext, IApplicationDbContext
     public DbSet<Message> Message { get; set; }
     public DbSet<Notification> Notification { get; set; }
 
+    public override int SaveChanges()
+    {
+        return base.SaveChanges();
+    }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

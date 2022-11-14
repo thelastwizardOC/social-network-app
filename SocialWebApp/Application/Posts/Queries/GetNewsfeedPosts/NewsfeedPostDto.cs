@@ -1,9 +1,8 @@
-
 using Domain.Entities;
 
-namespace Application.Posts.Queries.GetPersonalPosts;
+namespace Application.Posts.Queries.GetNewsfeedPosts;
 
-public class PersonalPostDto
+public class NewsfeedPostDto
 {
     public int Id { get; set; }
     public string Status { get; set; }

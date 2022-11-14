@@ -1,8 +1,5 @@
 @import "../../../../../node_modules/@taiga-ui/core/styles/mixins/mixins.scss";
 
-.personal-page-container {
-  width: 940px;
-}
 .cover-image {
   height: 300px;
   position: relative;
@@ -51,11 +48,4 @@
   border: 1px solid var(--tui-base-03);
   border-bottom-left-radius: 10px;
   padding: 1.5rem;
-}
-
-.posts-container {
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }

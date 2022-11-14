@@ -1,5 +1,6 @@
 using Application.Posts.Queries.GetPersonalPosts;
 using Application.Users.Queries.Login;
+using Application.Users.Queries.GetUserInfo;
 using AutoMapper;
 using Domain.Entities;
 
@@ -11,5 +12,6 @@ public class MappingProfile:Profile
         {
             CreateMap<Post, PersonalPostDto>();
             CreateMap<User, LoginUserDto>();
+            CreateMap<User, UserDto>();
         }
 }

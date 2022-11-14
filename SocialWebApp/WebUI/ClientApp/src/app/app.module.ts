@@ -19,6 +19,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { MessageComponent } from './pages/message/message.component';
 import { NewsfeedComponent } from './pages/newsfeed/newsfeed.component';
 import { NotificationComponent } from './pages/notification/notification.component';
+import { ErrorComponent } from './pages/error-page/error.component';
 import { PersonalPageModule } from './pages/personal-page/personal-page.module';
 import { RegisterComponent } from './pages/register/register.component';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -34,9 +35,9 @@ export function tokenGetter() {
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    NewsfeedComponent,
     MessageComponent,
     NotificationComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

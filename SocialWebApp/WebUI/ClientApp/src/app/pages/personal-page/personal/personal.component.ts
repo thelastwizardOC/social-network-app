@@ -1,11 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
-import { IPersonalPost } from 'src/app/interface/personal-post';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IPost } from 'src/app/interface/personal-post';
 import { IUser } from 'src/app/interface/user';
 import { environment } from 'src/environments/environment';
 
@@ -18,7 +12,7 @@ export class PersonalComponent {
   @Input() userNotFound: boolean = false;
   @Input() userInfo: IUser | undefined;
   @Input() activeItemIndex: number = 0;
-  @Input() personalPosts: IPersonalPost[] = [];
+  @Input() personalPosts: IPost[] = [];
   @Input() isLoading: boolean = false;
   @Output() onScroll = new EventEmitter();
 

@@ -1,0 +1,27 @@
+.input-status-wrapper {
+  height: 220px;
+  border-radius: 10px;
+  border: 1px solid var(--tui-base-03);
+  position: relative;
+  padding: 25px 50px;
+  margin-top: 20px;
+  .text-area {
+    font-size: 20px;
+  }
+  .status-button-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    border: 1px solid var(--tui-base-03);
+    position: absolute;
+    width: 70%;
+    bottom: 10px;
+    left: 20%;
+    padding: 10px;
+  }
+  .icon-image {
+    font-size: 20px;
+    cursor: pointer;
+  }
+}

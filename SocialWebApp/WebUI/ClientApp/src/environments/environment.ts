@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
   baseApi: 'https://localhost:7108/api',
-  mockImg:
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZh-kqkDsNPfhGrMctn-Js1iOVOXpSRhOnag&usqp=CAU',
+  mockImg: 'assets/skeleton.png',
 };
 
 /*

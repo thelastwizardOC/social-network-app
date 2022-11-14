@@ -20,8 +20,26 @@
       <tui-svg src="tuiIconMoreHorLarge"></tui-svg>
     </div>
   </div>
-  <p class="tui-text_body-m-2 post-title">{{ post.status }}</p>
+
+  <p #postStatus class="tui-text_body-m-2 post-status">
+    {{ post.status }}
+  </p>
+  <p *ngIf="hasSeeMore" (click)="onSeeMore()" class="see-more">See more</p>
   <div>
     <img class="post-img" [src]="post.photo || mockImg" />
+  </div>
+  <div class="post-numbers">
+    <p>5 Likes</p>
+    <p>5 Comments</p>
+  </div>
+  <div class="btn-actions">
+    <div class="btn-action">
+      <tui-svg src="tuiIconLikeLarge"></tui-svg>
+      <p>Like</p>
+    </div>
+    <div class="btn-action">
+      <tui-svg src="tuiIconEditLarge"></tui-svg>
+      <p>Comment</p>
+    </div>
   </div>
 </div>

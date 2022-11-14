@@ -1,0 +1,32 @@
+<div class="input-status-wrapper">
+  <p class="text-area">What do you think?</p>
+  <div>
+    <div class="status-button-wrapper">
+      <div style="display: flex; align-items: center; flex: 1">
+        <tui-svg class="icon-image" src="tuiIconPicture"></tui-svg>
+        <p class="tui-space_left-2">Add something to your post</p>
+      </div>
+      <button
+        s
+        size="s"
+        tuiButton
+        type="button"
+        appearance="secondary"
+        [disabled]="true"
+      >
+        Post
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  infinite-scroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="this.onScroll.emit()"
+>
+  <app-post *ngFor="let post of posts" [post]="post"></app-post>
+  <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading">
+  </tui-loader>
+</div>
