@@ -17,12 +17,19 @@ public class AuthController : ApiControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<NewUserVm>> Register(NewUserDto newUserDto)
     {
-        var newUser = await _mediator.Send(new RegisterCommand(){NewUserDto = newUserDto});
-        if (newUser == null)
+        try
         {
-            return BadRequest("User is existed");
-        }
+            var newUser = await _mediator.Send(new RegisterCommand(){NewUserDto = newUserDto});
+            if (newUser == null)
+            {
+                return BadRequest("User has been existed");
+            }
 
-        return Ok(newUser);
+            return Ok(newUser);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
+        }
     }
 }

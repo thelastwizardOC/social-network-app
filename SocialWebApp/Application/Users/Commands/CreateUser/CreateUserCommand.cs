@@ -25,26 +25,34 @@ public class CreateUserHandler : IRequestHandler<RegisterCommand, NewUserVm>
   }
   public async Task<NewUserVm> Handle(RegisterCommand request, CancellationToken cancellationToken)
   {
-    var existentUser = await _appDb.User.FirstOrDefaultAsync(u => u.UserName == request.NewUserDto.UserName || u.Email == request.NewUserDto.Email);
-    if (existentUser is not null)
+    try
     {
-      return null;
-    }
+      var existentUser = await _appDb.User.FirstOrDefaultAsync(u => u.UserName == request.NewUserDto.UserName || u.Email == request.NewUserDto.Email);
+      if (existentUser is not null)
+      {
+        return null;
+      }
 
-    var user = _mapper.Map<User>(request.NewUserDto);
-    // Save user in database
-    var encryptedPassword = _tokenServices.CreateEncryptedPassword(request.NewUserDto.Password);
-    user.HashedPassword = encryptedPassword.First();
-    user.SaltedPassword = encryptedPassword.ElementAt(1);
-    user.Token = _tokenServices.GenerateToken(request.NewUserDto);
-    var result = await _appDb.User.AddAsync(user);
-    if (result.State != EntityState.Added)
-    {
-      return null;
+      var user = _mapper.Map<User>(request.NewUserDto);
+      // Save user in database
+      var encryptedPassword = _tokenServices.CreateEncryptedPassword(request.NewUserDto.Password);
+      user.HashedPassword = encryptedPassword.First();
+      user.SaltedPassword = encryptedPassword.ElementAt(1);
+      var result = await _appDb.User.AddAsync(user);
+      if (result.State != EntityState.Added)
+      {
+        return null;
+      }
+      // Return profile data with token
+      _appDb.SaveChange();
+      var newUserVm = _mapper.Map<NewUserVm>(user);
+      newUserVm.Token = _tokenServices.GenerateToken(request.NewUserDto);
+      return newUserVm;
     }
-    // Return profile data with token
-    _appDb.SaveChange();
-    var newUserVm = _mapper.Map<NewUserVm>(user);
-    return newUserVm;
+    catch (Exception e)
+    {
+      Console.WriteLine(e);
+      throw;
+    }
   }
 }
