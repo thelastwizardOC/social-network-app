@@ -5,28 +5,44 @@ import {
   TuiAlertModule,
   TuiDialogModule,
   TuiRootModule,
-  TuiSvgModule,
   TUI_SANITIZER,
 } from '@taiga-ui/core';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 
 import { HttpClientModule } from '@angular/common/http';
-import { TuiAvatarModule } from '@taiga-ui/kit';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NavigationBarModule } from './components/navigation-bar/navigation-bar.module';
+import { HomeContainerComponent } from './pages/home-page/home-container/home-container.component';
+import { HomeComponent } from './pages/home-page/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { MessageComponent } from './pages/message/message.component';
+import { NewsfeedComponent } from './pages/newsfeed/newsfeed.component';
+import { NotificationComponent } from './pages/notification/notification.component';
 import { PersonalPageModule } from './pages/personal-page/personal-page.module';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    HomeContainerComponent,
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+    NewsfeedComponent,
+    MessageComponent,
+    NotificationComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PersonalPageModule,
     BrowserAnimationsModule,
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule,
+    PersonalPageModule,
     HttpClientModule,
+    NavigationBarModule,
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
   bootstrap: [AppComponent],

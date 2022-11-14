@@ -1,0 +1,45 @@
+<div class="navigation-bar-container">
+  <div class="logo-container">
+    <a routerLink="/newsfeed">
+      <img src="assets/images/nav-logo.png" />
+    </a>
+  </div>
+
+  <div class="search-box-container">
+    <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
+    <input type="text" placeholder="Search on Orial" />
+  </div>
+
+  <div class="menu-btn-container">
+    <div class="menu-btn" routerLink="newsfeed" routerLinkActive="active">
+      <tui-svg src="assets/svg/home-icon.svg"></tui-svg>
+    </div>
+    <div class="menu-btn" routerLink="message" routerLinkActive="active">
+      <tui-svg src="assets/svg/message-icon.svg"></tui-svg>
+    </div>
+    <div class="menu-btn" routerLink="notification" routerLinkActive="active">
+      <tui-svg src="assets/svg/bell-icon.svg"></tui-svg>
+    </div>
+
+    <tui-hosted-dropdown [content]="dropdown" [(open)]="isDropDownVisible">
+      <div
+        [class]="isOnProfilePage == true ? 'profile-btn-active' : 'menu-btn'"
+      >
+        <tui-svg src="assets/svg/profile-icon.svg"></tui-svg>
+      </div>
+    </tui-hosted-dropdown>
+
+    <ng-template #dropdown>
+      <tui-data-list>
+        <a
+          *ngFor="let item of profileItems"
+          tuiOption
+          (click)="toggleDropDown()"
+          [routerLink]="item.link"
+        >
+          {{ item.label }}
+        </a>
+      </tui-data-list>
+    </ng-template>
+  </div>
+</div>
