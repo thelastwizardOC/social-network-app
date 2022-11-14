@@ -6,7 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+<<<<<<< HEAD
   constructor() {}
 
   ngOnInit(): void {}
+=======
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+>>>>>>> ee12fbc (feat: create get photos api + photo tab UI)
 }

@@ -24,13 +24,7 @@ export function tokenGetter() {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NewsfeedComponent,
-    MessageComponent,
-    NotificationComponent,
-    ErrorComponent
-  ],
+  declarations: [AppComponent, NewsfeedComponent, MessageComponent, NotificationComponent, ErrorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

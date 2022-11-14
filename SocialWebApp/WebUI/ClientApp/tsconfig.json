@@ -18,7 +18,14 @@
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
+<<<<<<< HEAD
     "lib": ["es2020", "dom"]
+=======
+    "lib": [
+      "es2020",
+      "dom"
+    ]
+>>>>>>> ee12fbc (feat: create get photos api + photo tab UI)
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

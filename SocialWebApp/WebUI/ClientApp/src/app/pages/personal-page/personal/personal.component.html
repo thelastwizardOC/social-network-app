@@ -37,7 +37,8 @@
 <tui-tabs [(activeItemIndex)]="activeItemIndex">
   <button tuiTab>Posts</button>
   <button tuiTab disabled>Friends</button>
-  <button tuiTab disabled>Photos</button>
+
+  <button tuiTab>Photos</button>
 </tui-tabs>
 
 <div
@@ -54,6 +55,10 @@
     <tui-loader [size]="'l'" [showLoader]="isLoading"> </tui-loader>
   </div>
   <div *ngSwitchCase="'1'">Two</div>
+
+  <div *ngSwitchCase="'2'">
+    <app-photo-tab></app-photo-tab>
+  </div>
 </div>
 
 <ng-template #template let-observer>

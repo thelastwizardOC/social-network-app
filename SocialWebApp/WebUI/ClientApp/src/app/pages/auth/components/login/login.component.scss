@@ -1,5 +1,5 @@
-@import "src/styles/variables";
-@import "~@taiga-ui/core/styles/mixins/mixins.scss";
+@import 'src/styles/variables';
+@import '~@taiga-ui/core/styles/mixins/mixins.scss';
 
 .center {
   text-align: center;
@@ -30,9 +30,9 @@
   margin: 0;
   width: 100%;
   margin-top: 50px;
-    &._disabled {
-      > div {
-        background: var(--tui-base-05);
-      }
+  &._disabled {
+    > div {
+      background: var(--tui-base-05);
+    }
   }
 }

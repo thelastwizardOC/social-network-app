@@ -16,5 +16,6 @@ public class MappingProfile : Profile
     CreateMap<User, UserDto>();
     CreateMap<NewUserDto, User>();
     CreateMap<User, NewUserVm>();
+    CreateMap<Photo, PhotoDto>();
   }
 }

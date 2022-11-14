@@ -10,13 +10,8 @@
       <div class="tui-col_xs-12 tui-col_md-12 tui-col_lg-12">
         <div class="tui-form__row">
           <label class="label">User Name</label>
-          <tui-input formControlName="userNameValue" tuiTextfieldSize="m">
-            Enter your username
-          </tui-input>
-          <tui-error
-            formControlName="userNameValue"
-            [error]="[] | tuiFieldError | async"
-          ></tui-error>
+          <tui-input formControlName="userNameValue" tuiTextfieldSize="m"> Enter your username </tui-input>
+          <tui-error formControlName="userNameValue" [error]="[] | tuiFieldError | async"></tui-error>
         </div>
 
         <div class="tui-form__row">

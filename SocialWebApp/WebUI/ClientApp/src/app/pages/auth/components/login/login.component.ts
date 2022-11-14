@@ -60,6 +60,10 @@ export class LoginComponent implements OnInit {
             `The username or password that you've entered is incorrect. \n Please try again!`
           );
           console.log(err);
+<<<<<<< HEAD
+=======
+
+>>>>>>> ee12fbc (feat: create get photos api + photo tab UI)
           this.sendingState = false;
         },
       });
