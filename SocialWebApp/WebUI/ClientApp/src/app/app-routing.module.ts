@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './pages/error-page/error.component';
-import { LoginComponent } from './pages/login/login.component';
 import { MessageComponent } from './pages/message/message.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { AccessGuard } from './guard/access.guard';

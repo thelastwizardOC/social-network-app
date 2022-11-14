@@ -8,7 +8,7 @@ import { LoginComponent } from './components/login/login.component';
   imports: [
     RouterModule.forChild([
       {
-        path: 'auth',
+        path: '',
         component: AuthComponent,
         title: 'OriTalk - login or sign in',
         children: [
