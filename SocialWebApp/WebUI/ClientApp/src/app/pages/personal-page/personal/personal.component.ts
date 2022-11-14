@@ -1,7 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { TuiFileLike } from '@taiga-ui/kit';
-import { finalize, map, Observable, of, Subject, switchMap, timer } from 'rxjs';
 import { IPersonalPost } from 'src/app/interface/personal-post';
 import { IUser } from 'src/app/interface/user';
 import { environment } from 'src/environments/environment';

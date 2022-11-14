@@ -13,4 +13,12 @@ export class UserService {
   getUserInfo(userId: number): Observable<IUser> {
     return this.http.get<IUser>(`${environment.baseApi}/user/${userId}`);
   }
+
+  uploadAvatar(base64: string, id: number) {
+    const body = JSON.stringify({ id, base64 });
+    const headers = { 'content-type': 'application/json' };
+    return this.http.post(`${environment.baseApi}/user/upload-avatar`, body, {
+      headers,
+    });
+  }
 }

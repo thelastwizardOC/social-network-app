@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { TuiFileLike } from '@taiga-ui/kit';
-import { finalize, map, Observable, of, Subject, switchMap, timer } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-upload-image-dialog',
@@ -11,22 +10,28 @@ import { finalize, map, Observable, of, Subject, switchMap, timer } from 'rxjs';
 export class UploadImageDialogComponent implements OnInit {
   @Input() observer: any;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {}
 
+  file: any;
   imageURL: string = '';
 
   processFile(event: any) {
-    const file: File = event.target.files[0];
+    this.file = event.target.files[0];
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(this.file);
     reader.onload = () => {
       this.imageURL = reader.result as string;
+      console.log(this.imageURL);
     };
   }
 
   handleCloseDialog(observer: any) {
     observer.complete();
+  }
+
+  onSubmit() {
+    this.userService.uploadAvatar(this.imageURL, 1).subscribe({});
   }
 }
