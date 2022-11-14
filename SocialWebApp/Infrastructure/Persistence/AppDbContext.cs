@@ -18,8 +18,7 @@ public class AppDbContext : DbContext,IApplicationDbContext
     public DbSet<Comment> Comment { get; set; }
     public DbSet<Message> Message { get; set; }
     public DbSet<Notification> Notification { get; set; }
-
-    public override int SaveChanges()
+    public int SaveChanges()
     {
         return base.SaveChanges();
     }

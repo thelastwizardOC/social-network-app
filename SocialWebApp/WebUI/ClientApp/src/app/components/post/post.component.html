@@ -11,8 +11,8 @@
           ></tui-avatar>
         </div>
         <div class="post-detail">
-          <p>{{ post.user.lastName }}</p>
-          <p>{{ post.createdAt | dateFromNow }}</p>
+          <p class="tui-text_body-m">{{ post.user.lastName }}</p>
+          <p class="tui-text_body-m">{{ post.createdAt | dateFromNow }}</p>
         </div>
       </div>
     </div>
@@ -24,22 +24,24 @@
   <p #postStatus class="tui-text_body-m-2 post-status">
     {{ post.status }}
   </p>
-  <p *ngIf="hasSeeMore" (click)="onSeeMore()" class="see-more">See more</p>
+  <p *ngIf="hasSeeMore" (click)="onSeeMore()" class="see-more tui-text_body-m">
+    See more
+  </p>
   <div>
     <img class="post-img" [src]="post.photo || mockImg" />
   </div>
   <div class="post-numbers">
-    <p>5 Likes</p>
-    <p>5 Comments</p>
+    <p class="tui-text_body-m">5 Likes</p>
+    <p class="tui-text_body-m">5 Comments</p>
   </div>
   <div class="btn-actions">
     <div class="btn-action">
       <tui-svg src="tuiIconLikeLarge"></tui-svg>
-      <p>Like</p>
+      <p class="tui-text_body-m">Like</p>
     </div>
     <div class="btn-action">
       <tui-svg src="tuiIconEditLarge"></tui-svg>
-      <p>Comment</p>
+      <p class="tui-text_body-m">Comment</p>
     </div>
   </div>
 </div>
