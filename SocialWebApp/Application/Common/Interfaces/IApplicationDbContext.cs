@@ -12,7 +12,6 @@ public interface IApplicationDbContext
   public DbSet<Message> Message { get; set; }
   public DbSet<Notification> Notification { get; set; }
   Task<int> SaveChangesAsync();
-
-  public int SaveChange();
-
+  
+  public int SaveChanges();
 }

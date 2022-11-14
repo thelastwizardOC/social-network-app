@@ -1,5 +1,7 @@
+using System.Text;
 using Application.Common.Interfaces;
 using Infrastructure.Authentication;
+using Infrastructure.Persistence;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;

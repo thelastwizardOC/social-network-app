@@ -14,10 +14,10 @@ public class RegisterCommand : IRequest<NewUserVm>
 public class CreateUserHandler : IRequestHandler<RegisterCommand, NewUserVm>
 {
   private readonly IApplicationDbContext _appDb;
-  private readonly ITokenServices _tokenServices;
+  private readonly IIdentityService _tokenServices;
   private readonly IMapper _mapper;
 
-  public CreateUserHandler(IApplicationDbContext appDb, ITokenServices tokenServices, IMapper mapper)
+  public CreateUserHandler(IApplicationDbContext appDb, IIdentityService tokenServices, IMapper mapper)
   {
     _appDb = appDb;
     _tokenServices = tokenServices;
@@ -35,18 +35,18 @@ public class CreateUserHandler : IRequestHandler<RegisterCommand, NewUserVm>
 
       var user = _mapper.Map<User>(request.NewUserDto);
       // Save user in database
-      var encryptedPassword = _tokenServices.CreateEncryptedPassword(request.NewUserDto.Password);
-      user.HashedPassword = encryptedPassword.First();
-      user.SaltedPassword = encryptedPassword.ElementAt(1);
+      var encryptedPassword = _tokenServices.CreatePasswordHash(request.NewUserDto.Password);
+      user.PasswordHash = encryptedPassword.First();
+      user.PasswordSalt = encryptedPassword.ElementAt(1);
       var result = await _appDb.User.AddAsync(user);
       if (result.State != EntityState.Added)
       {
         return null;
       }
       // Return profile data with token
-      _appDb.SaveChange();
+      await _appDb.SaveChangesAsync();
       var newUserVm = _mapper.Map<NewUserVm>(user);
-      newUserVm.Token = _tokenServices.GenerateToken(request.NewUserDto);
+      newUserVm.Token = _tokenServices.GenerateAccessToken(user);
       return newUserVm;
     }
     catch (Exception e)
