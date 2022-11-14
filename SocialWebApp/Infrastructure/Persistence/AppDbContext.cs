@@ -2,7 +2,9 @@ using Application.Common.Interfaces;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-public class AppDbContext : DbContext, IApplicationDbContext
+namespace Infrastructure.Persistence;
+
+public class AppDbContext : DbContext,IApplicationDbContext
 {
     
     public AppDbContext() {}

@@ -23,8 +23,17 @@ public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserDto
     }
     public async Task<UserDto> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
     {
-        var user =await _appDb.User.FirstOrDefaultAsync(u=>u.Id==request.UserId);
-        var userDto = _mapper.Map<UserDto>(user);
-        return userDto;
+        try
+        {
+            var user =await _appDb.User.FirstOrDefaultAsync(u=>u.Id==request.UserId);
+            var userDto = _mapper.Map<UserDto>(user);
+            return userDto;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+      
     }
 }
