@@ -1,6 +1,7 @@
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Users.Queries.GetUserInfo;
 
@@ -20,10 +21,19 @@ public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserDto
         _appDb = appDb;
         _mapper = mapper;
     }
-    public Task<UserDto> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
+    public async Task<UserDto> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
     {
-        var user = _appDb.User.FirstOrDefault(u=>u.Id==request.UserId);
-        var userDto = _mapper.Map<UserDto>(user);
-        return Task.FromResult(userDto);
+        try
+        {
+            var user =await _appDb.User.FirstOrDefaultAsync(u=>u.Id==request.UserId);
+            var userDto = _mapper.Map<UserDto>(user);
+            return userDto;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+      
     }
 }

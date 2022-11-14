@@ -1,8 +1,10 @@
-<app-personal
-  [userNotFound]="userNotFound"
-  [userInfo]="userInfo"
-  [activeItemIndex]="activeItemIndex"
-  (onScroll)="handleOnScroll()"
-  [personalPosts]="personalPosts"
-  [isLoading]="isLoading"
-></app-personal>
+<div class="tui-container personal-page-container">
+  <app-personal
+    [userNotFound]="userNotFound"
+    [userInfo]="userInfo"
+    [activeItemIndex]="activeItemIndex"
+    (onScroll)="handleOnScroll()"
+    [personalPosts]="personalPosts"
+    [isLoading]="isLoading"
+  ></app-personal>
+</div>

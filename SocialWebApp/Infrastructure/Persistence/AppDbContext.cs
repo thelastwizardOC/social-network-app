@@ -2,7 +2,9 @@ using Application.Common.Interfaces;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-public class AppDbContext : DbContext, IApplicationDbContext
+namespace Infrastructure.Persistence;
+
+public class AppDbContext : DbContext,IApplicationDbContext
 {
     
     public AppDbContext() {}
@@ -16,11 +18,15 @@ public class AppDbContext : DbContext, IApplicationDbContext
     public DbSet<Comment> Comment { get; set; }
     public DbSet<Message> Message { get; set; }
     public DbSet<Notification> Notification { get; set; }
+    public int SaveChanges()
+    {
+        return base.SaveChanges();
+    }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=Muanaomahongtanh11052000./;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=12345OHdf%e;TrustServerCertificate=True");
     }
     
     protected override void OnModelCreating(ModelBuilder modelbuilder)

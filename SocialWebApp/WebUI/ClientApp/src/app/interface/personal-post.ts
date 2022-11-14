@@ -1,6 +1,6 @@
 import { IUser } from './user';
 
-export interface IPersonalPost {
+export interface IPost {
   id: number;
   status: string;
   photo: string;
@@ -10,8 +10,8 @@ export interface IPersonalPost {
   updatedAt: Date;
   user: IUser;
 }
-export interface IPersonalPostResponse {
-  items: IPersonalPost[];
+export interface IPostResponse {
+  items: IPost[];
   totalCount: number;
   hasNextPage: boolean;
 }

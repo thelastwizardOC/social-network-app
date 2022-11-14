@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ErrorComponent } from './pages/error-page/error.component';
 import { LoginComponent } from './pages/login/login.component';
 import { MessageComponent } from './pages/message/message.component';
-import { NewsfeedComponent } from './pages/newsfeed/newsfeed.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AccessGuard } from './guard/access.guard';
 import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
+  {
+    path: 'newsfeed',
+    loadChildren: async () =>
+      (await import('./pages/newsfeed-page/newsfeed-page.module'))
+        .NewsfeedPageModule,
+  },
   {
     path: 'profile',
     loadChildren: async () =>
@@ -31,10 +37,6 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   {
-    path: 'newsfeed',
-    component: NewsfeedComponent,
-  },
-  {
     path: 'message',
     component: MessageComponent,
   },
@@ -42,6 +44,7 @@ const routes: Routes = [
     path: 'notification',
     component: NotificationComponent,
   },
+  { path: '**', component: ErrorComponent },
 ];
 
 @NgModule({

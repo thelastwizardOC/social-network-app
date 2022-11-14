@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IPersonalPost } from 'src/app/interface/personal-post';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IPost } from 'src/app/interface/personal-post';
 import { IUser } from 'src/app/interface/user';
-import { PersonalPostService } from 'src/app/services/personal-post.service';
+import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -20,11 +20,12 @@ export class PersonalContainerComponent implements OnInit {
   limit: number = 1;
   offset: number = 0;
 
-  personalPosts: IPersonalPost[] = [];
+  personalPosts: IPost[] = [];
   userInfo: IUser | undefined;
   constructor(
     private route: ActivatedRoute,
-    private personalPostService: PersonalPostService,
+    private router: Router,
+    private postService: PostService,
     private userService: UserService
   ) {}
 
@@ -40,7 +41,7 @@ export class PersonalContainerComponent implements OnInit {
 
   fetchPosts(): void {
     this.isLoading = true;
-    this.personalPostService
+    this.postService
       .getPersonalPost(this.userId, this.offset, this.limit)
       .subscribe({
         next: (value) => {
@@ -61,9 +62,8 @@ export class PersonalContainerComponent implements OnInit {
         this.userInfo = value;
       },
       error: (err: HttpErrorResponse) => {
-        if (err.status == 404) {
-          this.userNotFound = true;
-        }
+        this.userNotFound = true;
+        this.router.navigate(['/error']);
       },
     });
   }

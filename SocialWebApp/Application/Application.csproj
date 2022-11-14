@@ -7,13 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Comment\**" />
-      <EmbeddedResource Remove="Comment\**" />
-      <None Remove="Comment\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Posts\Commands" />
+      <Folder Include="Comment\Commands\CreateComment" />
+      <Folder Include="Comment\Queries" />
+      <Folder Include="Common\Models" />
     </ItemGroup>
 
     <ItemGroup>

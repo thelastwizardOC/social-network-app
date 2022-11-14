@@ -1,3 +1,4 @@
+
 using Domain.Entities;
 
 namespace Application.Posts.Queries.GetPersonalPosts;
@@ -11,7 +12,6 @@ public class PersonalPostDto
     public int NumberOfComments { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public bool IsDeleted { get; set; }
     
     public List<Comment>?  Comments { get; set; }
 
