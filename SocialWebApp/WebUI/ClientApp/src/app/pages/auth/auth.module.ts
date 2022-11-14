@@ -30,9 +30,10 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { BrandLogoComponent } from './components/brand-logo/brand-logo.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
-  declarations: [AuthComponent, LoginComponent, BrandLogoComponent],
+  declarations: [AuthComponent, LoginComponent, BrandLogoComponent, RegisterComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

@@ -10,14 +10,13 @@ import { AppComponent } from './app.component';
 import { NavigationBarModule } from './components/navigation-bar/navigation-bar.module';
 import { HomeContainerComponent } from './pages/home-page/home-container/home-container.component';
 import { HomeComponent } from './pages/home-page/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
 import { MessageComponent } from './pages/message/message.component';
 import { NewsfeedComponent } from './pages/newsfeed/newsfeed.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { ErrorComponent } from './pages/error-page/error.component';
 import { PersonalPageModule } from './pages/personal-page/personal-page.module';
-import { RegisterComponent } from './pages/register/register.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { AuthModule } from './pages/auth/auth.module';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -28,8 +27,7 @@ export function tokenGetter() {
     AppComponent,
     HomeContainerComponent,
     HomeComponent,
-    LoginComponent,
-    RegisterComponent,
+    NewsfeedComponent,
     MessageComponent,
     NotificationComponent,
     ErrorComponent
@@ -37,6 +35,7 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AuthModule,
     BrowserAnimationsModule,
     TuiRootModule,
     TuiDialogModule,
