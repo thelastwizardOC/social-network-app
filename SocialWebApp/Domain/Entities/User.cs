@@ -4,24 +4,24 @@ namespace Domain.Entities;
 
 public class User
 {
-  public int Id { get; set; }
-  public string FirstName { get; set; }
-  public string LastName { get; set; }
-  public string UserName { get; set; }
-  public byte[]? PasswordHash { get; set; }
-  public byte[]? PasswordSalt { get; set; }
-  public DateTime Dob { get; set; }
-  public string Email { get; set; }
-  public string? Avatar { get; set; }
-  public string? Cover { get; set; }
-  public int Gender { get; set; }
-  public string PhoneNo { get; set; }
-  public DateTime CreatedAt { get; set; } = DateTime.Now;
-  public DateTime UpdatedAt { get; set; } = DateTime.Now;
-
-
-  [InverseProperty("Sender")]
-  public List<Message>? MessagesSend { get; set; }
+    public int Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string UserName { get; set; }
+    public string HashedPassword { get; set; }
+    public DateTime Dob { get; set; }
+    public string Email { get; set; }
+    [MaxLength]
+    public string Avatar { get; set; }
+    [MaxLength]
+    public string Cover { get; set; }
+    public int Gender { get; set; }
+    public string PhoneNo { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
+    
+    [InverseProperty("Sender")]
+    public List<Message>? MessagesSend { get; set; }
 
   [InverseProperty("Receiver")]
   public List<Message>? MessagesReceive { get; set; }
