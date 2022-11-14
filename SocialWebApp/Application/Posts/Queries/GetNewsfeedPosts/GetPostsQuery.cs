@@ -52,7 +52,6 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, NewsfeedPostV
                         FirstName = u.FirstName,
                         LastName = u.LastName,
                         UserName = u.UserName,
-                        HashedPassword = u.HashedPassword,
                         Dob = u.Dob,
                         Email = u.Email,
                         Avatar = u.Avatar,

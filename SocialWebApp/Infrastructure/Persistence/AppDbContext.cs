@@ -26,7 +26,7 @@ public class AppDbContext : DbContext,IApplicationDbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=Muanaomahongtanh11052000./;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=12345OHdf%e;TrustServerCertificate=True");
     }
     
     protected override void OnModelCreating(ModelBuilder modelbuilder)
