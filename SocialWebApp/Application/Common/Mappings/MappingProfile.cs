@@ -1,6 +1,7 @@
-using Application.Post.Queries.GetPersonalPosts;
-using Application.User.Queries.GetUserInfo;
+using Application.Posts.Queries.GetPersonalPosts;
+using Application.Users.Queries.Login;
 using AutoMapper;
+using Domain.Entities;
 
 namespace Application.Common.Mappings;
 
@@ -8,7 +9,7 @@ public class MappingProfile:Profile
 {
         public MappingProfile()
         {
-            CreateMap<SocialWebApp.Models.Post, PersonalPostDto>();
-            CreateMap<SocialWebApp.Models.User, UserDto>();
+            CreateMap<Post, PersonalPostDto>();
+            CreateMap<User, LoginUserDto>();
         }
 }

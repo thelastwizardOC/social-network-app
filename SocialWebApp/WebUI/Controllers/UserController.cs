@@ -1,7 +1,5 @@
-using Application.User.Queries.GetUserInfo;
-using Microsoft.AspNetCore.Authorization;
+using Application.Users.Queries.GetUserInfo;
 using Microsoft.AspNetCore.Mvc;
-using SocialWebApp.Models;
 
 namespace WebUI.Controllers;
 

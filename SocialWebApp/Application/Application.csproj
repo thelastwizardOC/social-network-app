@@ -7,10 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Comment\Commands\CreateComment" />
-      <Folder Include="Comment\Queries" />
-      <Folder Include="Common\Models" />
-      <Folder Include="Post\Commands" />
+      <Compile Remove="Comment\**" />
+      <EmbeddedResource Remove="Comment\**" />
+      <None Remove="Comment\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Posts\Commands" />
     </ItemGroup>
 
     <ItemGroup>
@@ -19,6 +22,7 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+      <PackageReference Include="FluentValidation" Version="11.2.2" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
     </ItemGroup>

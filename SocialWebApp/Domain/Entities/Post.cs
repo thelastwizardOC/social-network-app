@@ -1,7 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-
-namespace SocialWebApp.Models;
+namespace Domain.Entities;
 
 public class Post
 {

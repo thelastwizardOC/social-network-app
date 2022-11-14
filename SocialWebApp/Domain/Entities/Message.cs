@@ -1,9 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection.Metadata.Ecma335;
 
-namespace SocialWebApp.Models;
-
+namespace Domain.Entities;
 public class Message
 {
     public int Id { get; set; }

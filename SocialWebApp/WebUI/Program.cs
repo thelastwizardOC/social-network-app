@@ -33,10 +33,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors(policy=>policy.AllowAnyHeader().AllowAnyOrigin());
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin());
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

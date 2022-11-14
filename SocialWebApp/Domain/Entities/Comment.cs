@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-
-namespace SocialWebApp.Models;
+namespace Domain.Entities;
 
 public class Comment
 {

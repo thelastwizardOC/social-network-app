@@ -21,7 +21,7 @@ namespace Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("SocialWebApp.Models.Comment", b =>
+            modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.Message", b =>
+            modelBuilder.Entity("Domain.Entities.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,7 +92,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Message");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.Notification", b =>
+            modelBuilder.Entity("Domain.Entities.Notification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Notification");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.Post", b =>
+            modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,7 +169,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Post");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.User", b =>
+            modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -202,17 +202,25 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<string>("HashedPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("PhoneNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -226,7 +234,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.UserFriends", b =>
+            modelBuilder.Entity("Domain.Entities.UserFriends", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -255,15 +263,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("UserFriends");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.Comment", b =>
+            modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("SocialWebApp.Models.Post", "Post")
+                    b.HasOne("Domain.Entities.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SocialWebApp.Models.User", "User")
+                    b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -274,15 +282,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.Message", b =>
+            modelBuilder.Entity("Domain.Entities.Message", b =>
                 {
-                    b.HasOne("SocialWebApp.Models.User", "Receiver")
+                    b.HasOne("Domain.Entities.User", "Receiver")
                         .WithMany("MessagesReceive")
                         .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SocialWebApp.Models.User", "Sender")
+                    b.HasOne("Domain.Entities.User", "Sender")
                         .WithMany("MessagesSend")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -293,15 +301,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.Notification", b =>
+            modelBuilder.Entity("Domain.Entities.Notification", b =>
                 {
-                    b.HasOne("SocialWebApp.Models.User", "TriggerUser")
+                    b.HasOne("Domain.Entities.User", "TriggerUser")
                         .WithMany("UserTriggerNotifications")
                         .HasForeignKey("TriggerUserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SocialWebApp.Models.User", "User")
+                    b.HasOne("Domain.Entities.User", "User")
                         .WithMany("UserNotifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -312,9 +320,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.Post", b =>
+            modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
-                    b.HasOne("SocialWebApp.Models.User", "User")
+                    b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -323,15 +331,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.UserFriends", b =>
+            modelBuilder.Entity("Domain.Entities.UserFriends", b =>
                 {
-                    b.HasOne("SocialWebApp.Models.User", "Friend")
+                    b.HasOne("Domain.Entities.User", "Friend")
                         .WithMany("Friends")
                         .HasForeignKey("FriendId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SocialWebApp.Models.User", "SourceUser")
+                    b.HasOne("Domain.Entities.User", "SourceUser")
                         .WithMany()
                         .HasForeignKey("SourceUserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -342,12 +350,12 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("SourceUser");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.Post", b =>
+            modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("SocialWebApp.Models.User", b =>
+            modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("Comments");
 

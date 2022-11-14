@@ -1,7 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace SocialWebApp.Models;
-
+namespace Domain.Entities;
 public class Notification
 {
     public int Id { get; set; }

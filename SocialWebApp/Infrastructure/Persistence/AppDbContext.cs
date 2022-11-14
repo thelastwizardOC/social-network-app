@@ -1,10 +1,8 @@
 using Application.Common.Interfaces;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using SocialWebApp.Models;
 
-
-public class AppDbContext : DbContext,IApplicationDbContext
+public class AppDbContext : DbContext, IApplicationDbContext
 {
     
     public AppDbContext() {}
@@ -22,7 +20,7 @@ public class AppDbContext : DbContext,IApplicationDbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=12345OHdf%e;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=Muanaomahongtanh11052000./;TrustServerCertificate=True");
     }
     
     protected override void OnModelCreating(ModelBuilder modelbuilder)
@@ -34,6 +32,9 @@ public class AppDbContext : DbContext,IApplicationDbContext
         
         base.OnModelCreating(modelbuilder);
     }
+    public async Task<int> SaveChangesAsync()
+    {
+        return await base.SaveChangesAsync();
+    }
 
-    
 }

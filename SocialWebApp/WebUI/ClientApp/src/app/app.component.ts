@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { TUI_ARROW } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-root',
@@ -18,4 +19,5 @@ export class AppComponent {
       ? (this.isNavBarVisible = false)
       : (this.isNavBarVisible = true);
   }
+  readonly arrow = TUI_ARROW;
 }

@@ -5,6 +5,8 @@ import { MessageComponent } from './pages/message/message.component';
 import { NewsfeedComponent } from './pages/newsfeed/newsfeed.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AccessGuard } from './guard/access.guard';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -12,6 +14,13 @@ const routes: Routes = [
     loadChildren: async () =>
       (await import('./pages/personal-page/personal-page.module'))
         .PersonalPageModule,
+    canActivate: [AccessGuard],
+  },
+  {
+    path: 'auth',
+    loadChildren: async () =>
+      (await import('./pages/auth/auth.module')).AuthModule,
+    canActivate: [AuthGuard],
   },
   {
     path: 'login',
