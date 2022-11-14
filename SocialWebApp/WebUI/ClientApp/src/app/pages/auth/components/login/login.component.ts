@@ -6,7 +6,10 @@ import { TuiValidationError } from '@taiga-ui/cdk';
 import { tuiInputPasswordOptionsProvider } from '@taiga-ui/kit';
 import { IAuthenticationResponse } from 'src/app/interface/login-user';
 import { AuthService } from 'src/app/services/auth.service';
-import { userNameValidator } from '../../validators/login-validator';
+import {
+  passwordValidator,
+  userNameValidator,
+} from '../../validators/login-validator';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   readonly loginForm = new FormGroup({
     userNameValue: new FormControl(``, userNameValidator),
-    passwordValue: new FormControl(``),
+    passwordValue: new FormControl(``, passwordValidator),
   });
 
   loginError: TuiValidationError | null = null;
