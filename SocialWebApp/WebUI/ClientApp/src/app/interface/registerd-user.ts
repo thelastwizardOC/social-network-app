@@ -1,20 +1,13 @@
-export interface IUser {
+export interface IRegisterUser {
   id?: number;
   firstName: string;
   lastName: string;
   userName: string;
+  password:string;
   dob: string;
   email: string;
-  avatar?: string;
-  cover?: string;
   gender: number;
   phoneNo: string;
   createdAt?: string;
   updatedAt?:string;
-  token?:string;
-}
-export enum Gender {
-  male,
-  female,
-  other,
 }

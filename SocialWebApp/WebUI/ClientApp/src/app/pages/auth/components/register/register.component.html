@@ -71,15 +71,38 @@
           <tui-error formControlName="phoneValue" [error]="[] | tuiFieldError | async"></tui-error>
         </div>
 
-        <div tuiGroup class="tui-form__row" [adaptive]="true" [collapsed]="true">
+        <div class="tui-form__row">
           <label class="label">Gender</label>
-          <tui-radio-labeled formControlName="genderValue" [item]="gender[0]"> Male</tui-radio-labeled>
-          <tui-radio-labeled formControlName="genderValue" [item]="gender[1]"> Female</tui-radio-labeled>
-          <tui-radio-labeled formControlName="genderValue" [item]="gender[2]"> Other</tui-radio-labeled>
+          <div tuiGroup [collapsed]="true">
+            <tui-radio-block
+              contentAlign="left"
+              formControlName="genderValue"
+              [item]="gender[0]"
+              size="m"
+            >
+              Male
+            </tui-radio-block>
+            <tui-radio-block
+              contentAlign="left"
+              formControlName="genderValue"
+              [item]="gender[1]"
+              size="m"
+            >
+              Female
+            </tui-radio-block>
+            <tui-radio-block
+              contentAlign="left"
+              formControlName="genderValue"
+              [item]="gender[2]"
+              size="m"
+            >
+              Other
+            </tui-radio-block>
+          </div>
         </div>
 
         <div class="tui-form__row">
-          <tui-checkbox-labeled formControlName="conditionValue" size="m" class="tui-space_top-3">
+          <tui-checkbox-labeled formControlName="conditionValue" size="l" class="tui-space_top-3">
             I agree with <a href="#" tuiLink> terms and conditions </a>
           </tui-checkbox-labeled>
         </div>
@@ -91,7 +114,7 @@
         <div class="tui-form__buttons tui-form__buttons_align_center">
           <button tuiButton size="m" type="submit" class="tui-form__button"
                   [disabled]="!(registerForm.valid && registerForm.dirty)"
-                  [showLoader]="sendingState">Sign up
+                  [showLoader]="isSendingData">Sign up
           </button>
         </div>
 

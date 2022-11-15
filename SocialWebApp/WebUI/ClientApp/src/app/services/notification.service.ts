@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import {TuiAlertService, TuiDialogService, TuiNotification} from '@taiga-ui/core';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class NotificationService {
   constructor(
@@ -14,7 +14,7 @@ export class NotificationService {
       .open(message, {
         label: 'Success',
         status: TuiNotification.Success,
-        autoClose: true,
+        autoClose: true
       })
       .subscribe();
   }
@@ -24,7 +24,7 @@ export class NotificationService {
       .open(message, {
         label: 'Error',
         status: TuiNotification.Error,
-        autoClose: false,
+        autoClose: false
       })
       .subscribe();
   }
@@ -34,7 +34,7 @@ export class NotificationService {
       .open(message, {
         label: 'Warning',
         status: TuiNotification.Warning,
-        autoClose: true,
+        autoClose: true
       })
       .subscribe();
   }

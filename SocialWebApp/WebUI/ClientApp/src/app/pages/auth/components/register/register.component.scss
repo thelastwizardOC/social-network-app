@@ -1,5 +1,4 @@
 @import "src/styles/variables";
-@import "~@taiga-ui/core/styles/mixins/mixins.scss";
 
 .note {
   font-size: 0.8rem;
@@ -8,7 +7,7 @@
 
 .label {
   color: var(--tui-text-01);
-  font: var(--tui-font-text-s);
+  font: var(--tui-font-text-m);
 }
 
 .mail-group {
@@ -34,11 +33,7 @@
 }
 
 .tui-required {
-  color: $error-color !important;
-}
-
-.tui-group{
-  align-items: center;
+  color: $error-color;
 }
 
 .tui-form__buttons {

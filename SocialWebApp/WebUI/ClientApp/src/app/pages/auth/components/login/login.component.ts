@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('jwt', token);
         localStorage.setItem('refreshToken', refreshToken);
         this.sendingState = false;
-        this.route.navigate(['newsfeed']);
+        this.route.navigate(['']);
       },
       error: (err: HttpErrorResponse) => {
         this.loginError = new TuiValidationError(`The username or password that you've entered is incorrect. \n Please try again!`);

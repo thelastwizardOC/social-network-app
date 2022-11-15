@@ -9,7 +9,7 @@ import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'newsfeed',
+    path: '',
     loadChildren: async () => (await import('./pages/newsfeed-page/newsfeed-page.module')).NewsfeedPageModule,
     canActivate: [AccessGuard]
   },
