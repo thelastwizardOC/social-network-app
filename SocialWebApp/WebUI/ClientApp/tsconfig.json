@@ -18,14 +18,7 @@
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
-<<<<<<< HEAD
     "lib": ["es2020", "dom"]
-=======
-    "lib": [
-      "es2020",
-      "dom"
-    ]
->>>>>>> 9388498 (fix: remove unnecessary validation login form + config returned access token with user id + fix nav bar)
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

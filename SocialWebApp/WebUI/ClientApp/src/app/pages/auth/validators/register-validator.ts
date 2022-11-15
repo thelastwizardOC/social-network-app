@@ -13,10 +13,10 @@ export function nameValidator(fieldName: string): ValidatorFn {
   return (field: AbstractControl): Validators | null => {
     if (!field.value)
       return {other: `Please enter your ${fieldName}`};
-    if (field.value.length < 2)
-      return {other: `${fieldName} must be at least 2 characters long. Please use another one`};
     if (!nameChars.test(field.value))
       return {other: `${fieldName} is invalid. Please enter another value`};
+    if (field.value.length < 2)
+      return {other: `${fieldName} must be at least 2 characters long. Please use another one`};
     if (field.value.length > 50)
       return {other: `${fieldName} is limited on the number of 50 characters. Please use another one`};
     return null;

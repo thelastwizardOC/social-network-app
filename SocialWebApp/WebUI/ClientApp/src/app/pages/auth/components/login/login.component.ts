@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit {
             `The username or password that you've entered is incorrect. \n Please try again!`
           );
           console.log(err);
-
           this.sendingState = false;
         },
       });

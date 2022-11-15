@@ -15,7 +15,7 @@
 
   .logo {
     margin-top: calc(2.5rem + 30px);
-    width: max(40%, 17rem);
+    width: max(80%, 17rem);
     align-self: center;
     img {
       width: 100%;
@@ -35,7 +35,8 @@
       }
     }
     .logo {
-      width: 10rem;
+      margin-top: 0;
+      width: 20rem;
     }
   }
 }

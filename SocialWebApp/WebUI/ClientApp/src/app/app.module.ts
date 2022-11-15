@@ -17,6 +17,7 @@ import { ErrorComponent } from './pages/error-page/error.component';
 import { PersonalPageModule } from './pages/personal-page/personal-page.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthModule } from './pages/auth/auth.module';
+import { HomeModule } from './pages/home-page/home.module';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -25,8 +26,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeContainerComponent,
-    HomeComponent,
     NewsfeedComponent,
     MessageComponent,
     NotificationComponent,
@@ -41,6 +40,7 @@ export function tokenGetter() {
     TuiDialogModule,
     TuiAlertModule,
     PersonalPageModule,
+    HomeModule,
     HttpClientModule,
     NavigationBarModule,
     JwtModule.forRoot({
