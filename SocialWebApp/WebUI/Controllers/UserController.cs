@@ -1,6 +1,7 @@
 using Application.Common.Exceptions;
-using Application.User.Commands.UploadAvatar;
-using Application.User.Queries.GetUserInfo;
+using Application.Users.Commands.UploadAvatar;
+using Application.Users.Commands.UploadCover;
+using Application.Users.Queries.GetUserInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

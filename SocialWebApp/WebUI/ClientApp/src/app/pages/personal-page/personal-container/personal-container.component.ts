@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { IPersonalPost } from 'src/app/interface/personal-post';
+import { IPost } from 'src/app/interface/personal-post';
 import { IUser } from 'src/app/interface/user';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
@@ -27,8 +27,9 @@ export class PersonalContainerComponent implements OnInit {
   userInfo: IUser | undefined;
   constructor(
     private route: ActivatedRoute,
-    private personalPostService: PersonalPostService,
+    private router: Router,
     private userService: UserService,
+    private postService: PostService,
     private dialogService: TuiDialogService
   ) {}
 

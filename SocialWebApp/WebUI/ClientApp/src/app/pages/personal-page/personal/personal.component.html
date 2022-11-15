@@ -1,79 +1,12 @@
-<img *ngIf="userNotFound" src="assets/404.jpeg" />
-
-<div *ngIf="!userNotFound" class="tui-container personal-page-container">
-  <div class="cover-image">
-    <img [src]="userInfo?.cover || mockImg" />
-    <button
-      appearance="secondary"
-      size="m"
-      class="btn-add-cover"
-      tuiButton
-      icon="tuiIconCameraLarge"
-      (click)="this.onUploadPhotoClick.emit(template); uploadType = 'cover'"
-    >
-      Add cover photo
-    </button>
-  </div>
-
-  <div class="tui-row tui-row_adaptive tui-row_align_center">
-    <div class="user-avatar-container">
-      <tui-avatar
-        class="user-avatar"
-        [size]="'xxl'"
-        [rounded]="true"
-        [avatarUrl]="userInfo?.avatar || mockImg"
-      ></tui-avatar>
-      <tui-avatar
-        class="btn-upload-avatar"
-        [rounded]="true"
-        size="s"
-        avatarUrl="tuiIconCameraLarge"
-        (click)="this.onUploadPhotoClick.emit(template); uploadType = 'avatar'"
-      ></tui-avatar>
-    </div>
-    <p class="tui-text_h5 tui-space_left-3">{{ userInfo?.lastName }}</p>
-    <button
-      class="btn-edit"
-      appearance="secondary"
-      size="m"
-      tuiButton
-      [disabled]="true"
-    >
-      Edit profile
-    </button>
-  </div>
-
-  <div class="tui-container_fixed user-bio-container">
-    <p class="tui-space_vertical-5 tui-space_horizontal-5 tui-text_h5">
-      Introduction
-    </p>
-    <app-info-item
-      [value]="userInfo?.firstName"
-      icon="tuiIconUser"
-    ></app-info-item>
-    <app-info-item [value]="userInfo?.email" icon="tuiIconMail"></app-info-item>
-    <app-info-item
-      [value]="userInfo?.gender | gender"
-      icon="tuiIconStarFilled"
-    ></app-info-item>
-    <app-info-item
-      [value]="userInfo?.phoneNo"
-      icon="tuiIconCall"
-    ></app-info-item>
-  </div>
-  <tui-tabs [(activeItemIndex)]="activeItemIndex">
-    <button tuiTab>Posts</button>
-    <button tuiTab disabled>Friends</button>
-    <button tuiTab disabled>Photos</button>
-  </tui-tabs>
-
-  <div
-    class="tui-container-fixed"
-    [ngSwitch]="activeItemIndex"
-    infinite-scroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="1000"
-    (scrolled)="this.onScroll.emit()"
+<div class="cover-image">
+  <img [src]="userInfo?.cover || mockImg" />
+  <button
+    appearance="secondary"
+    size="m"
+    class="btn-add-cover"
+    tuiButton
+    icon="tuiIconCameraLarge"
+    (click)="this.onUploadPhotoClick.emit(template); uploadType = 'cover'"
   >
     Add cover photo
   </button>
@@ -81,44 +14,24 @@
 
 <div class="tui-row tui-row_adaptive tui-row_align_center">
   <div class="user-avatar-container">
-    <tui-avatar
-      class="user-avatar"
-      [size]="'xxl'"
-      [rounded]="true"
-      [avatarUrl]="userInfo?.avatar || mockImg"
-    ></tui-avatar>
+    <tui-avatar class="user-avatar" [size]="'xxl'" [rounded]="true" [avatarUrl]="userInfo?.avatar || mockImg"></tui-avatar>
     <tui-avatar
       class="btn-upload-avatar"
       [rounded]="true"
       size="s"
       avatarUrl="tuiIconCameraLarge"
+      (click)="this.onUploadPhotoClick.emit(template); uploadType = 'avatar'"
     ></tui-avatar>
   </div>
   <p class="tui-text_h5 tui-space_left-3">{{ userInfo?.lastName }}</p>
-  <button
-    class="btn-edit"
-    appearance="secondary"
-    size="m"
-    tuiButton
-    [disabled]="true"
-  >
-    Edit profile
-  </button>
+  <button class="btn-edit" appearance="secondary" size="m" tuiButton [disabled]="true">Edit profile</button>
 </div>
 
 <div class="tui-container_fixed user-bio-container">
-  <p class="tui-space_vertical-5 tui-space_horizontal-5 tui-text_h5">
-    Introduction
-  </p>
-  <app-info-item
-    [value]="userInfo?.firstName"
-    icon="tuiIconUser"
-  ></app-info-item>
+  <p class="tui-space_vertical-5 tui-space_horizontal-5 tui-text_h5">Introduction</p>
+  <app-info-item [value]="userInfo?.firstName" icon="tuiIconUser"></app-info-item>
   <app-info-item [value]="userInfo?.email" icon="tuiIconMail"></app-info-item>
-  <app-info-item
-    [value]="userInfo?.gender | gender"
-    icon="tuiIconStarFilled"
-  ></app-info-item>
+  <app-info-item [value]="userInfo?.gender | gender" icon="tuiIconStarFilled"></app-info-item>
   <app-info-item [value]="userInfo?.phoneNo" icon="tuiIconCall"></app-info-item>
 </div>
 <tui-tabs [(activeItemIndex)]="activeItemIndex">

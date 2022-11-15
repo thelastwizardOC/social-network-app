@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.User.Commands.UploadAvatar
+namespace Application.Users.Commands.UploadCover
 {
-    public class UploadAvatarCommandValidator : AbstractValidator<UploadAvatarCommand>
+    internal class UploadCoverCommandValidator : AbstractValidator<UploadCoverCommand>
     {
-        public UploadAvatarCommandValidator()
+        public UploadCoverCommandValidator()
         {
             RuleFor(v => v.UserId).NotNull().WithMessage("User ID is required");
             RuleFor(v => v.Base64).NotEmpty().WithMessage("Image base64 string is required");

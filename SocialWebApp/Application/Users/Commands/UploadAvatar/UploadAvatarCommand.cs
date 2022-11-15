@@ -4,7 +4,7 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.User.Commands.UploadAvatar;
+namespace Application.Users.Commands.UploadAvatar;
 
 public record UploadAvatarCommand(
     int UserId,
