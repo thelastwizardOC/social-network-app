@@ -1,9 +1,8 @@
-
 using Domain.Entities;
 
-namespace Application.Posts.Queries.GetPersonalPosts;
+namespace Application.Posts.Queries;
 
-public class PersonalPostDto
+public class PostDto
 {
   public int Id { get; set; }
   public string Status { get; set; }
@@ -12,9 +11,8 @@ public class PersonalPostDto
   public int NumberOfComments { get; set; }
   public DateTime CreatedAt { get; set; }
   public DateTime UpdatedAt { get; set; }
-
   public List<Comment>? Comments { get; set; }
-
   public int UserId { get; set; }
   public User User { get; set; }
+  public List<PostLike>? PostLikes { get; set; }
 }

@@ -1,3 +1,4 @@
+using Application.Posts.Queries;
 using Application.Posts.Queries.GetPersonalPosts;
 using Application.Users.Queries.Login;
 using Application.Users.Commands.CreateUser;
@@ -10,13 +11,17 @@ namespace Application.Common.Mappings;
 
 public class MappingProfile : Profile
 {
-  public MappingProfile()
-  {
-    CreateMap<Post, PersonalPostDto>();
-    CreateMap<User, LoginUserDto>();
-    CreateMap<User, UserDto>();
-    CreateMap<NewUserDto, User>();
-    CreateMap<User, NewUserVm>();
-    CreateMap<Photo, PhotoDto>();
-  }
+ 
+  
+        public MappingProfile()
+        {
+            CreateMap<User, UserDto>();
+            CreateMap<NewUserDto, User>();
+            CreateMap<User, NewUserVm>();
+            CreateMap<User, LoginUserDto>();
+            CreateMap<Post, PostDto>();
+            CreateMap<Photo, PhotoDto>();
+
+            
+        }
 }

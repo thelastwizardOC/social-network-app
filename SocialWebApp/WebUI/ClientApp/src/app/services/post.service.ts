@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IPost, IPostResponse } from '../interface/personal-post';
+import { IPost, IPostResponse } from '../interface/post';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +40,12 @@ export class PostService {
         },
       }
     );
+  }
+
+  likePost(postId: number, userId: number): Observable<IPost> {
+    const params = new HttpParams().set('userId', userId).set('postId', postId);
+    return this.http.post<IPost>(`${environment.baseApi}/post/like`, {
+      params,
+    });
   }
 }

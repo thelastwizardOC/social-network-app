@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Posts.Queries.GetNewsfeedPosts;
 
-public class GetPostsQuery : IRequest<NewsfeedPostVm>
+public class GetPostsQuery : IRequest<PaginatedPostDto>
 {
     public int UserId { get; set; }
     public int Offset { get; set; }
     public int Limit { get; set; }
 }
 
-public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, NewsfeedPostVm>
+public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, PaginatedPostDto>
 {
     private IApplicationDbContext _appDb;
     private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, NewsfeedPostV
     }
 
 
-    public async Task<NewsfeedPostVm> Handle(GetPostsQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedPostDto> Handle(GetPostsQuery request, CancellationToken cancellationToken)
     {
         try
         {
@@ -37,7 +37,7 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, NewsfeedPostV
                     on p.User.Id equals uf.FriendId
                 where p.User.Id == request.UserId || uf.SourceUserId == request.UserId
                 orderby p.CreatedAt descending
-                select new NewsfeedPostDto()
+                select new PostDto()
                 {
                     Id = p.Id,
                     Status = p.Status,
@@ -63,13 +63,18 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, NewsfeedPostV
                     }
                 }
             ).Skip(request.Offset).Take(request.Limit).ToListAsync();
-            List<NewsfeedPostDto> postDtos = _mapper.Map<List<NewsfeedPostDto>>(posts);
+            foreach (var post in posts)
+            {
+                var postLike =await _appDb.PostLike.Where(pl => pl.PostId == post.Id).ToListAsync();
+                post.PostLikes=postLike;
+            }
+            
+            List<PostDto> postDtos = _mapper.Map<List<PostDto>>(posts);
             int totalCount = postDtos.Count();
-
             bool hasNextPage = _appDb.Post.Count(p => p.User.Id == request.UserId) > request.Offset + request.Limit;
 
 
-            return new NewsfeedPostVm() { Items = postDtos, TotalCount = totalCount, HasNextPage = hasNextPage };
+            return new PaginatedPostDto() { Items = postDtos, TotalCount = totalCount, HasNextPage = hasNextPage };
         }
         catch (Exception e)
         {

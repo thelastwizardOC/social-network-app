@@ -39,6 +39,8 @@ public class User
     [InverseProperty("TriggerUser")]
     public List<Notification>? UserTriggerNotifications { get; set; }
 
-    public string? RefreshToken { get; set; }
-    public DateTime? RefreshTokenExpiryTime { get; set; }
+  public string? RefreshToken { get; set; }
+  public DateTime? RefreshTokenExpiryTime { get; set; }
+  public List<PostLike>? PostLikes { get; set; }
+
 }

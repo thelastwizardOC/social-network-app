@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IPost } from 'src/app/interface/personal-post';
+import { IPost } from 'src/app/interface/post';
 import { IUser } from 'src/app/interface/user';
 import { environment } from 'src/environments/environment';
 
@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 export class PersonalComponent {
   @Input() userNotFound: boolean = false;
   @Input() userInfo: IUser | undefined;
+  @Input() userId!: number;
   @Input() activeItemIndex: number = 0;
   @Input() personalPosts: IPost[] = [];
   @Input() isLoading: boolean = false;
@@ -18,6 +19,7 @@ export class PersonalComponent {
   @Output() onScroll = new EventEmitter();
   @Output() onUploadPhotoClick = new EventEmitter();
   @Output() onPhotoUpload = new EventEmitter();
+  @Output() onLike = new EventEmitter<number>();
 
   mockImg: string = environment.mockImg;
   uploadType!: 'avatar' | 'cover';

@@ -1,14 +1,15 @@
 <div class="tui-container personal-page-container">
-<app-personal
-  [userNotFound]="userNotFound"
-  [userInfo]="userInfo"
-  [activeItemIndex]="activeItemIndex"
-  (onScroll)="handleOnScroll()"
-  (onUploadPhotoClick)="showDialog($event)"
-  [personalPosts]="personalPosts"
-  [isLoading]="isLoading"
-  [uploadedAvatar]="avatar"
-  (onPhotoUpload)="handlePhotoUploaded($event)"
->
-</app-personal>
+  <app-personal
+    [userId]="userId"
+    [userNotFound]="userNotFound"
+    [userInfo]="userInfo"
+    [activeItemIndex]="activeItemIndex"
+    [personalPosts]="personalPosts"
+    [isLoading]="isLoading"
+    [uploadedAvatar]="avatar"
+    (onScroll)="handleOnScroll()"
+    (onUploadPhotoClick)="showDialog($event)"
+    (onLike)="handleLikePost($event)"
+    (onPhotoUpload)="handlePhotoUploaded($event)"
+  ></app-personal>
 </div>

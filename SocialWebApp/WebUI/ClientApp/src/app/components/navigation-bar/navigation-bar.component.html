@@ -1,16 +1,19 @@
 <div class="navigation-bar-container">
-  <div class="logo-container">
-    <a routerLink="/newsfeed">
-      <img src="assets/images/nav-logo.png" />
-    </a>
-  </div>
+  <div class="navigation-bar-left">
+    <div class="logo-container">
+      <img class="logo" routerLink="/newsfeed" src="assets/svg/nav-logo.svg" />
+    </div>
 
-  <div class="search-box-container">
-    <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
-    <input type="text" placeholder="Search on Orial" />
+    <div class="search-box-container">
+      <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
+      <input
+        class="tui-text_body-m-2"
+        type="text"
+        placeholder="Search on Honest"
+      />
+    </div>
   </div>
-
-  <div class="menu-btn-container">
+  <div class="navigation-bar-right">
     <div class="menu-btn" routerLink="newsfeed" routerLinkActive="active">
       <tui-svg src="assets/svg/home-icon.svg"></tui-svg>
     </div>

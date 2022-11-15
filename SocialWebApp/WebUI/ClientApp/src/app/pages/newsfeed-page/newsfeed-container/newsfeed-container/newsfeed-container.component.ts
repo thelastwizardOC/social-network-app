@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IPost } from 'src/app/interface/personal-post';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IPost } from 'src/app/interface/post';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -17,13 +17,14 @@ export class NewsfeedContainerComponent implements OnInit {
   offset: number = 0;
   constructor(
     private postService: PostService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe({
       next: ({ id }) => {
-        this.userId = id;
+        this.userId = +id;
         this.fetchPosts();
       },
     });
@@ -37,11 +38,12 @@ export class NewsfeedContainerComponent implements OnInit {
         next: (value) => {
           this.posts = [...this.posts, ...value.items];
           this.hasNextPage = value.hasNextPage;
-          this.isLoading = false;
           this.offset += this.limit;
         },
         error: (error) => {
           console.log({ error });
+        },
+        complete: () => {
           this.isLoading = false;
         },
       });
@@ -51,5 +53,22 @@ export class NewsfeedContainerComponent implements OnInit {
     if (this.hasNextPage) {
       this.fetchPosts();
     }
+  }
+
+  handleLikePost(postId: number) {
+    this.postService.likePost(postId, this.userId).subscribe({
+      next: (value) => {
+        this.posts = this.posts.map((post) => {
+          if (post.id === value.id) {
+            return value;
+          }
+          return post;
+        });
+      },
+      error: (err) => {
+        console.log({ err });
+        this.router.navigate(['/error']);
+      },
+    });
   }
 }

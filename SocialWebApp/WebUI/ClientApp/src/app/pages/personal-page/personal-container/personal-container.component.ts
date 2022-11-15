@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { IPost } from 'src/app/interface/personal-post';
+import { IPost } from 'src/app/interface/post';
 import { IUser } from 'src/app/interface/user';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
@@ -36,7 +36,7 @@ export class PersonalContainerComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe({
       next: ({ id }) => {
-        this.userId = id;
+        this.userId = +id;
         this.fetchPosts();
         this.fetchUserInfo();
       },
@@ -51,11 +51,12 @@ export class PersonalContainerComponent implements OnInit {
         next: (value) => {
           this.personalPosts = [...this.personalPosts, ...value.items];
           this.hasNextPage = value.hasNextPage;
-          this.isLoading = false;
           this.offset += this.limit;
         },
         error: (error) => {
           console.log({ error });
+        },
+        complete: () => {
           this.isLoading = false;
         },
       });
@@ -68,7 +69,6 @@ export class PersonalContainerComponent implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
         this.userNotFound = true;
-        this.router.navigate(['/error']);
       },
     });
   }
@@ -89,5 +89,20 @@ export class PersonalContainerComponent implements OnInit {
         this.userInfo.avatar = event.$event.res;
       if (event.uploadType === 'cover') this.userInfo.cover = event.$event.res;
     }
+  handleLikePost(postId: number) {
+    this.postService.likePost(postId, this.userId).subscribe({
+      next: (value) => {
+        this.personalPosts = this.personalPosts.map((post) => {
+          if (post.id === postId) {
+            return value;
+          }
+          return post;
+        });
+      },
+      error: (err) => {
+        console.log({ err });
+        // this.router.navigate(['/error']);
+      },
+    });
   }
 }

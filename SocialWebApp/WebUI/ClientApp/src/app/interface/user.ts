@@ -13,4 +13,5 @@ export interface IUser {
 export enum Gender {
   male,
   female,
+  other,
 }
