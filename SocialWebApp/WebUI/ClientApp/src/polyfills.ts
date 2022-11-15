@@ -45,12 +45,7 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-<<<<<<< HEAD
 import 'zone.js'; // Included with Angular CLI.
-=======
-import 'zone.js';  // Included with Angular CLI.
-
->>>>>>> ee12fbc (feat: create get photos api + photo tab UI)
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

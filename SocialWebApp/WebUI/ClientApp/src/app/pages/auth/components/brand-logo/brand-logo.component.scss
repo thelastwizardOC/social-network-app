@@ -8,7 +8,7 @@
     top: 20px;
     left: 20px;
 
-    .title_sub{
+    .title_sub {
       margin-top: 2rem;
     }
   }
@@ -24,14 +24,13 @@
     }
   }
 }
-<<<<<<< HEAD
 
-@media screen and (max-width: 47.9625em){
-  .brand-container{
-    .title-container{
+@media screen and (max-width: 47.9625em) {
+  .brand-container {
+    .title-container {
       position: relative;
 
-      .title_sub{
+      .title_sub {
         margin-top: 1rem;
       }
     }
@@ -41,5 +40,3 @@
     }
   }
 }
-=======
->>>>>>> ee12fbc (feat: create get photos api + photo tab UI)

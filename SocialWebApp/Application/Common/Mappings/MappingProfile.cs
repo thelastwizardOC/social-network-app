@@ -4,6 +4,7 @@ using Application.Users.Commands.CreateUser;
 using Application.Users.Queries.GetUserInfo;
 using AutoMapper;
 using Domain.Entities;
+using Application.Photos.Queries.GetPhotoByUserQuery;
 
 namespace Application.Common.Mappings;
 

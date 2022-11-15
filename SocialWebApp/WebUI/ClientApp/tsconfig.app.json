@@ -5,16 +5,6 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
-<<<<<<< HEAD
   "files": ["src/main.ts", "src/polyfills.ts"],
   "include": ["src/**/*.d.ts"]
-=======
-  "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
-  ],
-  "include": [
-    "src/**/*.d.ts"
-  ]
->>>>>>> ee12fbc (feat: create get photos api + photo tab UI)
 }
