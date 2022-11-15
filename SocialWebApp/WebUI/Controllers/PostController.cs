@@ -1,6 +1,8 @@
 using Application.Posts.Queries.GetPersonalPosts;
 using Application.Posts.Queries.GetNewsfeedPosts;
 using Microsoft.AspNetCore.Mvc;
+using Domain.Entities;
+
 namespace WebUI.Controllers;
 
 

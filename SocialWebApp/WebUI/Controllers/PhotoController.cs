@@ -1,4 +1,5 @@
-﻿using Application.Photos.Queries.GetPhotoByUserQuery;
+﻿using Application.Common.Exceptions;
+using Application.Photos.Queries.GetPhotoByUserQuery;
 using Application.Posts.Queries.GetPersonalPosts;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -7,10 +8,21 @@ namespace WebUI.Controllers
 {
     public class PhotoController : ApiControllerBase
     {
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<PhotoVm>> GetUserPhotos(int userId, int offset = 0, int limit = 100)
+        [HttpGet]
+        public async Task<ActionResult<PhotoVm>> GetUserPhotos([FromQuery] GetPhotoByUserQuery query)
         {
-            return await Mediator.Send(new GetPhotoByUserQuery(userId, offset, limit));
+            try
+            {
+                return await Mediator.Send(query);
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Errors);
+            }
         }
     }
 }

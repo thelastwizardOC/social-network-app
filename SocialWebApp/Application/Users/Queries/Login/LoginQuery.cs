@@ -30,14 +30,8 @@ namespace Application.Users.Queries.Login
             var user = await _context.User.FirstOrDefaultAsync(u => u.UserName == request.Username);
             if (user == null) return AuthenticationError.InvalidCredentials;
 
-            //var encryptedPassword = _identityService.CreatePasswordHash(request.Password);
-            //user.PasswordHash = encryptedPassword.First();
-            //user.PasswordSalt = encryptedPassword.ElementAt(1);
-            //await _context.SaveChangesAsync();
-
             if (!_identityService.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
                 return AuthenticationError.InvalidCredentials;
-
 
             var accessToken = _identityService.GenerateAccessToken(user);
             var refreshToken = _identityService.GenerateRefreshToken();

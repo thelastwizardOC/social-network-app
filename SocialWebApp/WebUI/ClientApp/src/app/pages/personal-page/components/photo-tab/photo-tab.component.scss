@@ -6,20 +6,44 @@
   border-radius: 10px;
   overflow: hidden;
   @include shadow(1);
+  .header {
+    display: flex;
+    flex-direction: row;
+    padding: 0px 20px;
+    margin: 20px 0px;
+    align-items: center;
+    .title {
+      flex: 1;
+    }
+    .btn {
+      cursor: pointer;
+      color: var(--tui-primary);
+      &:hover {
+        color: var(--tui-chart-2);
+      }
+    }
+  }
+
   .tui-row {
-    width: 100% !important;
+    width: 80% !important;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     div {
       text-align: center;
       width: 33.3333%;
       height: 200px;
       margin: 20px 0px;
+      padding: 0px;
       img {
-        width: 100%;
+        width: 200px;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
+        border-radius: 10px;
       }
     }
   }
+}
+
+.blank-spacer {
+  height: 20px;
 }

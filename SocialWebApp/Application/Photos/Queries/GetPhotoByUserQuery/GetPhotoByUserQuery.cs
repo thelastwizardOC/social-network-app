@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Application.Posts.Queries.GetPersonalPosts;
 using AutoMapper;
 using Domain.Common.Errors;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Photos.Queries.GetPhotoByUserQuery
 {
-    public record GetPhotoByUserQuery(int UserId, int Offset, int Limit) : IRequest<PhotoVm>;
+    public record GetPhotoByUserQuery(int UserId, int Offset = 0, int Limit = 100) : IRequest<PhotoVm>;
 
     public class GetPhotoByUserQueryHandler : IRequestHandler<GetPhotoByUserQuery, PhotoVm>
     {
@@ -26,19 +27,26 @@ namespace Application.Photos.Queries.GetPhotoByUserQuery
         }
         public async Task<PhotoVm> Handle(GetPhotoByUserQuery request, CancellationToken cancellationToken)
         {
-            var user = await _context.User.FirstOrDefaultAsync(u => u.Id == request.UserId);
-            if (user == null) return null;
-
-            List<Photo> photos = await _context.Photo.Where(ph => ph.UserId == user.Id).OrderByDescending(ph => ph.CreatedAt).Skip(request.Offset).Take(request.Limit).ToListAsync();
-            List<PhotoDto> photosDto = _mapper.Map<List<PhotoDto>>(photos);
-            bool hasNextPage = await _context.Photo.CountAsync(ph => ph.User.Id == request.UserId) > request.Offset + request.Limit;
-
-            return new PhotoVm()
+            try
             {
-                Photos = photosDto,
-                TotalCount = photosDto.Count,
-                HasNextPage = hasNextPage
-            };
+                var user = await _context.User.FirstOrDefaultAsync(u => u.Id == request.UserId);
+                if (user == null) throw new NotFoundException(nameof(User), request.UserId);
+
+                List<Photo> photos = await _context.Photo.Where(ph => ph.UserId == user.Id).OrderByDescending(ph => ph.CreatedAt).Skip(request.Offset).Take(request.Limit).ToListAsync();
+                List<PhotoDto> photosDto = _mapper.Map<List<PhotoDto>>(photos);
+                bool hasNextPage = await _context.Photo.CountAsync(ph => ph.User.Id == request.UserId) > request.Offset + request.Limit;
+
+                return new PhotoVm()
+                {
+                    Photos = photosDto,
+                    TotalCount = photosDto.Count,
+                    HasNextPage = hasNextPage
+                };
+            }
+            catch (Exception e) 
+            {
+                throw;
+            }
         }
     }
 }

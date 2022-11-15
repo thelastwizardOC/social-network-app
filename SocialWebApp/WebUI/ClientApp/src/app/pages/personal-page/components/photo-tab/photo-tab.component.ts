@@ -32,7 +32,6 @@ export class PhotoTabComponent implements OnInit {
           this.hasNextPage = res.hasNextPage;
           this.isLoading = false;
           this.offset += this.limit;
-          console.log('Hello', this.photos);
         },
         error: (error) => {
           console.log({ error });
