@@ -32,8 +32,8 @@ namespace Application.Users.Commands.RefreshToken
             string accessToken = request.AccessToken;
             string refreshToken = request.RefreshToken;
             var principal = _identityService.GetPrincipalFromExpiredToken(accessToken);
-            var username = principal.Claims.ToArray()[0].Value; // this is mapped to the sub-name claim
-            var user = await _context.User.SingleOrDefaultAsync(u => u.UserName == username);
+            var userId = int.Parse(principal.Claims.ToArray()[0].Value); // this is mapped to the sub-name claim
+            var user = await _context.User.SingleOrDefaultAsync(u => u.Id == userId);
             if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
                 return AuthenticationError.InvalidCredentials;
             var newAccessToken = _identityService.GenerateAccessToken(user);

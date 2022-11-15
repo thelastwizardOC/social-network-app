@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {TuiCountryIsoCode} from '@taiga-ui/i18n';
+import { tuiInputPasswordOptionsProvider } from '@taiga-ui/kit';
 import {
   emailValidator,
   nameValidator,
@@ -14,7 +15,15 @@ import {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   encapsulation:ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    tuiInputPasswordOptionsProvider({
+      icons: {
+        hide: `tuiIconEyeOpen`,
+        show: `tuiIconEyeClosed`,
+      },
+    }),
+  ],
 })
 
 export class RegisterComponent implements OnInit {
