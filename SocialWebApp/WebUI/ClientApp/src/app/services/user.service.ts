@@ -14,13 +14,15 @@ export class UserService {
     return this.http.get<IUser>(`${environment.baseApi}/user/${userId}`);
   }
 
-  uploadAvatar(base64: string, id: number) {
+  uploadPhoto(base64: string, id: number, type: string) {
+    console.log('Hello');
+
     const body = JSON.stringify({ id, base64 });
     const headers = {
       'content-type': 'application/json',
       'Response-Type': 'text',
     };
-    return this.http.post(`${environment.baseApi}/user/upload-avatar`, body, {
+    return this.http.post(`${environment.baseApi}/user/upload-${type}`, body, {
       headers,
       responseType: 'text',
     });

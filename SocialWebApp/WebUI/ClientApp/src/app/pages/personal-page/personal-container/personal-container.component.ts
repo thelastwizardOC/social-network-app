@@ -86,4 +86,11 @@ export class PersonalContainerComponent implements OnInit {
       this.userInfo.avatar = event;
     }
   }
+
+  handleCoverUploaded(event: any) {
+    if (this.userInfo !== undefined) {
+      console.log(event);
+      this.userInfo.cover = event;
+    }
+  }
 }

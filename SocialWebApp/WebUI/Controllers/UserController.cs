@@ -26,4 +26,11 @@ public class UserController : ApiControllerBase
         var base64 = await Mediator.Send(command);
         return Ok(base64);
     }
+    
+    [HttpPost("upload-cover")]
+    public async Task<ActionResult<string>> UploadCover(UploadCoverCommand command)
+    {
+        var base64 = await Mediator.Send(command);
+        return Ok(base64);
+    }
 }

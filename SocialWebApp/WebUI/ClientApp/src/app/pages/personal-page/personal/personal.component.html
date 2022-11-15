@@ -155,5 +155,6 @@
   <app-upload-image-dialog
     [observer]="observer"
     [type]="'cover'"
+    (onUploadCoverSuccess)="onCoverUploaded.emit($event)"
   ></app-upload-image-dialog>
 </ng-template>

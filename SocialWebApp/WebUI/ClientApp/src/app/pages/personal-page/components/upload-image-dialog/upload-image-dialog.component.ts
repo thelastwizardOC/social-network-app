@@ -13,6 +13,7 @@ export class UploadImageDialogComponent implements OnInit {
   @Input() observer: any;
   @Input() type!: 'avatar' | 'cover';
   @Output() onUploadAvatarSuccess = new EventEmitter();
+  @Output() onUploadCoverSuccess = new EventEmitter();
 
   constructor(private userService: UserService) {}
 
@@ -25,15 +26,18 @@ export class UploadImageDialogComponent implements OnInit {
   }
 
   onSubmit(observer: any) {
-    this.userService.uploadAvatar(this.imageURL as string, 2).subscribe({
-      next: (res) => {
-        observer.complete();
-        this.onUploadAvatarSuccess.emit(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.userService
+      .uploadPhoto(this.imageURL as string, 2, this.type)
+      .subscribe({
+        next: (res) => {
+          observer.complete();
+          this.type === 'avatar' && this.onUploadAvatarSuccess.emit(res);
+          this.type === 'cover' && this.onUploadCoverSuccess.emit(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   control = new FormControl();

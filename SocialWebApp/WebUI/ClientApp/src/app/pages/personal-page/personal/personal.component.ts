@@ -18,6 +18,7 @@ export class PersonalComponent {
   @Output() onScroll = new EventEmitter();
   @Output() onUploadAvatarClick = new EventEmitter();
   @Output() onAvatarUploaded = new EventEmitter();
+  @Output() onCoverUploaded = new EventEmitter();
 
   mockImg: string = environment.mockImg;
 
