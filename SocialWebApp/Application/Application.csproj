@@ -10,6 +10,7 @@
       <Folder Include="Comment\Commands\CreateComment" />
       <Folder Include="Comment\Queries" />
       <Folder Include="Common\Models" />
+      <Folder Include="Posts\Commands" />
     </ItemGroup>
 
     <ItemGroup>

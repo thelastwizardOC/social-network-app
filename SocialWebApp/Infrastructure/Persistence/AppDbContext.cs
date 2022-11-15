@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
 
-public class AppDbContext : DbContext,IApplicationDbContext
+public class AppDbContext : DbContext, IApplicationDbContext
 {
-    
     public AppDbContext() {}
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
@@ -22,8 +21,7 @@ public class AppDbContext : DbContext,IApplicationDbContext
     {
         return base.SaveChanges();
     }
-
-
+   
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=12345OHdf%e;TrustServerCertificate=True");
@@ -42,5 +40,4 @@ public class AppDbContext : DbContext,IApplicationDbContext
     {
         return await base.SaveChangesAsync();
     }
-
 }

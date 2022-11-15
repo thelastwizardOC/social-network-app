@@ -18,10 +18,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Services.AddControllers().AddNewtonsoftJson(option => {
-    option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-    option.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-    option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+builder.Services.AddControllers().AddNewtonsoftJson(option =>
+{
+  option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+  option.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+  option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 });
 
 
@@ -30,13 +31,15 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+  app.UseSwagger();
+  app.UseSwaggerUI();
 }
-app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin());
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
