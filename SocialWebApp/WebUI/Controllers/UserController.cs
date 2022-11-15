@@ -1,3 +1,4 @@
+using Application.Common.Exceptions;
 using Application.User.Commands.UploadAvatar;
 using Application.User.Queries.GetUserInfo;
 using Microsoft.AspNetCore.Authorization;
@@ -23,14 +24,36 @@ public class UserController : ApiControllerBase
     [HttpPost("upload-avatar")]
     public async Task<ActionResult<string>> UploadAvatar(UploadAvatarCommand command)
     {
-        var base64 = await Mediator.Send(command);
-        return Ok(base64);
+        try
+        {
+            var base64 = await Mediator.Send(command);
+            return Ok(base64);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (ValidationException e)
+        { 
+            return BadRequest(e.Message);
+        }
     }
-    
+
     [HttpPost("upload-cover")]
     public async Task<ActionResult<string>> UploadCover(UploadCoverCommand command)
     {
-        var base64 = await Mediator.Send(command);
-        return Ok(base64);
+        try
+        {
+            var base64 = await Mediator.Send(command);
+            return Ok(base64);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (ValidationException e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }

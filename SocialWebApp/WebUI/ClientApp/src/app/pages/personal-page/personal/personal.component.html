@@ -9,7 +9,7 @@
       class="btn-add-cover"
       tuiButton
       icon="tuiIconCameraLarge"
-      (click)="this.onUploadAvatarClick.emit(templateCover)"
+      (click)="this.onUploadPhotoClick.emit(template); uploadType = 'cover'"
     >
       Add cover photo
     </button>
@@ -28,7 +28,7 @@
         [rounded]="true"
         size="s"
         avatarUrl="tuiIconCameraLarge"
-        (click)="this.onUploadAvatarClick.emit(templateAvatar)"
+        (click)="this.onUploadPhotoClick.emit(template); uploadType = 'avatar'"
       ></tui-avatar>
     </div>
     <p class="tui-text_h5 tui-space_left-3">{{ userInfo?.lastName }}</p>
@@ -143,18 +143,10 @@
   <div *ngSwitchCase="'1'">Two</div>
 </div>
 
-<ng-template #templateAvatar let-observer>
+<ng-template #template let-observer>
   <app-upload-image-dialog
     [observer]="observer"
-    [type]="'avatar'"
-    (onUploadAvatarSuccess)="onAvatarUploaded.emit($event)"
-  ></app-upload-image-dialog>
-</ng-template>
-
-<ng-template #templateCover let-observer>
-  <app-upload-image-dialog
-    [observer]="observer"
-    [type]="'cover'"
-    (onUploadCoverSuccess)="onCoverUploaded.emit($event)"
+    [type]="uploadType"
+    (onUploadPhotoSuccess)="onPhotoUpload.emit({$event, uploadType})"
   ></app-upload-image-dialog>
 </ng-template>

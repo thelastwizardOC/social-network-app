@@ -59,6 +59,7 @@ export class PersonalContainerComponent implements OnInit {
         },
       });
   }
+
   fetchUserInfo(): void {
     this.userService.getUserInfo(this.userId).subscribe({
       next: (value) => {
@@ -81,16 +82,11 @@ export class PersonalContainerComponent implements OnInit {
     this.dialogService.open(content).subscribe();
   }
 
-  handleAvatarUploaded(event: any) {
+  handlePhotoUploaded(event: any) {
     if (this.userInfo !== undefined) {
-      this.userInfo.avatar = event;
-    }
-  }
-
-  handleCoverUploaded(event: any) {
-    if (this.userInfo !== undefined) {
-      console.log(event);
-      this.userInfo.cover = event;
+      if (event.uploadType === 'avatar')
+        this.userInfo.avatar = event.$event.res;
+      if (event.uploadType === 'cover') this.userInfo.cover = event.$event.res;
     }
   }
 }

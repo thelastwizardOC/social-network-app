@@ -3,11 +3,10 @@
   [userInfo]="userInfo"
   [activeItemIndex]="activeItemIndex"
   (onScroll)="handleOnScroll()"
-  (onUploadAvatarClick)="showDialog($event)"
+  (onUploadPhotoClick)="showDialog($event)"
   [personalPosts]="personalPosts"
   [isLoading]="isLoading"
   [uploadedAvatar]="avatar"
-  (onAvatarUploaded)="handleAvatarUploaded($event)"
-  (onCoverUploaded)="handleCoverUploaded($event)"
+  (onPhotoUpload)="handlePhotoUploaded($event)"
 >
 </app-personal>

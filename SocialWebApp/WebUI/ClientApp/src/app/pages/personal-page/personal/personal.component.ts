@@ -16,11 +16,10 @@ export class PersonalComponent {
   @Input() isLoading: boolean = false;
   @Input() uploadedAvatar: any;
   @Output() onScroll = new EventEmitter();
-  @Output() onUploadAvatarClick = new EventEmitter();
-  @Output() onAvatarUploaded = new EventEmitter();
-  @Output() onCoverUploaded = new EventEmitter();
+  @Output() onUploadPhotoClick = new EventEmitter();
+  @Output() onPhotoUpload = new EventEmitter();
 
   mockImg: string = environment.mockImg;
-
+  uploadType!: 'avatar' | 'cover';
   constructor() {}
 }

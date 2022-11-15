@@ -1,12 +1,5 @@
-<div
-  style="
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 30px;
-  "
->
-  <h1 style="flex: 1">Upload Image</h1>
+<div class="header">
+  <h1 class="title">Upload Image</h1>
   <tui-svg src="tuiIconClose" (click)="handleCloseDialog(observer)"></tui-svg>
 </div>
 <div>
@@ -38,33 +31,23 @@
         [file]="file"
       ></tui-file>
     </tui-files>
-    <div style="text-align: center; margin-top: 20px; margin-bottom: 20px">
+    <div class="img-container">
       <img
-        style="
-          width: 144px;
-          height: 144px;
-          object-fit: cover;
-          border-radius: 50%;
-          border: 1px solid gray;
-        "
+        *ngIf="imageURL"
+        [class]="type === 'avatar' ? 'img-avatar' : 'img-cover'"
         [src]="imageURL"
-        *ngIf="imageURL && type === 'avatar'"
-      />
-      <img
-        style="width: 422px; height: 150px; object-fit: contain"
-        [src]="imageURL"
-        *ngIf="imageURL && type === 'cover'"
       />
     </div>
   </div>
 </div>
-<div style="text-align: end">
+<div class="btn-container">
   <button
     *ngIf="imageURL"
     tuiButton
     type="submit"
     (click)="onSubmit(observer)"
     size="m"
+    [showLoader]="loading"
   >
     Proceed Upload
   </button>
