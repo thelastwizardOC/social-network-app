@@ -14,7 +14,7 @@ export class ErrorService {
   }
 
   getServerMessage(error: HttpErrorResponse): string {
-    return error.error || error.message;
+    return typeof (error.error)== "string" ? error.error: error.message;
   }
 
 }
