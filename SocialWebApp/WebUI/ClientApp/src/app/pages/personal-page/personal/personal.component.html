@@ -9,6 +9,7 @@
       class="btn-add-cover"
       tuiButton
       icon="tuiIconCameraLarge"
+      (click)="this.onUploadAvatarClick.emit(templateCover)"
     >
       Add cover photo
     </button>
@@ -27,7 +28,7 @@
         [rounded]="true"
         size="s"
         avatarUrl="tuiIconCameraLarge"
-        (click)="this.onUploadAvatarClick.emit(template)"
+        (click)="this.onUploadAvatarClick.emit(templateAvatar)"
       ></tui-avatar>
     </div>
     <p class="tui-text_h5 tui-space_left-3">{{ userInfo?.lastName }}</p>
@@ -72,7 +73,7 @@
     infinite-scroll
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="1000"
-    (scrolled)="this.onScroll.emit(template)"
+    (scrolled)="this.onScroll.emit()"
   >
     Add cover photo
   </button>
@@ -142,6 +143,17 @@
   <div *ngSwitchCase="'1'">Two</div>
 </div>
 
-<ng-template #template let-observer>
-  <app-upload-image-dialog [observer]="observer"></app-upload-image-dialog>
+<ng-template #templateAvatar let-observer>
+  <app-upload-image-dialog
+    [observer]="observer"
+    [type]="'avatar'"
+    (onUploadAvatarSuccess)="onAvatarUploaded.emit($event)"
+  ></app-upload-image-dialog>
+</ng-template>
+
+<ng-template #templateCover let-observer>
+  <app-upload-image-dialog
+    [observer]="observer"
+    [type]="'cover'"
+  ></app-upload-image-dialog>
 </ng-template>

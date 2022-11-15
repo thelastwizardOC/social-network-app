@@ -29,7 +29,7 @@ export class PersonalContainerComponent implements OnInit {
     private route: ActivatedRoute,
     private personalPostService: PersonalPostService,
     private userService: UserService,
-    private  dialogService: TuiDialogService,
+    private dialogService: TuiDialogService
   ) {}
 
   ngOnInit(): void {
@@ -78,18 +78,12 @@ export class PersonalContainerComponent implements OnInit {
   }
 
   showDialog(content: PolymorpheusContent<TuiDialogContext>): void {
-    this.dialogService
-      .open(content)
-      .subscribe();
+    this.dialogService.open(content).subscribe();
   }
 
   handleAvatarUploaded(event: any) {
-    let reader = new FileReader();
-    this.file = event.target.files[0];
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = () => {
-      this.avatar = reader.result;
-      console.log(this.avatar);
-    };
+    if (this.userInfo !== undefined) {
+      this.userInfo.avatar = event;
+    }
   }
 }

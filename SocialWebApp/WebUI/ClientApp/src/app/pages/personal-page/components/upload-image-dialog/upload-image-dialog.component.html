@@ -1,17 +1,66 @@
-<div style="display: flex; flex-direction: row; align-items: center">
+<div
+  style="
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 30px;
+  "
+>
   <h1 style="flex: 1">Upload Image</h1>
   <tui-svg src="tuiIconClose" (click)="handleCloseDialog(observer)"></tui-svg>
 </div>
 <div>
   <div>
-    <input type="file" accept="image/*" (change)="processFile($event)" />
+    <tui-input-files
+      *ngIf="!control.value && !rejectedState"
+      accept=".png, .jpg, .jpeg"
+      [formControl]="control"
+      (reject)="onReject($event)"
+      [multiple]="false"
+    ></tui-input-files>
 
-    <img
-      style="width: 100%; height: 200px; object-fit: contain"
-      [src]="imageURL"
-    />
+    <tui-files class="tui-space_top-1">
+      <tui-file
+        *ngIf="loadedFiles$ | async as file"
+        [file]="file"
+        (removed)="removeFile()"
+      ></tui-file>
+      <tui-file
+        *ngIf="rejectedFiles$ | async as file"
+        #rejectedFile
+        state="error"
+        [file]="file"
+        (removed)="clearRejected()"
+      ></tui-file>
+      <tui-file
+        *ngIf="loadingFiles$ | async as file"
+        state="loading"
+        [file]="file"
+      ></tui-file>
+    </tui-files>
+    <div style="text-align: center; margin-top: 20px; margin-bottom: 20px">
+      <img
+        style="
+          width: 144px;
+          height: 144px;
+          object-fit: cover;
+          border-radius: 50%;
+          border: 1px solid gray;
+        "
+        [src]="imageURL"
+        *ngIf="imageURL && type === 'avatar'"
+      />
+    </div>
   </div>
 </div>
-<div>
-  <button type="submit" (click)="onSubmit()">Proceed Upload</button>
+<div style="text-align: end">
+  <button
+    *ngIf="imageURL"
+    tuiButton
+    type="submit"
+    (click)="onSubmit(observer)"
+    size="m"
+  >
+    Proceed Upload
+  </button>
 </div>

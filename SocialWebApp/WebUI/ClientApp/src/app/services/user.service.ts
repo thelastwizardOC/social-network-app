@@ -16,9 +16,13 @@ export class UserService {
 
   uploadAvatar(base64: string, id: number) {
     const body = JSON.stringify({ id, base64 });
-    const headers = { 'content-type': 'application/json' };
+    const headers = {
+      'content-type': 'application/json',
+      'Response-Type': 'text',
+    };
     return this.http.post(`${environment.baseApi}/user/upload-avatar`, body, {
       headers,
+      responseType: 'text',
     });
   }
 }
