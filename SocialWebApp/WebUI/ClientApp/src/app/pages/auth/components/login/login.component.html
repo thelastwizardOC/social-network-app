@@ -3,6 +3,7 @@
   <form
     [formGroup]="loginForm"
     (ngSubmit)="onLoginFormSubmit()"
+    (click)="loginError = null"
     [tuiTextfieldLabelOutside]="true"
   >
     <div class="tui-row tui-row_sme">
@@ -23,6 +24,8 @@
           <tui-input-password
             formControlName="passwordValue"
             tuiTextfieldSize="m"
+            tuiHintContent=""
+            tuiHintAppearance="onDark"
             >Enter your password
           </tui-input-password>
           <tui-error
