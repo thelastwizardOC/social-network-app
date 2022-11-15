@@ -1,0 +1,104 @@
+<div class="tui-container tui-container_fullwidth">
+  <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmitted()">
+    <div class="tui-row tui-row_sme">
+      <div class="tui-col_xs-12 tui-col_md-12 tui-col_lg-12">
+        <div class="tui-form__row tui-form__row_multi-fields">
+          <div class="tui-form__multi-field">
+            <label class="label">
+              First Name <span class="tui-required"></span></label>
+            <tui-input tuiTextfieldExampleText="Field placeholder" formControlName="firstNameValue"
+                       tuiTextfieldSize="m">
+              Enter your first name
+            </tui-input>
+            <tui-error formControlName="firstNameValue" [error]="[]| tuiFieldError | async"></tui-error>
+          </div>
+
+          <div class="tui-form__multi-field">
+            <label class="label">
+              Last Name <span class="tui-required"></span></label>
+            <tui-input tuiTextfieldExampleText="Field placeholder" formControlName="lastNameValue"
+                       tuiTextfieldSize="m">
+              Enter your last name
+            </tui-input>
+            <tui-error formControlName="lastNameValue" [error]="[] | tuiFieldError | async"></tui-error>
+          </div>
+        </div>
+
+        <div class="tui-form__row">
+          <label class="label">
+            User Name <span class="tui-required"></span></label>
+          <tui-input formControlName="userNameValue" tuiTextfieldSize="m">Enter your user name</tui-input>
+          <tui-error formControlName="userNameValue" [error]="[] | tuiFieldError | async"></tui-error>
+        </div>
+
+        <div class="tui-form__row">
+          <label class="label">
+            Password <span class="tui-required"></span></label>
+          <tui-input-password formControlName="passwordValue" tuiTextfieldSize="m" tuiHintContent=""
+                              tuiHintAppearance="onDark"
+          >Enter password with at least 1 uppercase, 1 lowercase and 1 number
+          </tui-input-password>
+          <tui-error formControlName="passwordValue" [error]="[] | tuiFieldError | async"></tui-error>
+        </div>
+
+        <div class="tui-form__row">
+          <div class="mail-group">
+            <div class="mail-input">
+              <label class="label">
+                Email <span class="tui-required"></span></label>
+              <tui-input formControlName="emailValue" tuiTextfieldSize="m" class="mail-input_field"
+              >Someone
+                <input tuiTextfield type="email"/>
+              </tui-input>
+            </div>
+            <button class="mail-label" [disabled]="true" tuiButton type="button" appearance="outline" size="m">
+              @gmail.com
+            </button>
+          </div>
+          <tui-error formControlName="emailValue" [error]="[] | tuiFieldError | async"></tui-error>
+        </div>
+
+        <div class="tui-form__row">
+          <label class="label">Phone Number</label>
+          <tui-input-phone-international
+            formControlName="phoneValue"
+            tuiTextfieldSize="m"
+            [countries]="countries"
+            [(countryIsoCode)]="countryIsoCode"
+          >
+            Enter your phone number
+          </tui-input-phone-international>
+          <tui-error formControlName="phoneValue" [error]="[] | tuiFieldError | async"></tui-error>
+        </div>
+
+        <div tuiGroup class="tui-form__row" [adaptive]="true" [collapsed]="true">
+          <label class="label">Gender</label>
+          <tui-radio-labeled formControlName="genderValue" [item]="gender[0]"> Male</tui-radio-labeled>
+          <tui-radio-labeled formControlName="genderValue" [item]="gender[1]"> Female</tui-radio-labeled>
+          <tui-radio-labeled formControlName="genderValue" [item]="gender[2]"> Other</tui-radio-labeled>
+        </div>
+
+        <div class="tui-form__row">
+          <tui-checkbox-labeled formControlName="conditionValue" size="m" class="tui-space_top-3">
+            I agree with <a href="#" tuiLink> terms and conditions </a>
+          </tui-checkbox-labeled>
+        </div>
+
+        <div class="tui-form__row">
+          <span class="note">Note: (<span class="tui-required"></span>) is the required field</span>
+        </div>
+
+        <div class="tui-form__buttons tui-form__buttons_align_center">
+          <button tuiButton size="m" type="submit" class="tui-form__button"
+                  [disabled]="!(registerForm.valid && registerForm.dirty)"
+                  [showLoader]="sendingState">Sign up
+          </button>
+        </div>
+
+        <div class="tui-form__row center">
+          <p class="tui-text_body-s">Already have an account? <a href="/auth/login" tuiLink>Login</a></p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

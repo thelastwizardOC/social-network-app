@@ -1,0 +1,59 @@
+@import "src/styles/variables";
+@import "~@taiga-ui/core/styles/mixins/mixins.scss";
+
+.note {
+  font-size: 0.8rem;
+  color: var(--tui-base-05);
+}
+
+.label {
+  color: var(--tui-text-01);
+  font: var(--tui-font-text-s);
+}
+
+.mail-group {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+
+  .mail-input {
+    flex-grow: 1;
+
+    .mail-input_field {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .mail-label {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    box-shadow: 0 0.125rem 0.1875rem rgb(0 0 0 / 10%);
+    font-weight: 500;
+  }
+}
+
+.tui-required {
+  color: $error-color !important;
+}
+
+.tui-group{
+  align-items: center;
+}
+
+.tui-form__buttons {
+  margin-top: 0.25rem;
+
+  .tui-form__button {
+    width: 100%;
+
+    &._disabled {
+
+      > div {
+        background: var(--tui-base-05);
+      }
+    }
+  }
+}
+
+
