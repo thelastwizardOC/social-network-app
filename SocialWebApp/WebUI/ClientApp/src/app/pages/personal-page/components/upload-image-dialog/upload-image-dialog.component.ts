@@ -1,7 +1,8 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { finalize, map, Observable, of, Subject, switchMap, timer } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,28 +13,39 @@ import { UserService } from 'src/app/services/user.service';
 export class UploadImageDialogComponent implements OnInit {
   @Input() observer: any;
   @Input() type!: 'avatar' | 'cover';
-  @Output() onUploadAvatarSuccess = new EventEmitter();
+  @Output() onUploadPhotoSuccess = new EventEmitter();
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private notification: NotificationService
+  ) {}
 
   ngOnInit(): void {}
 
   imageURL: string | null = null;
+  loading: boolean = false;
 
   handleCloseDialog(observer: any) {
     observer.complete();
   }
 
   onSubmit(observer: any) {
-    this.userService.uploadAvatar(this.imageURL as string, 2).subscribe({
-      next: (res) => {
-        observer.complete();
-        this.onUploadAvatarSuccess.emit(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.loading = true;
+    this.userService
+      .uploadPhoto(this.imageURL as string, 1, this.type)
+      .subscribe({
+        next: (res) => {
+          observer.complete();
+          this.notification.showSuccess('Upload successfully!');
+          this.onUploadPhotoSuccess.emit({ res, type: this.type });
+          this.loading = false;
+        },
+        error: (err) => {
+          console.log(err);
+          this.notification.showError('Upload failed!');
+          this.loading = false;
+        },
+      });
   }
 
   control = new FormControl();

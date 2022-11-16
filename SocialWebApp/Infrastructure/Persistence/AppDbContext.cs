@@ -17,11 +17,13 @@ public class AppDbContext : DbContext, IApplicationDbContext
     public DbSet<Comment> Comment { get; set; }
     public DbSet<Message> Message { get; set; }
     public DbSet<Notification> Notification { get; set; }
+    public DbSet<Photo> Photo { get; set; }
+    
     public int SaveChanges()
     {
         return base.SaveChanges();
     }
-   
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer("Server=localhost;Database=TestDB;User=sa;Password=Muanaomahongtanh110500./;TrustServerCertificate=True");

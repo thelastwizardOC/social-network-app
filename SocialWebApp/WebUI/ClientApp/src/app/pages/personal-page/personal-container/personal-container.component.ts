@@ -1,11 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
+import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { IPost } from 'src/app/interface/personal-post';
 import { IUser } from 'src/app/interface/user';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
-
 @Component({
   selector: 'app-personal-container',
   templateUrl: './personal-container.component.html',
@@ -19,14 +20,17 @@ export class PersonalContainerComponent implements OnInit {
   userId: number = 0;
   limit: number = 1;
   offset: number = 0;
+  file!: File;
+  avatar: any;
 
   personalPosts: IPost[] = [];
   userInfo: IUser | undefined;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private userService: UserService,
     private postService: PostService,
-    private userService: UserService
+    private dialogService: TuiDialogService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +60,7 @@ export class PersonalContainerComponent implements OnInit {
         },
       });
   }
+
   fetchUserInfo(): void {
     this.userService.getUserInfo(this.userId).subscribe({
       next: (value) => {
@@ -71,6 +76,18 @@ export class PersonalContainerComponent implements OnInit {
   handleOnScroll() {
     if (this.hasNextPage) {
       this.fetchPosts();
+    }
+  }
+
+  showDialog(content: PolymorpheusContent<TuiDialogContext>): void {
+    this.dialogService.open(content).subscribe();
+  }
+
+  handlePhotoUploaded(event: any) {
+    if (this.userInfo !== undefined) {
+      if (event.uploadType === 'avatar')
+        this.userInfo.avatar = event.$event.res;
+      if (event.uploadType === 'cover') this.userInfo.cover = event.$event.res;
     }
   }
 }
