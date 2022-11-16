@@ -58,6 +58,10 @@ public class PostController : ApiControllerBase
             if (userId == null) return BadRequest();
             return await Mediator.Send(new GetPostsQuery() { UserId = userId, Offset = offset, Limit = limit });
         }
+        catch (NotFoundException e)
+        {
+            return NotFound();
+        }
         catch (Exception e)
         {
             return StatusCode(500);
