@@ -13,4 +13,5 @@ public interface IApplicationDbContext
     public DbSet<Notification> Notification { get; set; }
     public DbSet<Photo> Photo { get; set; }
     Task<int> SaveChangesAsync();
+    public int SaveChanges();
 }

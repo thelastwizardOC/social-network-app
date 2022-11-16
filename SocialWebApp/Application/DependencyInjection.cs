@@ -3,6 +3,8 @@ using Application.Common.Behaviours;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using FluentValidation;
+using Application.Common.Behaviours;
 
 namespace Application;
 

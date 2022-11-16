@@ -7,7 +7,3 @@ public record AuthenticationResult(
     string AccessToken,
     string RefreshToken
 );
-
-//public record RefreshTokenResult(
-//    string AccessToken,
-//    string RefreshToken);

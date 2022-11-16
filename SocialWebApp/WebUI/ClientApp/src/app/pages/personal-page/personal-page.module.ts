@@ -11,6 +11,7 @@ import { PersonalContainerComponent } from './personal-container/personal-contai
 import { PersonalPageRoute } from './personal-page.route';
 import { PersonalComponent } from './personal/personal.component';
 import { UploadImageDialogComponent } from './components/upload-image-dialog/upload-image-dialog.component';
+import { PhotoTabComponent } from './components/photo-tab/photo-tab.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { UploadImageDialogComponent } from './components/upload-image-dialog/upl
     InfoItemComponent,
     GenderPipe,
     UploadImageDialogComponent,
+    PhotoTabComponent
   ],
   imports: [
     CommonModule,
