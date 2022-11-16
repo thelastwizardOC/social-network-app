@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TuiButtonModule, TuiLoaderModule, TuiSvgModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiDialogModule, TuiLoaderModule, TuiSvgModule } from '@taiga-ui/core';
 import { TuiAvatarModule, TuiInputFilesModule, TuiTabsModule } from '@taiga-ui/kit';
+
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PostModule } from 'src/app/components/post/post.module';
 import { GenderPipe } from 'src/app/pipes/gender.pipe';
@@ -33,7 +34,8 @@ import { PhotoTabComponent } from './components/photo-tab/photo-tab.component';
     TuiLoaderModule,
     PostModule,
     TuiInputFilesModule,
-    ReactiveFormsModule 
-  ],
+    ReactiveFormsModule,
+    TuiDialogModule
+  ]
 })
 export class PersonalPageModule {}

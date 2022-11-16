@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TuiEditorTool } from '@taiga-ui/addon-editor';
-import { IPost } from 'src/app/interface/personal-post';
+import { IPost } from 'src/app/interface/post';
 
 @Component({
   selector: 'app-newsfeed',
@@ -9,9 +7,12 @@ import { IPost } from 'src/app/interface/personal-post';
   styleUrls: ['./newsfeed.component.scss'],
 })
 export class NewsfeedComponent implements OnInit {
+  @Input() userId!: number;
   @Input() posts: IPost[] = [];
   @Input() isLoading: boolean = false;
   @Output() onScroll = new EventEmitter();
+  @Output() onLike = new EventEmitter<number>();
+
   constructor() {}
 
   ngOnInit(): void {}

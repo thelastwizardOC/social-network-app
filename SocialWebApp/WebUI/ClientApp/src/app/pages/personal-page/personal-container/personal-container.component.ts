@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { IPost } from 'src/app/interface/personal-post';
+import { IPost } from 'src/app/interface/post';
 import { IUser } from 'src/app/interface/user';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-personal-container',
   templateUrl: './personal-container.component.html',
-  styleUrls: ['./personal-container.component.scss'],
+  styleUrls: ['./personal-container.component.scss']
 })
 export class PersonalContainerComponent implements OnInit {
   userNotFound: boolean = false;
@@ -36,40 +36,38 @@ export class PersonalContainerComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe({
       next: ({ id }) => {
-        this.userId = id;
+        this.userId = +id;
         this.fetchPosts();
         this.fetchUserInfo();
-      },
+      }
     });
   }
 
   fetchPosts(): void {
     this.isLoading = true;
-    this.postService
-      .getPersonalPost(this.userId, this.offset, this.limit)
-      .subscribe({
-        next: (value) => {
-          this.personalPosts = [...this.personalPosts, ...value.items];
-          this.hasNextPage = value.hasNextPage;
-          this.isLoading = false;
-          this.offset += this.limit;
-        },
-        error: (error) => {
-          console.log({ error });
-          this.isLoading = false;
-        },
-      });
+    this.postService.getPersonalPost(this.userId, this.offset, this.limit).subscribe({
+      next: value => {
+        this.personalPosts = [...this.personalPosts, ...value.items];
+        this.hasNextPage = value.hasNextPage;
+        this.offset += this.limit;
+      },
+      error: error => {
+        console.log({ error });
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 
   fetchUserInfo(): void {
     this.userService.getUserInfo(this.userId).subscribe({
-      next: (value) => {
+      next: value => {
         this.userInfo = value;
       },
       error: (err: HttpErrorResponse) => {
         this.userNotFound = true;
-        this.router.navigate(['/error']);
-      },
+      }
     });
   }
 
@@ -85,9 +83,24 @@ export class PersonalContainerComponent implements OnInit {
 
   handlePhotoUploaded(event: any) {
     if (this.userInfo !== undefined) {
-      if (event.uploadType === 'avatar')
-        this.userInfo.avatar = event.$event.res;
+      if (event.uploadType === 'avatar') this.userInfo.avatar = event.$event.res;
       if (event.uploadType === 'cover') this.userInfo.cover = event.$event.res;
     }
+  }
+  handleLikePost(postId: number) {
+    this.postService.likePost(postId, this.userId).subscribe({
+      next: value => {
+        this.personalPosts = this.personalPosts.map(post => {
+          if (post.id === postId) {
+            return value;
+          }
+          return post;
+        });
+      },
+      error: err => {
+        console.log({ err });
+        // this.router.navigate(['/error']);
+      }
+    });
   }
 }

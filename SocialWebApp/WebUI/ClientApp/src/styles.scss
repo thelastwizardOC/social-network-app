@@ -9,9 +9,11 @@
   --tui-primary: #009cf3;
   --tui-link: #009cf3;
   --tui-text-font: 'Mulish', sans-serif;
+  --nav-bar-height: 60px;
 }
 
-html, *,
+html,
+*,
 body {
   margin: 0;
   padding: 0;
@@ -33,8 +35,4 @@ body {
     font-weight: 500;
     font-size: 1.2em;
   }
-}
-
-.tui-col {
-  padding: 0 !important;
 }

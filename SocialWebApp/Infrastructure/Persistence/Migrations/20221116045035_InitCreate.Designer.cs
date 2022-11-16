@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221116034239_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221116045035_InitCreate")]
+    partial class InitCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -198,6 +198,29 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Post");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PostLike", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PostLike");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -369,6 +392,25 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PostLike", b =>
+                {
+                    b.HasOne("Domain.Entities.Post", "Post")
+                        .WithMany("PostLikes")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("PostLikes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Entities.UserFriends", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Friend")
@@ -391,6 +433,8 @@ namespace Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("PostLikes");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -402,6 +446,8 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("MessagesReceive");
 
                     b.Navigation("MessagesSend");
+
+                    b.Navigation("PostLikes");
 
                     b.Navigation("Posts");
 

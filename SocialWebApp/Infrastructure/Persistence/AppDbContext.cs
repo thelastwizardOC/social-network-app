@@ -19,6 +19,8 @@ public class AppDbContext : DbContext, IApplicationDbContext
     public DbSet<Notification> Notification { get; set; }
     public DbSet<Photo> Photo { get; set; }
     
+    public DbSet<PostLike> PostLike { get; set; }
+
     public int SaveChanges()
     {
         return base.SaveChanges();

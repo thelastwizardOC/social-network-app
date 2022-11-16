@@ -8,17 +8,14 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-upload-image-dialog',
   templateUrl: './upload-image-dialog.component.html',
-  styleUrls: ['./upload-image-dialog.component.scss'],
+  styleUrls: ['./upload-image-dialog.component.scss']
 })
 export class UploadImageDialogComponent implements OnInit {
   @Input() observer: any;
   @Input() type!: 'avatar' | 'cover';
   @Output() onUploadPhotoSuccess = new EventEmitter();
 
-  constructor(
-    private userService: UserService,
-    private notification: NotificationService
-  ) {}
+  constructor(private userService: UserService, private notification: NotificationService) {}
 
   ngOnInit(): void {}
 
@@ -31,21 +28,19 @@ export class UploadImageDialogComponent implements OnInit {
 
   onSubmit(observer: any) {
     this.loading = true;
-    this.userService
-      .uploadPhoto(this.imageURL as string, 1, this.type)
-      .subscribe({
-        next: (res) => {
-          observer.complete();
-          this.notification.showSuccess('Upload successfully!');
-          this.onUploadPhotoSuccess.emit({ res, type: this.type });
-          this.loading = false;
-        },
-        error: (err) => {
-          console.log(err);
-          this.notification.showError('Upload failed!');
-          this.loading = false;
-        },
-      });
+    this.userService.uploadPhoto(this.imageURL as string, 1, this.type).subscribe({
+      next: res => {
+        observer.complete();
+        this.notification.showSuccess('Upload successfully!');
+        this.onUploadPhotoSuccess.emit({ res, type: this.type });
+        this.loading = false;
+      },
+      error: err => {
+        console.log(err);
+        this.notification.showError('Upload failed!');
+        this.loading = false;
+      }
+    });
   }
 
   control = new FormControl();
@@ -53,7 +48,7 @@ export class UploadImageDialogComponent implements OnInit {
   loadingFiles$ = new Subject<TuiFileLike | null>();
   rejectedState: Boolean = false;
   loadedFiles$ = this.control.valueChanges.pipe(
-    switchMap((file) => {
+    switchMap(file => {
       return file ? this.makeRequest(file) : of(null);
     })
   );

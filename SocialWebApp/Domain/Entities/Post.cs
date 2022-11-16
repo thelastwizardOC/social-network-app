@@ -19,5 +19,6 @@ public class Post
   public int UserId { get; set; }
   public User User { get; set; }
 
+    public List<PostLike>? PostLikes { get; set; }
 
 }

@@ -6,6 +6,9 @@ import { Gender } from '../interface/user';
 })
 export class GenderPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): string {
-    return value === Gender.male ? 'Male' : 'Female';
+    if (value === Gender.female) return 'Female';
+    if (value === Gender.male) return 'Male';
+    if (value === Gender.other) return 'Other';
+    return '';
   }
 }
