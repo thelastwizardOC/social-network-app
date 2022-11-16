@@ -1,3 +1,4 @@
+using Application.Common.Exceptions;
 using Application.Posts.Commands.LikePost;
 using Application.Posts.Queries;
 using Application.Posts.Queries.GetPersonalPosts;
@@ -18,10 +19,15 @@ public class PostController : ApiControllerBase
             if (userId == null) return BadRequest();
             return await Mediator.Send(new GetPersonalPostsQuery() { UserId = userId, Offset = offset, Limit = limit });
         }
+        catch (NotFoundException e)
+        {
+            return NotFound();
+        }
         catch (Exception e)
         {
             return StatusCode(500);
         }
+   
     }
 
     [HttpPost("like")]
@@ -32,6 +38,10 @@ public class PostController : ApiControllerBase
             Console.WriteLine(postId);
             if (postId == null) return BadRequest();
             return await Mediator.Send(new LikePostCommand() { PostId = postId, UserId = userId });
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound();
         }
         catch (Exception e)
         {

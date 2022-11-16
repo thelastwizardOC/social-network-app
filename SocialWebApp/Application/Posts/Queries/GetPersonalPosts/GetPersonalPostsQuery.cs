@@ -1,3 +1,4 @@
+using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;
@@ -26,6 +27,8 @@ public class GetPersonalPostsQueryHandler : IRequestHandler<GetPersonalPostsQuer
     {
         try
         {
+            var foundUser = await _appDb.User.FirstOrDefaultAsync(u=>u.Id==request.UserId);
+            if (foundUser == null) throw new NotFoundException();
             var post = await _appDb.Post.Where(p=>p.User.Id==request.UserId).Include(p=>p.PostLikes).OrderByDescending(p=>p.CreatedAt).Include(p=>p.User).Skip(request.Offset).Take(request.Limit).ToListAsync();
             List<PostDto> postDtos = _mapper.Map<List<PostDto>>(post);
             int totalCount = postDtos.Count();

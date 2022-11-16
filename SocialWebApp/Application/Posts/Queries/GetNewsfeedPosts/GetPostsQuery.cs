@@ -1,3 +1,4 @@
+using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -29,6 +30,8 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, PaginatedPost
     {
         try
         {
+            var foundUser = await _appDb.User.FirstOrDefaultAsync(u=>u.Id==request.UserId);
+            if (foundUser == null) throw new NotFoundException();            
             var posts = await (
                 from p in _appDb.Post
                 join u in _appDb.User
