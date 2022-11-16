@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
-  TuiDataListModule,
+  TuiButtonModule,
+  TuiDataListModule, TuiDialogModule,
   TuiHostedDropdownModule,
   TuiSvgModule,
 } from '@taiga-ui/core';
@@ -16,6 +17,8 @@ import { NavigationBarComponent } from './navigation-bar.component';
     TuiHostedDropdownModule,
     TuiDataListModule,
     RouterModule,
+    TuiButtonModule,
+    TuiDialogModule,
   ],
   exports: [NavigationBarComponent],
 })

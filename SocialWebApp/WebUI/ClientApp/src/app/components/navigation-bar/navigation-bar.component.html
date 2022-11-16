@@ -1,7 +1,7 @@
 <div class="navigation-bar-container">
   <div class="navigation-bar-left">
     <div class="logo-container">
-      <img class="logo" routerLink="/newsfeed" src="assets/svg/nav-logo.svg" />
+      <img class="logo" routerLink="/newsfeed" src="assets/svg/nav-logo.svg"/>
     </div>
 
     <div class="search-box-container">
@@ -35,9 +35,9 @@
     <ng-template #dropdown>
       <tui-data-list>
         <a
-          *ngFor="let item of profileItems"
+          *ngFor="let item of profileItems,  index as i"
           tuiOption
-          (click)="toggleDropDown()"
+          (click)="toggleDropDown(i)"
           [routerLink]="item.link"
         >
           {{ item.label }}
@@ -46,3 +46,14 @@
     </ng-template>
   </div>
 </div>
+
+<ng-template
+  let-observer
+  [tuiDialogOptions]="{label: 'Confirm log out', size: 's'}"
+  [(tuiDialog)]="isDialogOpened">
+  <p class="tui-text_body-m tui-space_vertical-4">Do you want to log out?</p>
+  <div class="tui-form__buttons buttons">
+  <button tuiButton size="m" (click)="logout()">Log out</button>
+  <button tuiButton size="m" appearance="outline">Cancel</button>
+  </div>
+</ng-template>

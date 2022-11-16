@@ -1,11 +1,12 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, Inject,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { TuiHostedDropdownComponent } from '@taiga-ui/core';
+import {Router} from '@angular/router';
+import {TuiDialogService, TuiHostedDropdownComponent} from '@taiga-ui/core';
+
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
@@ -13,21 +14,25 @@ import { TuiHostedDropdownComponent } from '@taiga-ui/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationBarComponent implements OnInit {
-  constructor(private route: Router) {}
+  isDialogOpened: boolean = false;
+
+  constructor(private route: Router, @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,) {
+  }
 
   @ViewChild(TuiHostedDropdownComponent)
   component?: TuiHostedDropdownComponent;
 
   readonly profileItems = [
-    { label: 'See Your Profile', link: '/profile/1' },
-    { label: 'Log Out', link: '/' },
+    {label: 'See Your Profile', link: '/profile/1'},
+    {label: 'Log Out', link: '#'},
   ];
 
   isDropDownVisible = false;
 
   isOnProfilePage = false;
 
-  toggleDropDown() {
+  toggleDropDown(itemIndex: number) {
+    if (itemIndex === 1) this.showDialog();
     this.isDropDownVisible = !this.isDropDownVisible;
   }
 
@@ -38,5 +43,15 @@ export class NavigationBarComponent implements OnInit {
       : (this.isOnProfilePage = false);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
+
+  showDialog(): void {
+    this.isDialogOpened = true;
+  }
+
+  logout() {
+    localStorage.clear();
+    this.route.navigate(["auth/login"]);
+  }
 }
