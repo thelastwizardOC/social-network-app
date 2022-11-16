@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TuiFileLike } from '@taiga-ui/kit';
@@ -14,10 +15,13 @@ export class UploadImageDialogComponent implements OnInit {
   @Input() observer: any;
   @Input() type!: 'avatar' | 'cover';
   @Output() onUploadPhotoSuccess = new EventEmitter();
+  userId!: number;
 
-  constructor(private userService: UserService, private notification: NotificationService) {}
+  constructor(private userService: UserService, private notification: NotificationService, private jwtHelper: JwtHelperService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+   this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
+  }
 
   imageURL: string | null = null;
   loading: boolean = false;
@@ -28,7 +32,7 @@ export class UploadImageDialogComponent implements OnInit {
 
   onSubmit(observer: any) {
     this.loading = true;
-    this.userService.uploadPhoto(this.imageURL as string, 1, this.type).subscribe({
+    this.userService.uploadPhoto(this.imageURL as string, this.userId, this.type).subscribe({
       next: res => {
         observer.complete();
         this.notification.showSuccess('Upload successfully!');

@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Component, OnInit } from '@angular/core';
 import { PhotoService } from 'src/app/services/photo.service';
 
@@ -7,15 +8,16 @@ import { PhotoService } from 'src/app/services/photo.service';
   styleUrls: ['./photo-tab.component.scss'],
 })
 export class PhotoTabComponent implements OnInit {
-  constructor(private photoService: PhotoService) {}
+  constructor(private photoService: PhotoService, private jwtHelper: JwtHelperService) {}
   photos: any = [];
   isLoading: boolean = false;
   hasNextPage: boolean = false;
-  userId: number = 1;
+  userId!: number;
   limit: number = 6;
   offset: number = 0;
   scrollable: boolean = false;
   ngOnInit(): void {
+    this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.fetchPhotos();
   }
 
@@ -24,6 +26,7 @@ export class PhotoTabComponent implements OnInit {
     this.fetchPhotos();
   }
   fetchPhotos(): void {
+    this.isLoading = true;
     this.photoService
       .getUserPhotos(this.userId, this.offset, this.limit)
       .subscribe({
@@ -32,6 +35,7 @@ export class PhotoTabComponent implements OnInit {
           this.hasNextPage = res.hasNextPage;
           this.isLoading = false;
           this.offset += this.limit;
+          
         },
         error: (error) => {
           console.log({ error });
