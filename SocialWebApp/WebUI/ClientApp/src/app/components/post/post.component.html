@@ -1,19 +1,12 @@
-<div class="tui-container-fixed tui-space_vertical-5 post-container">
+<div class="tui-container_adaptive tui-space_vertical-5 post-container">
   <div class="tui-row tui-row_adaptive tui-row_align_center">
     <div class="tui-col_lg-11">
       <div class="tui-row tui-row_adaptive tui-space_top-5">
         <div class="tui-col_lg-0.5 tui-space_right-5">
-          <tui-avatar
-            class="tui-space_left-10"
-            [size]="'m'"
-            [rounded]="true"
-            [avatarUrl]="post.user.avatar || mockImg"
-          ></tui-avatar>
+          <tui-avatar class="tui-space_left-10" [size]="'m'" [rounded]="true" [avatarUrl]="post.user.avatar || mockImg"></tui-avatar>
         </div>
         <div>
-          <p class="post-user tui-text_body-m">
-            {{ post.user.firstName }} {{ post.user.lastName }}
-          </p>
+          <p class="post-user tui-text_body-m">{{ post.user.firstName }} {{ post.user.lastName }}</p>
           <p class="tui-text_body-m post-time">
             {{ post.createdAt | dateFromNow }}
           </p>
@@ -28,9 +21,7 @@
   <p #postStatusRef class="tui-text_body-m-2 post-status">
     {{ post.status }}
   </p>
-  <p *ngIf="hasSeeMore" (click)="onSeeMore()" class="see-more tui-text_body-m">
-    See more
-  </p>
+  <p *ngIf="hasSeeMore" (click)="onSeeMore()" class="see-more tui-text_body-m">See more</p>
   <div>
     <img class="post-img" [src]="post.photo || mockImg" />
   </div>
@@ -40,12 +31,7 @@
   </div>
   <div class="btn-actions">
     <div (click)="onLike.emit(post.id)" class="btn-action">
-      <tui-svg
-        [ngClass]="isLiked ? 'likedHeart' : null"
-        [src]="
-          isLiked === true ? 'tuiIconHeartFilledLarge' : 'tuiIconHeartLarge'
-        "
-      ></tui-svg>
+      <tui-svg [ngClass]="isLiked ? 'likedHeart' : null" [src]="isLiked ? 'tuiIconHeartFilledLarge' : 'tuiIconHeartLarge'"></tui-svg>
       <p class="tui-text_body-m">Like</p>
     </div>
     <div class="btn-action">

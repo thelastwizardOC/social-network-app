@@ -32,10 +32,11 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, PaginatedPost
             var posts = await (
                 from p in _appDb.Post
                 join u in _appDb.User
-                    on p.User.Id equals u.Id
+                    on p.User.Id equals u.Id into ps_jointable
+                from pu in ps_jointable.DefaultIfEmpty()
                 join uf in _appDb.UserFriends
                     on p.User.Id equals uf.FriendId
-                where p.User.Id == request.UserId || uf.SourceUserId == request.UserId
+                where (p.User.Id == request.UserId || uf.SourceUserId == request.UserId) 
                 orderby p.CreatedAt descending
                 select new PostDto()
                 {
@@ -48,18 +49,18 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, PaginatedPost
                     UpdatedAt = p.UpdatedAt,
                     User = new User()
                     {
-                        Id = u.Id,
-                        FirstName = u.FirstName,
-                        LastName = u.LastName,
-                        UserName = u.UserName,
-                        Dob = u.Dob,
-                        Email = u.Email,
-                        Avatar = u.Avatar,
-                        Cover = u.Cover,
-                        Gender = u.Gender,
-                        PhoneNo = u.PhoneNo,
-                        CreatedAt = u.CreatedAt,
-                        UpdatedAt = u.UpdatedAt
+                        Id = pu.Id,
+                        FirstName = pu.FirstName,
+                        LastName = pu.LastName,
+                        UserName = pu.UserName,
+                        Dob = pu.Dob,
+                        Email = pu.Email,
+                        Avatar = pu.Avatar,
+                        Cover = pu.Cover,
+                        Gender = pu.Gender,
+                        PhoneNo = pu.PhoneNo,
+                        CreatedAt = pu.CreatedAt,
+                        UpdatedAt = pu.UpdatedAt
                     }
                 }
             ).Skip(request.Offset).Take(request.Limit).ToListAsync();
