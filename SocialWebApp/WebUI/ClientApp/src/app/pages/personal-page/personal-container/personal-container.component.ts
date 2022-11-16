@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { IPost } from 'src/app/interface/post';
@@ -17,7 +17,7 @@ export class PersonalContainerComponent implements OnInit {
   hasNextPage: boolean = false;
   isLoading: boolean = false;
   activeItemIndex: number = 0;
-  userId: number = 0;
+  userId!: number;
   limit: number = 1;
   offset: number = 0;
   file!: File;
@@ -27,24 +27,26 @@ export class PersonalContainerComponent implements OnInit {
   userInfo: IUser | undefined;
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private userService: UserService,
     private postService: PostService,
-    private dialogService: TuiDialogService
+    private dialogService: TuiDialogService,
+
   ) {}
 
   ngOnInit(): void {
+
     this.route.params.subscribe({
       next: ({ id }) => {
         this.userId = +id;
         this.fetchPosts();
         this.fetchUserInfo();
       }
-    });
+    });   
   }
 
   fetchPosts(): void {
     this.isLoading = true;
+    
     this.postService.getPersonalPost(this.userId, this.offset, this.limit).subscribe({
       next: value => {
         this.personalPosts = [...this.personalPosts, ...value.items];

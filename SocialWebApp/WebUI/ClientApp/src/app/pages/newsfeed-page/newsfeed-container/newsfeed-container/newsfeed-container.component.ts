@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IPost } from 'src/app/interface/post';
@@ -18,16 +19,13 @@ export class NewsfeedContainerComponent implements OnInit {
   constructor(
     private postService: PostService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private jwtHelper: JwtHelperService
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe({
-      next: ({ id }) => {
-        this.userId = +id;
-        this.fetchPosts();
-      },
-    });
+    this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
+    this.fetchPosts();
   }
 
   fetchPosts(): void {

@@ -60,7 +60,7 @@
     [type]="uploadType"
     (onUploadPhotoSuccess)="onPhotoUpload.emit({$event, uploadType})"
   ></app-upload-image-dialog>
-  <ng-template let-observer [tuiDialogOptions]="{ label: 'Error', size: 's' }" [(tuiDialog)]="userNotFound">
-    <p>User Not Found</p>
-  </ng-template>
+</ng-template>
+<ng-template let-observer [tuiDialogOptions]="{ label: 'Error', size: 's' }" [(tuiDialog)]="userNotFound">
+  <p>User Not Found</p>
 </ng-template>

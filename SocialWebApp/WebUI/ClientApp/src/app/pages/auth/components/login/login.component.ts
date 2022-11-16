@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
 
   onLoginFormSubmit() {
     this.sendingState = true;
-    console.log(this.loginForm.value);
     this.authService.login(this.loginForm.value.userNameValue as string, this.loginForm.value.passwordValue as string).subscribe({
       next: (response: IAuthenticationResponse) => {
         const token = response.accessToken;
@@ -45,7 +44,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('jwt', token);
         localStorage.setItem('refreshToken', refreshToken);
         this.sendingState = false;
-        this.route.navigate(['profile/1']);
+        this.route.navigate(['newsfeed']);
       },
       error: (err: HttpErrorResponse) => {
         this.loginError = new TuiValidationError(`The username or password that you've entered is incorrect. \n Please try again!`);

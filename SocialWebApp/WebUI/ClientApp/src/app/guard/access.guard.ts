@@ -19,6 +19,7 @@ export class AccessGuard implements CanActivate {
   ) {}
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const token = localStorage.getItem('jwt');
+    
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return true;
     }
