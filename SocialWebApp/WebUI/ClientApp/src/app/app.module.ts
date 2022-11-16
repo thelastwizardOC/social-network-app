@@ -15,13 +15,14 @@ import { HomeModule } from './pages/home-page/home.module';
 import { MessageComponent } from './pages/message/message.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { PersonalPageModule } from './pages/personal-page/personal-page.module';
+import { WildcardPageComponent } from './pages/wildcard-page/wildcard-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
 }
 
 @NgModule({
-  declarations: [AppComponent, MessageComponent, NotificationComponent, ErrorComponent],
+  declarations: [AppComponent, MessageComponent, NotificationComponent, ErrorComponent, WildcardPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

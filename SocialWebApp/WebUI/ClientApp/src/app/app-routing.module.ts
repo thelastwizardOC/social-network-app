@@ -1,3 +1,4 @@
+import { WildcardPageComponent } from './pages/wildcard-page/wildcard-page.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './pages/error-page/error.component';
@@ -30,7 +31,10 @@ const routes: Routes = [
     path: 'notification',
     component: NotificationComponent
   },
-  { path: '**', component: ErrorComponent }
+  {
+    path: 'error', component: ErrorComponent
+  },
+  { path: '**', component: WildcardPageComponent }
 ];
 
 @NgModule({
