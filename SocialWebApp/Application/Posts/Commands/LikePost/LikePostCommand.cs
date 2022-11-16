@@ -1,3 +1,4 @@
+using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Application.Posts.Queries;
 using AutoMapper;
@@ -27,6 +28,8 @@ public class LikePostCommandHandler: IRequestHandler<LikePostCommand, PostDto>{
     {
         try
         {
+            var foundUser = await _appDb.User.FirstOrDefaultAsync(u=>u.Id==request.UserId);
+            if (foundUser == null) throw new NotFoundException();
             var foundPost = await _appDb.Post.Where(p=>p.Id == request.PostId).Include(p=>p.User).Include(p=>p.PostLikes).FirstOrDefaultAsync();
             var checkUserLiked =
                 await _appDb.PostLike.FirstOrDefaultAsync(p =>

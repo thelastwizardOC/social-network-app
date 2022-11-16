@@ -1,4 +1,4 @@
-@import "~@taiga-ui/core/styles/mixins/mixins.scss";
+@import '~@taiga-ui/core/styles/mixins/mixins.scss';
 
 $primary-color: #379cf3;
 
@@ -7,8 +7,8 @@ $primary-color: #379cf3;
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  top: 0;
   background: var(--tui-base-01);
+  top: 0;
   z-index: 10;
   width: 100%;
   height: 60px;
@@ -18,7 +18,7 @@ $primary-color: #379cf3;
 
 .navigation-bar-left {
   flex: 1;
-  heigh\t: 100%;
+  height: 100%;
   display: flex;
 }
 .logo-container {
@@ -74,14 +74,14 @@ $primary-color: #379cf3;
   align-items: center;
   width: 15%;
   min-width: 200px;
-  justify-content: end;
   margin-right: 10px;
+  justify-content: end;
 }
 
 .menu-btn {
   @include menu-btn(var(--tui-base-03));
   margin-left: 15px;
-
+  flex-shrink: 0;
   &:hover {
     background-color: var(--tui-base-04);
   }
