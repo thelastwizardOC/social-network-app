@@ -45,7 +45,7 @@ export class PhotoTabComponent implements OnInit {
   }
 
   onScroll() {
-    if (this.hasNextPage) {
+    if (this.hasNextPage && !this.isLoading) {
       this.fetchPhotos();
     }
   }

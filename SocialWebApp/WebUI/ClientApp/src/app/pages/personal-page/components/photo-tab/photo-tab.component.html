@@ -25,5 +25,6 @@
       <img [src]="item.photoString" />
     </div>
   </div>
+  <tui-loader *ngIf="isLoading && photos.length !== 0"></tui-loader>
 </div>
 <div class="blank-spacer"></div>
