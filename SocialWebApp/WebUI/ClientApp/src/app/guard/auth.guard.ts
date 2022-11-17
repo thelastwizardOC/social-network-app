@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -13,8 +13,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private jwtHelper: JwtHelperService) {}
+  constructor(private router: Router, private jwtHelper: JwtHelperService) {
+  }
 
+  userId!: number;
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -26,8 +28,9 @@ export class AuthGuard implements CanActivate {
     const token = localStorage.getItem('jwt');
     if (!token) {
       return true;
-    }
-    this.router.navigate(['profile']);
+    }    
+    
+    this.router.navigate(['profile/' + this.userId]);
     return false;
   }
 }

@@ -1,3 +1,4 @@
+import { WildcardPageComponent } from './pages/wildcard-page/wildcard-page.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './pages/error-page/error.component';
@@ -9,7 +10,8 @@ import { AuthGuard } from './guard/auth.guard';
 const routes: Routes = [
   {
     path: 'newsfeed',
-    loadChildren: async () => (await import('./pages/newsfeed-page/newsfeed-page.module')).NewsfeedPageModule
+    loadChildren: async () => (await import('./pages/newsfeed-page/newsfeed-page.module')).NewsfeedPageModule,
+    canActivate: [AccessGuard]
   },
   {
     path: 'profile',
@@ -29,7 +31,10 @@ const routes: Routes = [
     path: 'notification',
     component: NotificationComponent
   },
-  { path: '**', component: ErrorComponent }
+  {
+    path: 'error', component: ErrorComponent
+  },
+  { path: '**', component: WildcardPageComponent }
 ];
 
 @NgModule({

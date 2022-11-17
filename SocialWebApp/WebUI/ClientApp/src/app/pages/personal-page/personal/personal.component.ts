@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { IPost } from 'src/app/interface/post';
 import { IUser } from 'src/app/interface/user';
 import { environment } from 'src/environments/environment';
@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './personal.component.html',
   styleUrls: ['./personal.component.scss']
 })
-export class PersonalComponent {
+export class PersonalComponent  {
   @Input() userNotFound: boolean = false;
   @Input() userInfo: IUser | undefined;
   @Input() userId!: number;
@@ -24,4 +24,5 @@ export class PersonalComponent {
   mockImg: string = environment.mockImg;
   uploadType!: 'avatar' | 'cover';
   constructor() {}
+  
 }

@@ -6,7 +6,7 @@ import { NewsfeedContainerComponent } from './newsfeed-container/newsfeed-contai
   imports: [
     RouterModule.forChild([
       {
-        path: ':id',
+        path: '',
         component: NewsfeedContainerComponent,
         title: 'Newsfeed',
       },
