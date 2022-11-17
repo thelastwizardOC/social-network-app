@@ -7,14 +7,8 @@
   class="container tui-container tui-container_adaptive"
 >
   <div class="header">
-    <div class="tui-space_horizontal-5 tui-space_top-2 tui-text_h5 title">
-      Photos
-    </div>
-    <div
-      (click)="seeAll()"
-      *ngIf="!scrollable && hasNextPage"
-      class="btn tui-space_horizontal-5 tui-space_top-2 tui-text_body-s"
-    >
+    <div class="tui-space_horizontal-5 tui-space_top-2 tui-text_h5 title">Photos</div>
+    <div (click)="seeAll()" *ngIf="!scrollable && hasNextPage" class="btn tui-space_horizontal-5 tui-space_top-2 tui-text_body-s">
       See all
     </div>
   </div>
