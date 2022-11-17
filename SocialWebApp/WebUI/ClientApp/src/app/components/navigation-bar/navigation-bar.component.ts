@@ -31,7 +31,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
 
   profileItems = [
     { label: 'See Your Profile', link: '/' },
-    {label: 'Log Out', link: '#'},
+    {label: 'Log Out'},
   ];
 
   isDropDownVisible = false;
@@ -52,7 +52,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     const token = localStorage.getItem('jwt');
-    
+
     if (token !== null) {
       this.userId = +this.jwtHelper.decodeToken(token as string).sub;
       this.profileItems[0].link = '/profile/' + this.userId;
@@ -64,7 +64,8 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   }
 
   logout() {
-    localStorage.clear();
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("refreshToken");
     this.route.navigate(["auth/login"]);
   }
 }

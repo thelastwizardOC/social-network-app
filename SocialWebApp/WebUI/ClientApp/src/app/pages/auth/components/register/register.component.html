@@ -73,13 +73,15 @@
 
         <div tuiGroup class="tui-form__row" [adaptive]="true" [collapsed]="true">
           <label class="label">Gender</label>
+          <div class="radio-group">
           <tui-radio-labeled formControlName="genderValue" [item]="gender[0]"> Male</tui-radio-labeled>
           <tui-radio-labeled formControlName="genderValue" [item]="gender[1]"> Female</tui-radio-labeled>
           <tui-radio-labeled formControlName="genderValue" [item]="gender[2]"> Other</tui-radio-labeled>
+          </div>
         </div>
 
         <div class="tui-form__row">
-          <tui-checkbox-labeled formControlName="conditionValue" size="m" class="tui-space_top-3">
+          <tui-checkbox-labeled formControlName="conditionValue" size="l" class="tui-space_top-3">
             I agree with <a href="#" tuiLink> terms and conditions </a>
           </tui-checkbox-labeled>
         </div>
@@ -91,7 +93,7 @@
         <div class="tui-form__buttons tui-form__buttons_align_center">
           <button tuiButton size="m" type="submit" class="tui-form__button"
                   [disabled]="!(registerForm.valid && registerForm.dirty)"
-                  [showLoader]="sendingState">Sign up
+                  [showLoader]="isSendingData">Sign up
           </button>
         </div>
 

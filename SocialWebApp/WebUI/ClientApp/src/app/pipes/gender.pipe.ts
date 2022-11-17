@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Gender } from '../interface/user';
 
 @Pipe({
-  name: 'gender',
+  name: 'gender'
 })
 export class GenderPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): string {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiValidatorModule } from '@taiga-ui/cdk';
 import {
@@ -38,21 +38,17 @@ import { RegisterComponent } from './components/register/register.component';
     CommonModule,
     AuthRoutingModule,
     TuiIslandModule,
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     TuiButtonModule,
-    TuiIslandModule,
     TuiInputModule,
     TuiErrorModule,
-    TuiInputDateModule,
     TuiInputPasswordModule,
     TuiFieldErrorPipeModule,
     TuiSelectModule,
     TuiDataListWrapperModule,
     TuiInputPhoneModule,
     TuiGroupModule,
-    TuiRadioBlockModule,
     TuiCheckboxLabeledModule,
     TuiLabelModule,
     TuiTextfieldControllerModule,
