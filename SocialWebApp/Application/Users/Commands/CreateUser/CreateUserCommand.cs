@@ -27,10 +27,15 @@ public class CreateUserHandler : IRequestHandler<RegisterCommand, NewUserVm>
   {
     try
     {
-      var existentUser = await _appDb.User.FirstOrDefaultAsync(u => u.UserName == request.NewUserDto.UserName || u.Email == request.NewUserDto.Email);
-      if (existentUser is not null)
+      var existentUserName = await _appDb.User.FirstOrDefaultAsync(u => u.UserName == request.NewUserDto.UserName);
+      if (existentUserName is not null)
       {
-        return null;
+        throw new Exception("Someone already has that username. Try another");
+      }
+      var existentEmail = await _appDb.User.FirstOrDefaultAsync(u => u.Email == request.NewUserDto.Email);
+      if (existentEmail is not null)
+      {
+        throw new Exception("This email is already in use. Please use another one");
       }
 
       var user = _mapper.Map<User>(request.NewUserDto);
@@ -41,7 +46,7 @@ public class CreateUserHandler : IRequestHandler<RegisterCommand, NewUserVm>
       var result = await _appDb.User.AddAsync(user);
       if (result.State != EntityState.Added)
       {
-        return null;
+        throw new Exception("");
       }
       // Return profile data with token
       await _appDb.SaveChangesAsync();
@@ -51,7 +56,7 @@ public class CreateUserHandler : IRequestHandler<RegisterCommand, NewUserVm>
     catch (Exception e)
     {
       Console.WriteLine(e);
-      throw;
+      throw new Exception(e.Message);
     }
   }
 }

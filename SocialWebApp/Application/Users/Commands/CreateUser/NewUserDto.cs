@@ -13,7 +13,4 @@ public class NewUserDto
     public string PhoneNo { get; set; }
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
     public DateTime? UpdatedAt { get; set; } = DateTime.Now;
-    public string? Token { get; set; }
-    public DateTime? TokenCreated { get; set; }
-    public DateTime? TokenExpires { get; set; }
 }

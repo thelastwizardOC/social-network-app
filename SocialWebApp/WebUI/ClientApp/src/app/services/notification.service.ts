@@ -24,7 +24,7 @@ export class NotificationService {
       .open(message, {
         label: 'Error',
         status: TuiNotification.Error,
-        autoClose: false
+        autoClose: true
       })
       .subscribe();
   }

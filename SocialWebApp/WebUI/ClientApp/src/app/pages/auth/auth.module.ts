@@ -31,9 +31,11 @@ import { AuthComponent } from './auth.component';
 import { BrandLogoComponent } from './components/brand-logo/brand-logo.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { TermPolicyComponent } from './accessories/term-policy/term-policy.component';
+import {TuiPreviewModule} from "@taiga-ui/addon-preview";
 
 @NgModule({
-  declarations: [AuthComponent, LoginComponent, BrandLogoComponent, RegisterComponent],
+  declarations: [AuthComponent, LoginComponent, BrandLogoComponent, RegisterComponent, TermPolicyComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -57,7 +59,9 @@ import { RegisterComponent } from './components/register/register.component';
     TuiLinkModule,
     TuiValidatorModule,
     TuiHintModule,
-    TuiPrimitiveTextfieldModule
+    TuiPrimitiveTextfieldModule,
+    TuiPreviewModule,
+    TuiRadioBlockModule
   ]
 })
 export class AuthModule {}
