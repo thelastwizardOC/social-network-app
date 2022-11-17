@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Persistence.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initCreateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
