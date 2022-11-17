@@ -1,38 +1,27 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {environment} from 'src/environments/environment';
-import {IAuthenticationResponse} from '../interface/login-user';
-import {IRegisterUser} from "../interface/registerd-user";
-import {IUser} from "../interface/user";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { IAuthenticationResponse } from '../interface/login-user';
+import { IRegisterUser } from '../interface/registerd-user';
+import { IUser } from '../interface/user';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   register(newUser: IRegisterUser): Observable<IUser> {
-    return this.http.post<IUser>(
-      `${environment.baseApi}/auth/register`,
-      {...newUser},
-    );
+    return this.http.post<IUser>(`${environment.baseApi}/auth/register`, { ...newUser });
   }
 
-  login(
-    username: string,
-    password: string
-  ): Observable<IAuthenticationResponse> {
-    const body = JSON.stringify({username, password});
-    const headers = {'content-type': 'application/json'};
-    return this.http.post<IAuthenticationResponse>(
-      `${environment.baseApi}/authentication/login`,
-      body,
-      {
-        headers,
-      }
-    );
+  login(username: string, password: string): Observable<IAuthenticationResponse> {
+    const body = JSON.stringify({ username, password });
+    const headers = { 'content-type': 'application/json' };
+    return this.http.post<IAuthenticationResponse>(`${environment.baseApi}/auth/login`, body, {
+      headers
+    });
   }
 
   async tryRefreshingTokens(token: string): Promise<boolean> {
@@ -43,29 +32,23 @@ export class AuthService {
 
     const credentials = JSON.stringify({
       accessToken: token,
-      refreshToken: refreshToken,
+      refreshToken: refreshToken
     });
-    const refreshRes = await new Promise<IAuthenticationResponse>(
-      (resolve, reject) => {
-        this.http
-          .post<IAuthenticationResponse>(
-            `${environment.baseApi}/authentication/refresh`,
-            credentials,
-            {
-              headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-              }),
-            }
-          )
-          .subscribe({
-            next: (res: IAuthenticationResponse) => resolve(res),
-            error: (_) => {
-              reject;
-              return false;
-            },
-          });
-      }
-    );
+    const refreshRes = await new Promise<IAuthenticationResponse>((resolve, reject) => {
+      this.http
+        .post<IAuthenticationResponse>(`${environment.baseApi}/auth/refresh`, credentials, {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json'
+          })
+        })
+        .subscribe({
+          next: (res: IAuthenticationResponse) => resolve(res),
+          error: _ => {
+            reject;
+            return false;
+          }
+        });
+    });
     localStorage.setItem('jwt', refreshRes.accessToken);
     localStorage.setItem('refreshToken', refreshRes.refreshToken);
     return true;

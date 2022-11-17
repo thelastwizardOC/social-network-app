@@ -14,7 +14,13 @@
 
 <div class="tui-row tui-row_adaptive tui-row_align_center">
   <div class="user-avatar-container">
-    <tui-avatar class="user-avatar" [size]="'xxl'" [rounded]="true" [avatarUrl]="userInfo?.avatar || mockImg"></tui-avatar>
+    <tui-avatar
+      class="user-avatar"
+      [size]="'xxl'"
+      [rounded]="true"
+      [avatarUrl]="userInfo?.avatar || mockImg"
+      (click)="this.onUploadPhotoClick.emit(template); uploadType = 'avatar'"
+    ></tui-avatar>
     <tui-avatar
       class="btn-upload-avatar"
       [rounded]="true"
@@ -34,7 +40,7 @@
   <app-info-item [value]="userInfo?.gender | gender" icon="tuiIconStarFilled"></app-info-item>
   <app-info-item [value]="userInfo?.phoneNo" icon="tuiIconCall"></app-info-item>
 </div>
-<tui-tabs [(activeItemIndex)]="activeItemIndex">
+<tui-tabs class="tabs-bar" [(activeItemIndex)]="activeItemIndex">
   <button tuiTab>Posts</button>
   <button tuiTab disabled>Friends</button>
 

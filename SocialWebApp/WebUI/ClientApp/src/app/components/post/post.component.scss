@@ -1,9 +1,21 @@
-@import "~@taiga-ui/core/styles/mixins/mixins.scss";
+@import '~@taiga-ui/core/styles/mixins/mixins.scss';
 
 .post-container {
   border-radius: 10px;
   overflow: hidden;
   @include shadow(1);
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    padding-bottom: 0;
+
+    &-left {
+      display: flex;
+    }
+  }
+
   .post-status {
     --line-to-show: 2;
     margin-top: 1rem;
@@ -40,6 +52,7 @@
   }
   .post-numbers {
     padding: 1rem;
+    padding-top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -46,7 +46,6 @@ public class CreateUserHandler : IRequestHandler<RegisterCommand, NewUserVm>
       // Return profile data with token
       await _appDb.SaveChangesAsync();
       var newUserVm = _mapper.Map<NewUserVm>(user);
-      newUserVm.Token = _tokenServices.GenerateAccessToken(user);
       return newUserVm;
     }
     catch (Exception e)
