@@ -11,7 +11,7 @@ namespace Application.Photos.Queries.GetPhotoByUserQuery
     {
         public GetPhotoByUserQueryValidator()
         {
-            RuleFor(v => v.Offset).GreaterThanOrEqualTo(0).WithMessage("Offset must be greater than 0");
+            RuleFor(v => v.Offset).GreaterThanOrEqualTo(0).WithMessage("Offset must be greater than or equal to 0");
             RuleFor(v => v.Limit).GreaterThan(0).WithMessage("Limit must be greater than 0");
         }
     }
