@@ -1,4 +1,5 @@
 using Application.Common.Models;
+using Application.Common.Exceptions;
 using Application.Users.Commands.CreateUser;
 using Application.Users.Commands.RefreshToken;
 using Application.Users.Queries.Login;
@@ -23,17 +24,21 @@ public class AuthController : ApiControllerBase
     {
         try
         {
-            var newUser = await _mediator.Send(new RegisterCommand(){NewUserDto = newUserDto});
+            var newUser = await _mediator.Send(new RegisterCommand() { NewUserDto = newUserDto });
             if (newUser == null)
             {
-                return BadRequest("User has been existed");
+                return StatusCode(503);
             }
 
             return Ok(newUser);
         }
+        catch (ValidationException e)
+        {
+            return BadRequest(e.Errors);
+        }
         catch (Exception e)
         {
-            return StatusCode(500);
+            return BadRequest(e.Message);
         }
     }
     

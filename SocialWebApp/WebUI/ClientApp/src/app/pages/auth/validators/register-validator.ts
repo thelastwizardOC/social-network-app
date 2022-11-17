@@ -4,6 +4,7 @@ const nameChars = /^[A-Za-z][a-zA-Z\s]+$/
 const userNameChars = /^[A-Za-z][a-zA-Z0-9]+$/
 const emailChars = /^\w[a-zA-Z0-9\.\_\-\+\"]+$/
 const passwordChars = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
 /*
 * Password rule:
 * Minimum eight characters, at least one letter, one uppercase letter and one number
@@ -13,10 +14,12 @@ export function nameValidator(fieldName: string): ValidatorFn {
   return (field: AbstractControl): Validators | null => {
     if (!field.value)
       return {other: `Please enter your ${fieldName}`};
-    if (!nameChars.test(field.value))
+    if(specialChars.test(field.value.charAt(0)))
       return {other: `${fieldName} is invalid. Please enter another value`};
     if (field.value.length < 2)
       return {other: `${fieldName} must be at least 2 characters long. Please use another one`};
+    if (!nameChars.test(field.value))
+      return {other: `${fieldName} is invalid. Please enter another value`};
     if (field.value.length > 50)
       return {other: `${fieldName} is limited on the number of 50 characters. Please use another one`};
     return null;
