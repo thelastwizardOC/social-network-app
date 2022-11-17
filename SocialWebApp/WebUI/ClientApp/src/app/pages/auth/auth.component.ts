@@ -13,7 +13,10 @@ export class AuthComponent implements OnInit {
   constructor(private route: Router) {}
 
   ngOnInit(): void {
-    const currentRoute = this.route.url;
-    currentRoute.includes('/login') ? (this.newUser = true) : (this.newUser = false);
+    this.newUser = this.route.url.includes('/login');
+
+    this.route.events.subscribe(() => {
+      this.newUser = this.route.url.includes('/login');
+    });
   }
 }

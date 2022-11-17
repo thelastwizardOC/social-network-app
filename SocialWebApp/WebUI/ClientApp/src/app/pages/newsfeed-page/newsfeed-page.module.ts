@@ -9,15 +9,6 @@ import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 
 @NgModule({
   declarations: [NewsfeedComponent, NewsfeedContainerComponent],
-  imports: [
-    CommonModule,
-    NewsfeedPageRoute,
-    PostModule,
-    TuiButtonModule,
-    TuiSvgModule,
-    PostModule,
-    InfiniteScrollModule,
-    TuiLoaderModule,
-  ],
+  imports: [CommonModule, NewsfeedPageRoute, PostModule, TuiButtonModule, TuiSvgModule, PostModule, InfiniteScrollModule, TuiLoaderModule]
 })
 export class NewsfeedPageModule {}

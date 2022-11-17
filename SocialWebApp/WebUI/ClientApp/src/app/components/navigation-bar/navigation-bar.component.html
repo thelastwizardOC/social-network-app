@@ -1,20 +1,16 @@
 <div class="navigation-bar-container">
   <div class="navigation-bar-left">
     <div class="logo-container">
-      <img class="logo" routerLink="/newsfeed" src="assets/svg/nav-logo.svg"/>
+      <img class="logo" routerLink="" src="assets/svg/nav-logo.svg" />
     </div>
 
     <div class="search-box-container">
       <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
-      <input
-        class="tui-text_body-m-2"
-        type="text"
-        placeholder="Search on Honest"
-      />
+      <input class="tui-text_body-m-2" type="text" placeholder="Search on Honest" />
     </div>
   </div>
   <div class="navigation-bar-right">
-    <div class="menu-btn" routerLink="newsfeed" routerLinkActive="active">
+    <div class="menu-btn" routerLink="" routerLinkActive="active">
       <tui-svg src="assets/svg/home-icon.svg"></tui-svg>
     </div>
     <div class="menu-btn" routerLink="message" routerLinkActive="active">
@@ -25,21 +21,14 @@
     </div>
 
     <tui-hosted-dropdown [content]="dropdown" [(open)]="isDropDownVisible">
-      <div
-        [class]="isOnProfilePage == true ? 'profile-btn-active' : 'menu-btn'"
-      >
+      <div [class]="isOnProfilePage == true ? 'profile-btn-active' : 'menu-btn'">
         <tui-svg src="assets/svg/profile-icon.svg"></tui-svg>
       </div>
     </tui-hosted-dropdown>
 
     <ng-template #dropdown>
       <tui-data-list>
-        <a
-          *ngFor="let item of profileItems,  index as i"
-          tuiOption
-          (click)="toggleDropDown(i)"
-          [routerLink]="item.link"
-        >
+        <a *ngFor="let item of profileItems; index as i" tuiOption (click)="toggleDropDown(i)" [routerLink]="item.link">
           {{ item.label }}
         </a>
       </tui-data-list>
@@ -47,13 +36,10 @@
   </div>
 </div>
 
-<ng-template
-  let-observer
-  [tuiDialogOptions]="{label: 'Confirm log out', size: 's'}"
-  [(tuiDialog)]="isDialogOpened">
+<ng-template let-observer [tuiDialogOptions]="{ label: 'Confirm log out', size: 's' }" [(tuiDialog)]="isDialogOpened">
   <p class="tui-text_body-m tui-space_vertical-4">Do you want to log out?</p>
   <div class="tui-form__buttons buttons">
-  <button tuiButton size="m" (click)="logout()">Log out</button>
-  <button tuiButton size="m" appearance="outline">Cancel</button>
+    <button tuiButton size="m" (click)="logout()">Log out</button>
+    <button tuiButton size="m" (click)="observer.complete()" appearance="outline">Cancel</button>
   </div>
 </ng-template>

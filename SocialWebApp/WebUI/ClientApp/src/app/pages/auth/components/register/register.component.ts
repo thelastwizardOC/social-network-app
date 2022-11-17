@@ -56,10 +56,6 @@ export class RegisterComponent implements OnInit {
     this.isSendingData = true;
     this.authService.register(this.handleParsingData()).subscribe({
       next: (response: IUser) => {
-        const token = response.token;
-        if (typeof token === 'string') {
-          localStorage.setItem('jwt', token);
-        }
         this.notification.showSuccess('Register successfully');
         this.route.navigate(['auth/login']);
       },

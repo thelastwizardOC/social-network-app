@@ -32,6 +32,6 @@ public class CreateUserCommandValidator : AbstractValidator<RegisterCommand>
             .Matches(_passwordPattern).WithMessage(
                 "The password is at least 1 uppercase, 1 lowercase and 1 number. Password must be between 8 and 32 characters");
 
-        RuleFor(x => x.NewUserDto.PhoneNo).Length(8, 15).WithMessage("Invalid phone number");
+        RuleFor(x => x.NewUserDto.PhoneNo).MaximumLength(15).WithMessage("Invalid phone number");
     }
 }

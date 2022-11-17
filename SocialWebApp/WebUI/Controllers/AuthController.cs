@@ -1,5 +1,8 @@
-using Application.Common.Exceptions;
+using Application.Common.Models;
 using Application.Users.Commands.CreateUser;
+using Application.Users.Commands.RefreshToken;
+using Application.Users.Queries.Login;
+using Domain.Common.Errors;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +23,7 @@ public class AuthController : ApiControllerBase
     {
         try
         {
-            var newUser = await _mediator.Send(new RegisterCommand() { NewUserDto = newUserDto });
+            var newUser = await _mediator.Send(new RegisterCommand(){NewUserDto = newUserDto});
             if (newUser == null)
             {
                 return BadRequest("User has been existed");
@@ -28,9 +31,36 @@ public class AuthController : ApiControllerBase
 
             return Ok(newUser);
         }
-        catch (ValidationException e)
+        catch (Exception e)
         {
-            return BadRequest(e.Errors);
+            return StatusCode(500);
         }
+    }
+    
+    [HttpPost("login")]
+    public async Task<ActionResult<AuthenticationResult>> Login(LoginQuery request)
+    {
+        var authenticationResult = await _mediator.Send(request);
+
+        if (authenticationResult.IsError && authenticationResult.FirstError == AuthenticationError.InvalidCredentials)
+        {
+            return Unauthorized();
+        }
+        return Ok(authenticationResult.Value);
+    }
+
+    [HttpPost("refresh")]
+    public async Task<ActionResult<AuthenticationResult>> Refresh(RefreshTokenCommand command)
+    {
+        if (command is null)
+            return BadRequest("Invalid client request");
+
+        var refreshTokenResult = await _mediator.Send(command);
+        if (refreshTokenResult.IsError && refreshTokenResult.FirstError == AuthenticationError.InvalidCredentials)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(refreshTokenResult.Value);
     }
 }

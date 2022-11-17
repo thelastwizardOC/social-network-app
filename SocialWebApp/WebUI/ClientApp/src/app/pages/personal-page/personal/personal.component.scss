@@ -1,4 +1,4 @@
-@import "../../../../../node_modules/@taiga-ui/core/styles/mixins/mixins.scss";
+@import '../../../../../node_modules/@taiga-ui/core/styles/mixins/mixins.scss';
 
 .cover-image-container {
   height: 300px;
@@ -48,4 +48,7 @@
   border: 1px solid var(--tui-base-03);
   border-bottom-left-radius: 10px;
   padding: 1.5rem;
+}
+::ng-deep .tabs-bar {
+  padding: 10px;
 }
