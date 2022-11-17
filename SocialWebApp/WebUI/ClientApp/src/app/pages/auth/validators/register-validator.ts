@@ -53,7 +53,10 @@ export function emailValidator(field: AbstractControl): Validators | null {
   if(!emailChars.test(field.value))
     return {other: `The email you entered is not a valid email address`};
   if (field.value.length > 256){
-    return {other: `Your username must be lest than 256 characters`};
+    return {other: `Your email must be lest than 256 characters`};
+  }
+  if ((field.value).includes("..") || (field.value).endsWith(".")){
+    return {other: `Trailing dots in address`};
   }
   return null;
 }

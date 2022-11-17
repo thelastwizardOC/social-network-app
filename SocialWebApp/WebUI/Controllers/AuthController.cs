@@ -1,3 +1,4 @@
+using Application.Common.Exceptions;
 using Application.Users.Commands.CreateUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ public class AuthController : ApiControllerBase
     {
         try
         {
-            var newUser = await _mediator.Send(new RegisterCommand(){NewUserDto = newUserDto});
+            var newUser = await _mediator.Send(new RegisterCommand() { NewUserDto = newUserDto });
             if (newUser == null)
             {
                 return BadRequest("User has been existed");
@@ -27,9 +28,9 @@ public class AuthController : ApiControllerBase
 
             return Ok(newUser);
         }
-        catch (Exception e)
+        catch (ValidationException e)
         {
-            return StatusCode(500);
+            return BadRequest(e.Errors);
         }
     }
 }

@@ -71,33 +71,12 @@
           <tui-error formControlName="phoneValue" [error]="[] | tuiFieldError | async"></tui-error>
         </div>
 
-        <div class="tui-form__row">
+        <div tuiGroup class="tui-form__row" [adaptive]="true" [collapsed]="true">
           <label class="label">Gender</label>
-          <div tuiGroup [collapsed]="true">
-            <tui-radio-block
-              contentAlign="left"
-              formControlName="genderValue"
-              [item]="gender[0]"
-              size="m"
-            >
-              Male
-            </tui-radio-block>
-            <tui-radio-block
-              contentAlign="left"
-              formControlName="genderValue"
-              [item]="gender[1]"
-              size="m"
-            >
-              Female
-            </tui-radio-block>
-            <tui-radio-block
-              contentAlign="left"
-              formControlName="genderValue"
-              [item]="gender[2]"
-              size="m"
-            >
-              Other
-            </tui-radio-block>
+          <div class="radio-group">
+          <tui-radio-labeled formControlName="genderValue" [item]="gender[0]"> Male</tui-radio-labeled>
+          <tui-radio-labeled formControlName="genderValue" [item]="gender[1]"> Female</tui-radio-labeled>
+          <tui-radio-labeled formControlName="genderValue" [item]="gender[2]"> Other</tui-radio-labeled>
           </div>
         </div>
 

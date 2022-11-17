@@ -49,7 +49,6 @@ import { RegisterComponent } from './components/register/register.component';
     TuiDataListWrapperModule,
     TuiInputPhoneModule,
     TuiGroupModule,
-    TuiRadioBlockModule,
     TuiCheckboxLabeledModule,
     TuiLabelModule,
     TuiTextfieldControllerModule,

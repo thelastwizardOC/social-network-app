@@ -51,6 +51,12 @@
   }
 }
 
+.radio-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 tui-input-password {
   tui-svg {
     color: var(--tui-primary) !important;
