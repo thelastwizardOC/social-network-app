@@ -16,14 +16,15 @@ export class UploadImageDialogComponent implements OnInit {
   @Input() type!: 'avatar' | 'cover';
   @Output() onUploadPhotoSuccess = new EventEmitter();
   userId!: number;
+  file!: File;
+  imageUrl!: string | null;
 
   constructor(private userService: UserService, private notification: NotificationService, private jwtHelper: JwtHelperService) {}
 
   ngOnInit(): void {
-   this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
+    this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
   }
 
-  imageURL: string | null = null;
   loading: boolean = false;
 
   handleCloseDialog(observer: any) {
@@ -32,7 +33,9 @@ export class UploadImageDialogComponent implements OnInit {
 
   onSubmit(observer: any) {
     this.loading = true;
-    this.userService.uploadPhoto(this.imageURL as string, this.userId, this.type).subscribe({
+    const formData = new FormData();
+    formData.append('formFile', this.file);
+    this.userService.uploadPhoto(formData, this.userId, this.type).subscribe({
       next: res => {
         observer.complete();
         this.notification.showSuccess('Upload successfully!');
@@ -64,7 +67,7 @@ export class UploadImageDialogComponent implements OnInit {
 
   removeFile(): void {
     this.rejectedState = false;
-    this.imageURL = null;
+    this.imageUrl = null;
     this.control.setValue(null);
   }
 
@@ -77,10 +80,11 @@ export class UploadImageDialogComponent implements OnInit {
     this.loadingFiles$.next(file);
     return timer(1000).pipe(
       map(() => {
+        this.file = file as File;
         const reader = new FileReader();
         reader.readAsDataURL(file as File);
         reader.onload = () => {
-          this.imageURL = reader.result as string;
+          this.imageUrl = reader.result as string;
         };
         return file;
       }),

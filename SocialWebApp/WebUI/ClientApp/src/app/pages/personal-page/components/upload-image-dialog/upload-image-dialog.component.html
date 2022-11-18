@@ -18,10 +18,10 @@
       <tui-file *ngIf="loadingFiles$ | async as file" state="loading" [file]="file"></tui-file>
     </tui-files>
     <div class="img-container">
-      <img *ngIf="imageURL" [class]="type === 'avatar' ? 'img-avatar' : 'img-cover'" [src]="imageURL" />
+      <img *ngIf="imageUrl" [class]="type === 'avatar' ? 'img-avatar' : 'img-cover'" [src]="imageUrl" />
     </div>
   </div>
 </div>
 <div class="btn-container">
-  <button *ngIf="imageURL" tuiButton type="submit" (click)="onSubmit(observer)" size="m" [showLoader]="loading">Proceed Upload</button>
+  <button *ngIf="imageUrl" tuiButton type="submit" (click)="onSubmit(observer)" size="m" [showLoader]="loading">Proceed Upload</button>
 </div>

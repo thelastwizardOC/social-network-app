@@ -1,7 +1,9 @@
 using Application.Common.Exceptions;
+using Application.Common.Models;
 using Application.Users.Commands.UploadAvatar;
 using Application.Users.Commands.UploadCover;
 using Application.Users.Queries.GetUserInfo;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,12 +25,19 @@ public class UserController : ApiControllerBase
     }
     
     [HttpPost("upload-avatar")]
-    public async Task<ActionResult<string>> UploadAvatar(UploadAvatarCommand command)
+    public async Task<ActionResult<string>> UploadAvatar(int userId, IFormFile formFile)
     {
         try
         {
-            var base64 = await Mediator.Send(command);
-            return Ok(base64);
+            var file = new FileDto
+            {
+                Content = formFile.OpenReadStream(),
+                Name = formFile.FileName,
+                ContentType = formFile.ContentType,
+            };
+
+            var url = await Mediator.Send(new UploadAvatarCommand(userId, file));
+            return Ok(url);
         }
         catch (NotFoundException e)
         {
@@ -41,12 +50,19 @@ public class UserController : ApiControllerBase
     }
 
     [HttpPost("upload-cover")]
-    public async Task<ActionResult<string>> UploadCover(UploadCoverCommand command)
+    public async Task<ActionResult<string>> UploadCover(int userId, IFormFile formFile)
     {
         try
         {
-            var base64 = await Mediator.Send(command);
-            return Ok(base64);
+            var file = new FileDto
+            {
+                Content = formFile.OpenReadStream(),
+                Name = formFile.FileName,
+                ContentType = formFile.ContentType,
+            };
+            var url = await Mediator.Send(new UploadCoverCommand(userId, file));
+
+            return Ok(url);
         }
         catch (NotFoundException e)
         {

@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Infrastructure.File;
+using Azure.Storage.Blobs;
 
 namespace Infrastructure;
 
@@ -27,8 +29,12 @@ public static class DependencyInjection
   {
     var jwtSettings = new JwtSettings();
     configuration.Bind(JwtSettings.SectionName, jwtSettings);
+    var blobStorageSettings = new BlobStorageSettings();
+    configuration.Bind(BlobStorageSettings.SectionName, blobStorageSettings);
     services.AddSingleton(Options.Create(jwtSettings));
     services.AddSingleton<IIdentityService, IdentityServices>();
+    services.AddSingleton(x => new BlobServiceClient(blobStorageSettings.ConnectionString));
+    services.AddScoped<IFileStorageService, FileStorageService>(); 
     services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
         {
