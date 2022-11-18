@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IPost } from 'src/app/interface/post';
 import { IUser } from 'src/app/interface/user';
 import { environment } from 'src/environments/environment';
@@ -8,11 +8,10 @@ import { environment } from 'src/environments/environment';
   templateUrl: './personal.component.html',
   styleUrls: ['./personal.component.scss']
 })
-export class PersonalComponent  {
+export class PersonalComponent {
   @Input() userNotFound: boolean = false;
   @Input() userInfo: IUser | undefined;
   @Input() userId!: number;
-  @Input() activeItemIndex: number = 0;
   @Input() personalPosts: IPost[] = [];
   @Input() isLoading: boolean = false;
   @Input() uploadedAvatar: any;
@@ -21,8 +20,8 @@ export class PersonalComponent  {
   @Output() onPhotoUpload = new EventEmitter();
   @Output() onLike = new EventEmitter<number>();
 
+  activeItemIndex: number = 0;
   mockImg: string = environment.mockImg;
   uploadType!: 'avatar' | 'cover';
   constructor() {}
-  
 }

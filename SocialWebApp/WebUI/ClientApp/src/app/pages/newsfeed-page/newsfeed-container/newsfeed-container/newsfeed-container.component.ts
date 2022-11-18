@@ -1,13 +1,14 @@
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import * as _ from 'lodash';
 import { IPost } from 'src/app/interface/post';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-newsfeed-container',
   templateUrl: './newsfeed-container.component.html',
-  styleUrls: ['./newsfeed-container.component.scss'],
+  styleUrls: ['./newsfeed-container.component.scss']
 })
 export class NewsfeedContainerComponent implements OnInit {
   posts: IPost[] = [];
@@ -16,6 +17,7 @@ export class NewsfeedContainerComponent implements OnInit {
   userId: number = 0;
   limit: number = 3;
   offset: number = 0;
+
   constructor(
     private postService: PostService,
     private route: ActivatedRoute,
@@ -26,25 +28,24 @@ export class NewsfeedContainerComponent implements OnInit {
   ngOnInit(): void {
     this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.fetchPosts();
+    this.handleLikePost = _.debounce(this.handleLikePost, 1000);
   }
 
   fetchPosts(): void {
     this.isLoading = true;
-    this.postService
-      .getNewsfeedPost(this.userId, this.offset, this.limit)
-      .subscribe({
-        next: (value) => {
-          this.posts = [...this.posts, ...value.items];
-          this.hasNextPage = value.hasNextPage;
-          this.offset += this.limit;
-        },
-        error: (error) => {
-          console.log({ error });
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+    this.postService.getNewsfeedPost(this.userId, this.offset, this.limit).subscribe({
+      next: value => {
+        this.posts = [...this.posts, ...value.items];
+        this.hasNextPage = value.hasNextPage;
+        this.offset += this.limit;
+      },
+      error: error => {
+        console.log({ error });
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 
   handleOnScroll() {
@@ -55,18 +56,17 @@ export class NewsfeedContainerComponent implements OnInit {
 
   handleLikePost(postId: number) {
     this.postService.likePost(postId, this.userId).subscribe({
-      next: (value) => {
-        this.posts = this.posts.map((post) => {
+      next: value => {
+        this.posts = this.posts.map(post => {
           if (post.id === value.id) {
             return value;
           }
           return post;
         });
       },
-      error: (err) => {
+      error: err => {
         console.log({ err });
-        this.router.navigate(['/error']);
-      },
+      }
     });
   }
 }
