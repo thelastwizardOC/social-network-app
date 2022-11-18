@@ -4,7 +4,7 @@ const nameChars = /^[A-Za-z][a-zA-Z\s]+$/
 const userNameChars = /^[A-Za-z][a-zA-Z0-9]+$/
 const emailChars = /^\w[a-zA-Z0-9\.\_\-\+\"]+$/
 const passwordChars = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+const specialChars = /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
 /*
 * Password rule:
 * Minimum eight characters, at least one letter, one uppercase letter and one number

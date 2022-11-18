@@ -27,6 +27,11 @@ public class CreateUserHandler : IRequestHandler<RegisterCommand, NewUserVm>
   {
     try
     {
+      var existentUser = await _appDb.User.FirstOrDefaultAsync(u => u.UserName == request.NewUserDto.UserName && u.Email == request.NewUserDto.Email);
+      if (existentUser is not null)
+      {
+        throw new Exception("This email and username already have been existed");
+      }
       var existentUserName = await _appDb.User.FirstOrDefaultAsync(u => u.UserName == request.NewUserDto.UserName);
       if (existentUserName is not null)
       {
