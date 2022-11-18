@@ -29,11 +29,10 @@ builder.Services.AddControllers().AddNewtonsoftJson(option =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
   app.UseSwagger();
   app.UseSwaggerUI();
-}
+
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
 app.UseHttpsRedirection();

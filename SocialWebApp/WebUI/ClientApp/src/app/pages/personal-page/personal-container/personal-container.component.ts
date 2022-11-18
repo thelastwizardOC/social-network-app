@@ -7,6 +7,8 @@ import { IPost } from 'src/app/interface/post';
 import { IUser } from 'src/app/interface/user';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-personal-container',
   templateUrl: './personal-container.component.html',
@@ -16,7 +18,6 @@ export class PersonalContainerComponent implements OnInit {
   userNotFound: boolean = false;
   hasNextPage: boolean = false;
   isLoading: boolean = false;
-  activeItemIndex: number = 0;
   userId!: number;
   limit: number = 1;
   offset: number = 0;
@@ -29,24 +30,23 @@ export class PersonalContainerComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private postService: PostService,
-    private dialogService: TuiDialogService,
-
+    private dialogService: TuiDialogService
   ) {}
 
   ngOnInit(): void {
-
     this.route.params.subscribe({
       next: ({ id }) => {
         this.userId = +id;
         this.fetchPosts();
         this.fetchUserInfo();
+        this.handleLikePost = _.debounce(this.handleLikePost, 1000);
       }
-    });   
+    });
   }
 
   fetchPosts(): void {
     this.isLoading = true;
-    
+
     this.postService.getPersonalPost(this.userId, this.offset, this.limit).subscribe({
       next: value => {
         this.personalPosts = [...this.personalPosts, ...value.items];

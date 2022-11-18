@@ -27,11 +27,12 @@
   margin-top: -60px;
   margin-bottom: 20px;
   position: relative;
+  cursor: pointer;
+
   .btn-upload-avatar {
     position: absolute;
     bottom: 0;
     right: 10px;
-    cursor: pointer;
   }
 }
 
@@ -50,5 +51,5 @@
   padding: 1.5rem;
 }
 ::ng-deep .tabs-bar {
-  padding: 10px;
+  padding: 0 10px;
 }

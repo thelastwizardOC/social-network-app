@@ -36,3 +36,6 @@
     }
   }
 }
+::ng-deep .sign-up-title span:hover {
+  color: var(--tui-primary-hover);
+}
