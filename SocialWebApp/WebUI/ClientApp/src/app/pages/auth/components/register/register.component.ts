@@ -91,7 +91,7 @@ export class RegisterComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         this.isSendingData = false;
         if (err.status === 400) this.handleBadRequests(err);
-        this.errorHandler.handleError(err);
+        this.errorHandler.handleError(new Error("Fail to register your account"));
       }
     });
   }
