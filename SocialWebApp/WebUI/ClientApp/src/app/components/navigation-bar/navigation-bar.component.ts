@@ -1,7 +1,8 @@
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { ChangeDetectionStrategy, Component, Inject, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Inject, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiDialogService, TuiHostedDropdownComponent } from '@taiga-ui/core';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -10,6 +11,7 @@ import { TuiDialogService, TuiHostedDropdownComponent } from '@taiga-ui/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavigationBarComponent implements OnInit, OnChanges {
+  @ViewChild('searchInput') input!: ElementRef;
   isDialogOpened: boolean = false;
 
   constructor(
@@ -59,5 +61,9 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     localStorage.removeItem('jwt');
     localStorage.removeItem('refreshToken');
     this.route.navigate(['auth/login']);
+  }
+
+  onSearchInputChange() {
+    _.debounce();
   }
 }

@@ -1,9 +1,9 @@
 
 using FluentValidation;
 
-namespace Application.Users.Queries.SearchFriends;
+namespace Application.Users.Queries.SearchUsers;
 
-public class SearchFriendsQueryValidator : AbstractValidator<SearchFriendsQuery>
+public class SearchFriendsQueryValidator : AbstractValidator<SearchUsersQuery>
 {
     public SearchFriendsQueryValidator()
     {

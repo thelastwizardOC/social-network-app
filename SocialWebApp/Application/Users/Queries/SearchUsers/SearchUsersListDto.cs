@@ -1,4 +1,4 @@
-namespace Application.Users.Queries.SearchFriends;
+namespace Application.Users.Queries.SearchUsers;
 
 public class SearchUsersListDto
 {

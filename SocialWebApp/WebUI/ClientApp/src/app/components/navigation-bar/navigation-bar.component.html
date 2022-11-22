@@ -6,7 +6,7 @@
 
     <div class="search-box-container">
       <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
-      <input class="tui-text_body-m-2" type="text" placeholder="Search on Honest" />
+      <input class="tui-text_body-m-2" type="text" placeholder="Search on Honest" #searchInput (change)="onSearchInputChange()" />
     </div>
   </div>
   <div class="navigation-bar-right">

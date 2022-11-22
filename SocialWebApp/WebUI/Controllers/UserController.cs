@@ -3,9 +3,7 @@ using Application.Common.Models;
 using Application.Users.Commands.UploadAvatar;
 using Application.Users.Commands.UploadCover;
 using Application.Users.Queries.GetUserInfo;
-using Application.Users.Queries.SearchFriends;
-using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
+using Application.Users.Queries.SearchUsers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers;
@@ -76,7 +74,7 @@ public class UserController : ApiControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<SearchUsersListDto>> SearchUser([FromQuery] SearchFriendsQuery query)
+    public async Task<ActionResult<SearchUsersListDto>> SearchUser([FromQuery] SearchUsersQuery query)
     {
         try
         {
