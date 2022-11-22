@@ -10,6 +10,6 @@ export interface IMessage {
   receiver: IUser;
 }
 export enum MessageType {
-  send,
-  receive
+  SEND,
+  RECEIVE
 }

@@ -46,7 +46,7 @@ import {TuiValidationError} from "@taiga-ui/cdk";
 export class RegisterComponent implements OnInit {
   @ViewChild(`preview`)
   readonly preview?: TemplateRef<TuiDialogContext<void>>;
-  gender = [{name: Gender.male}, {name: Gender.female}, {name: Gender.other}];
+  gender = [{ name: Gender.MALE }, { name: Gender.FEMALE }, { name: Gender.OTHER }];
   countries: TuiCountryIsoCode[] = Object.values(TuiCountryIsoCode);
   countryIsoCode = TuiCountryIsoCode.VN;
   isSendingData: boolean = false;
@@ -91,14 +91,14 @@ export class RegisterComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         this.isSendingData = false;
         if (err.status === 400) this.handleBadRequests(err);
-        this.errorHandler.handleError(new Error("Fail to register your account"));
+        this.errorHandler.handleError(new Error('Fail to register your account'));
       }
     });
   }
 
   handleParsingData(): IRegisterUser {
     const genderRecord = this.registerForm.value.genderValue?.name;
-    let gender = genderRecord === Gender.male ? 0 : genderRecord === Gender.female ? 1 : 2;
+    let gender = genderRecord === Gender.MALE ? 0 : genderRecord === Gender.FEMALE ? 1 : 2;
 
     return {
       firstName: this.registerForm.value.firstNameValue as string,
