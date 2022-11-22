@@ -12,7 +12,6 @@ import { NavigationBarModule } from './components/navigation-bar/navigation-bar.
 import { AuthModule } from './pages/auth/auth.module';
 import { ErrorComponent } from './pages/error-page/error.component';
 import { HomeModule } from './pages/home-page/home.module';
-import { MessageComponent } from './pages/message/message.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { PersonalPageModule } from './pages/personal-page/personal-page.module';
 import { WildcardPageComponent } from './pages/wildcard-page/wildcard-page.component';
@@ -22,7 +21,7 @@ export function tokenGetter() {
 }
 
 @NgModule({
-  declarations: [AppComponent, MessageComponent, NotificationComponent, ErrorComponent, WildcardPageComponent],
+  declarations: [AppComponent, NotificationComponent, ErrorComponent, WildcardPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

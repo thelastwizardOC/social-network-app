@@ -2,7 +2,6 @@ import { WildcardPageComponent } from './pages/wildcard-page/wildcard-page.compo
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './pages/error-page/error.component';
-import { MessageComponent } from './pages/message/message.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { AccessGuard } from './guard/access.guard';
 import { AuthGuard } from './guard/auth.guard';
@@ -25,14 +24,16 @@ const routes: Routes = [
   },
   {
     path: 'message',
-    component: MessageComponent
+    loadChildren: async () => (await import('./pages/message-page/message-page.module')).MessagePageModule,
+    canActivate: [AccessGuard]
   },
   {
     path: 'notification',
     component: NotificationComponent
   },
   {
-    path: 'error', component: ErrorComponent
+    path: 'error',
+    component: ErrorComponent
   },
   { path: '**', component: WildcardPageComponent }
 ];

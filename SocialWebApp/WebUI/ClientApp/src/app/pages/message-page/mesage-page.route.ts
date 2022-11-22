@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NewsfeedContainerComponent } from './newsfeed-container/newsfeed-container.component';
+import { MessageContainerComponent } from './message-container/message-container.component';
 
 @NgModule({
   imports: [
     RouterModule.forChild([
       {
         path: '',
-        component: NewsfeedContainerComponent,
-        title: 'Newsfeed'
+        component: MessageContainerComponent,
+        title: 'Message'
       }
     ])
   ],
   exports: [RouterModule]
 })
-export class NewsfeedPageRoute {}
+export class MessagePageRoute {}

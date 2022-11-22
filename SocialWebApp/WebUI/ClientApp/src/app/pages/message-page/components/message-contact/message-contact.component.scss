@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  cursor: pointer;
+  &-left {
+    display: flex;
+    flex: 1;
+
+    & > div {
+      margin-left: 10px;
+    }
+    .user-name {
+      font-weight: 700;
+    }
+  }
+}
