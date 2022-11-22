@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Users.Queries.SearchFriends;
 
-public record SearchFriendsQuery(string SearchString, int Offset, int Limit) : IRequest<SearchUsersListDto>;
+public record SearchFriendsQuery(string SearchString, int Offset = 0, int Limit = 100) : IRequest<SearchUsersListDto>;
 
 public class SearchFriendsQueryHandler : IRequestHandler<SearchFriendsQuery, SearchUsersListDto>
 {
