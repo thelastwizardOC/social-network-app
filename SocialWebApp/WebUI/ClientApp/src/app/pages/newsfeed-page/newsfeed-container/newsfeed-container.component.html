@@ -1,9 +1,19 @@
-<div class="tui-container newsfeed-page-container">
-  <app-newsfeed
-    [posts]="posts"
-    [isLoading]="isLoading"
-    [userId]="userId"
-    (onScroll)="handleOnScroll()"
-    (onLike)="handleLikePost($event)"
-  ></app-newsfeed>
+<div class="tui-container tui-container_fullwidth newsfeed-page-container">
+  <div class="tui-row tui-row_adaptive">
+    <div class="tui-col_md-1 tui-col_lg-2">
+      <div></div>
+    </div>
+    <div class="tui-col_xs-12 tui-col_md-7 tui-col_lg-7">
+      <app-newsfeed
+        [posts]="posts"
+        [isLoading]="isLoading"
+        [userId]="userId"
+        (onScroll)="handleOnScroll()"
+        (onLike)="handleLikePost($event)"
+      ></app-newsfeed>
+    </div>
+    <div class="tui-col_md-4 tui-col_lg-3 friend-container">
+      <div>Friends are online</div>
+    </div>
+  </div>
 </div>

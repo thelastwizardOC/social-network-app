@@ -1,0 +1,15 @@
+.no-shadow {
+  box-shadow: none;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+.add-file__frame {
+  justify-content: space-between;
+  margin-left: 2rem;
+}
+
+.tui-form__button._disabled > div{
+  background: var(--tui-base-05);
+}

@@ -1,0 +1,17 @@
+<tui-island>
+  <a tuiAction (click)="showPostDialog()" class="no-shadow tui-space_horizontal-4">What do you think?</a>
+  <tui-island class="tui-space_horizontal-8" size="s">
+    <div class="tui-container tui-container_fullwidth">
+      <div class="tui-row tui-row_align_center add-file__frame">
+        <app-add-file></app-add-file>
+        <button tuiButton type="submit" size="s" [disabled]="true" class="tui-form__button">Post</button>
+      </div>
+    </div>
+  </tui-island>
+</tui-island>
+
+
+<ng-template let-observer [(tuiDialog)]="isDialogOpened">
+<app-header-dialog></app-header-dialog>
+  <app-body-dialog></app-body-dialog>
+</ng-template>
