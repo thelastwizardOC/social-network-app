@@ -3,6 +3,7 @@ using Application.Common.Models;
 using Application.Users.Commands.UploadAvatar;
 using Application.Users.Commands.UploadCover;
 using Application.Users.Queries.GetUserInfo;
+using Application.Users.Queries.SearchFriends;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +46,7 @@ public class UserController : ApiControllerBase
         }
         catch (ValidationException e)
         { 
-            return BadRequest(e.Message);
+            return BadRequest(e.Errors);
         }
     }
 
@@ -70,7 +71,25 @@ public class UserController : ApiControllerBase
         }
         catch (ValidationException e)
         {
-            return BadRequest(e.Message);
+            return BadRequest(e.Errors);
+        }
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<SearchUsersListDto>> SearchUser([FromQuery] SearchFriendsQuery query)
+    {
+        try
+        {
+            var result = await Mediator.Send(query);
+            return Ok(result);
+        }
+        catch (ValidationException e)
+        {
+            return BadRequest(e.Errors);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
         }
     }
 }

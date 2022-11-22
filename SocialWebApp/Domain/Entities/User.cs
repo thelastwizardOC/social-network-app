@@ -42,5 +42,4 @@ public class User
   public string? RefreshToken { get; set; }
   public DateTime? RefreshTokenExpiryTime { get; set; }
   public List<PostLike>? PostLikes { get; set; }
-
 }
