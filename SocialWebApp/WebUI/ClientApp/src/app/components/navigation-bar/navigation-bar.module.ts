@@ -10,10 +10,11 @@ import {
   TuiLoaderModule,
   TuiSvgModule
 } from '@taiga-ui/core';
+import { RelationshipPipe } from 'src/app/pipes/relationship.pipe';
 import { NavigationBarComponent } from './navigation-bar.component';
 
 @NgModule({
-  declarations: [NavigationBarComponent],
+  declarations: [NavigationBarComponent, RelationshipPipe],
   imports: [
     CommonModule,
     TuiLoaderModule,

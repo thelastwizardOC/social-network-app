@@ -1,15 +1,15 @@
-import { UserService } from './../../services/user.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { ChangeDetectionStrategy, Component, ElementRef, Inject, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { TuiDialogService, TuiHostedDropdownComponent } from '@taiga-ui/core';
-import { debounce } from 'lodash';
+import { debounce, trim } from 'lodash';
+import { ISearchUser, ISearchUserResponse } from 'src/app/interface/user';
+import { UserService } from './../../services/user.service';
 
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
-  styleUrls: ['./navigation-bar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./navigation-bar.component.scss']
 })
 export class NavigationBarComponent implements OnInit, OnChanges {
   @ViewChild('searchInput') input!: ElementRef;
@@ -21,7 +21,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     private userService: UserService
   ) {
-    // this.onSearchInputChange = debounce(this.onSearchInputChange, 500);
+    this.onSearchInputChange = debounce(this.onSearchInputChange, 500);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -38,6 +38,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   isDropDownSearchVisible = false;
   isOnProfilePage = false;
   isLoadingSearch = false;
+  searchUsers: ISearchUser[] = [];
 
   toggleDropDown(itemIndex: number) {
     if (itemIndex === 1) this.showDialog();
@@ -56,8 +57,6 @@ export class NavigationBarComponent implements OnInit, OnChanges {
       this.userId = +this.jwtHelper.decodeToken(token as string).sub;
       this.profileItems[0].link = '/profile/' + this.userId;
     }
-
-    console.log(this.isLoadingSearch);
   }
 
   showDialog(): void {
@@ -70,28 +69,42 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     this.route.navigate(['auth/login']);
   }
 
+  onSearch(event: KeyboardEvent) {
+    if (this.input.nativeElement.value === '') return;
+    if (event.key == 'Enter') {
+      this.onSearchEnter();
+    } else {
+      this.isLoadingSearch = true;
+      this.onSearchInputChange();
+    }
+  }
+
   onSearchInputChange() {
-    this.isLoadingSearch = true;
-    console.log(this.isLoadingSearch);
-    var value: string = this.input.nativeElement.value;
+    var value: string = trim(this.input.nativeElement.value);
     if (value.length != 0) {
-      this.userService.searchUser(this.userId, value).subscribe({
-        next: res => {
-          console.log('Hi', res);
-          console.log(this.isLoadingSearch);
+      this.userService.searchUser(this.userId, value, 0, 5).subscribe({
+        next: (res: ISearchUserResponse) => {
+          this.searchUsers = res.users;
         },
         error: err => {
           console.log(err);
         },
         complete: () => {
-          console.log('complete' + this.isLoadingSearch);
           this.isLoadingSearch = false;
         }
       });
+    } else {
+      this.searchUsers = [];
+      this.isLoadingSearch = false;
     }
   }
 
   onToggleDropdownSearch() {
     this.isDropDownSearchVisible = true;
+  }
+
+  onSearchEnter() {
+    this.isDropDownSearchVisible = false;
+    this.route.navigate(['search'], { queryParams: { searchString: trim(this.input.nativeElement.value) } });
   }
 }

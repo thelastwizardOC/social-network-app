@@ -18,3 +18,18 @@ export enum Gender {
   FEMALE,
   OTHER
 }
+
+export interface ISearchUser {
+  id?: number;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  avatar: string;
+  relationship: number;
+}
+
+export interface ISearchUserResponse {
+  users: ISearchUser[];
+  totalCount: number;
+  hasNextPage: boolean;
+}

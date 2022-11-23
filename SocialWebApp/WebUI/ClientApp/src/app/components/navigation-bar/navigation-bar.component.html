@@ -10,16 +10,26 @@
           class="tui-text_body-m-2"
           type="text"
           placeholder="Search on Honest"
-          (keyup)="onSearchInputChange()"
+          (keyup)="onSearch($event)"
           (click)="onToggleDropdownSearch()"
           #searchInput
         />
       </div>
     </tui-hosted-dropdown>
-    <tui-loader [showLoader]="isLoadingSearch" style="width: 100px; height: 100px">{{ isLoadingSearch }}</tui-loader>
 
-    <ng-template #dropdownSearch>
-      <!-- <tui-data-list> </tui-data-list> -->
+    <ng-template #dropdownSearch class="dropdown-search">
+      <tui-data-list emptyContent="Try searching for friends">
+        <a *ngFor="let user of searchUsers; index as i" tuiOption [href]="'profile/' + user.id">
+          <div style="display: flex; flex-direction: row; align-items: center; width: 250px">
+            <img [src]="user.avatar" alt="" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px" />
+            <div>
+              <p class="tui-text_body-m username">{{ user.firstName + ' ' + user.lastName }}</p>
+              <p class="tui-text_body-s relationship">{{ user.relationship | relationship }}</p>
+            </div>
+          </div>
+        </a>
+      </tui-data-list>
+      <tui-loader *ngIf="isLoadingSearch" style="margin-bottom: 20px"></tui-loader>
     </ng-template>
   </div>
   <div class="navigation-bar-right">

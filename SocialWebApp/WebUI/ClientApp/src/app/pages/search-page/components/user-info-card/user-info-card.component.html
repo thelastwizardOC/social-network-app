@@ -1,0 +1,21 @@
+<div
+  style="
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 20px 15px 30px;
+    border-radius: 10px;
+    border: 1.5px solid #d7d7d7;
+  "
+>
+  <div style="display: flex; align-items: center">
+    <img [src]="user.avatar" style="width: 50px; height: 50px; border-radius: 50%" alt="" />
+  </div>
+  <div style="flex: 1; align-items: center; margin-left: 20px">
+    <p class="tui-text_body-m" style="font-weight: 700">{{ user.firstName }} {{ user.lastName }}</p>
+    <p class="tui-text_body-s" style="color: gray">{{ user.userName }}</p>
+  </div>
+  <button tuiButton size="s" [appearance]="user.relationship > 1 ? 'primary' : 'secondary'" class="btn">
+    {{ user.relationship | buttonRelationship }}
+  </button>
+</div>

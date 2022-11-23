@@ -1,0 +1,9 @@
+<div>
+  <div>
+    <h1>Search Result</h1>
+  </div>
+  <tui-loader [showLoader]="isLoading"></tui-loader>
+  <div *ngFor="let user of userList">
+    <app-user-info-card [user]="user"></app-user-info-card>
+  </div>
+</div>

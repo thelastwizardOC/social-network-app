@@ -56,7 +56,7 @@ public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, SearchU
             
             return new SearchUsersListDto()
             {
-                Users = searchUsersResult,
+                Users = searchUsersResult.OrderBy(user => user.Relationship).ToList(),
                 TotalCount = totalCount,
                 HasNextPage = hasNextPage
             };
