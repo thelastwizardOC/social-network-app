@@ -73,7 +73,7 @@ public class UserController : ApiControllerBase
         }
     }
 
-    [HttpGet]
+    [HttpGet("search")]
     public async Task<ActionResult<SearchUsersListDto>> SearchUser([FromQuery] SearchUsersQuery query)
     {
         try

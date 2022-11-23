@@ -3,11 +3,24 @@
     <a href="" class="logo-container">
       <img class="logo" src="assets/svg/nav-logo.svg" />
     </a>
+    <tui-hosted-dropdown [content]="dropdownSearch" [(open)]="isDropDownSearchVisible">
+      <div class="search-box-container">
+        <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
+        <input
+          class="tui-text_body-m-2"
+          type="text"
+          placeholder="Search on Honest"
+          (keyup)="onSearchInputChange()"
+          (click)="onToggleDropdownSearch()"
+          #searchInput
+        />
+      </div>
+    </tui-hosted-dropdown>
+    <tui-loader [showLoader]="isLoadingSearch" style="width: 100px; height: 100px">{{ isLoadingSearch }}</tui-loader>
 
-    <div class="search-box-container">
-      <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
-      <input class="tui-text_body-m-2" type="text" placeholder="Search on Honest" #searchInput (change)="onSearchInputChange()" />
-    </div>
+    <ng-template #dropdownSearch>
+      <!-- <tui-data-list> </tui-data-list> -->
+    </ng-template>
   </div>
   <div class="navigation-bar-right">
     <div class="menu-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -20,13 +33,13 @@
       <tui-svg src="assets/svg/bell-icon.svg"></tui-svg>
     </div>
 
-    <tui-hosted-dropdown [content]="dropdown" [(open)]="isDropDownVisible">
+    <tui-hosted-dropdown [content]="dropdownProfile" [(open)]="isDropDownProfileVisible">
       <div [class]="isOnProfilePage == true ? 'profile-btn-active' : 'menu-btn'">
         <tui-svg src="assets/svg/profile-icon.svg"></tui-svg>
       </div>
     </tui-hosted-dropdown>
 
-    <ng-template #dropdown>
+    <ng-template #dropdownProfile>
       <tui-data-list>
         <a *ngFor="let item of profileItems; index as i" tuiOption (click)="toggleDropDown(i)" [routerLink]="item.link">
           {{ item.label }}

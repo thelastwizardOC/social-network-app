@@ -26,18 +26,33 @@ public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, SearchU
     {
         try
         {
-            var users =
-                from u in _context.User
-                from f in _context.UserFriends.Where(f => f.SourceUserId == u.Id || f.FriendId == u.Id)
-                    .DefaultIfEmpty()
-                select u;
-            // users = users.Where(u => u.UserName.Contains(request.SearchString)
-            //                          || u.FirstName.Contains(request.SearchString)
-            //                          || u.LastName.Contains(request.SearchString)).OrderBy(u => u.FirstName);
-            int totalCount = await users.CountAsync();
+            var users = from u in _context.User select u; 
+            users = users.Where(u => u.UserName.Contains(request.SearchString)
+                                     || u.FirstName.Contains(request.SearchString)
+                                     || u.LastName.Contains(request.SearchString)).OrderBy(u => u.FirstName).AsNoTracking();
+
+            int totalCount = users.Count();
             var paginatedList = await users.Skip(request.Offset).Take(request.Limit).ToListAsync();
             bool hasNextPage = totalCount > request.Limit + request.Offset;
             var searchUsersResult = _mapper.Map<List<User>, List<SearchUserDto>>(paginatedList);
+
+            var friends = await (from f in _context.UserFriends select new {f.SourceUserId, f.FriendId}).AsNoTracking().ToListAsync();
+            
+            searchUsersResult.ForEach(i =>
+            {
+                if (i.Id == request.UserId)
+                {
+                    i.Relationship = RelationshipType.Self;
+                }
+                else if (friends.FirstOrDefault(x => x.FriendId == i.Id || x.SourceUserId == i.Id) != default)
+                {
+                    i.Relationship = RelationshipType.Friend;
+                }
+                else
+                {
+                    i.Relationship = RelationshipType.NotFriend;
+                }
+            });
             
             return new SearchUsersListDto()
             {

@@ -1,8 +1,9 @@
+import { UserService } from './../../services/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ChangeDetectionStrategy, Component, ElementRef, Inject, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiDialogService, TuiHostedDropdownComponent } from '@taiga-ui/core';
-import * as _ from 'lodash';
+import { debounce } from 'lodash';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -17,8 +18,11 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   constructor(
     private route: Router,
     private jwtHelper: JwtHelperService,
-    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService
-  ) {}
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    private userService: UserService
+  ) {
+    // this.onSearchInputChange = debounce(this.onSearchInputChange, 500);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
@@ -30,13 +34,14 @@ export class NavigationBarComponent implements OnInit, OnChanges {
 
   profileItems = [{ label: 'See Your Profile', link: '/' }, { label: 'Log Out' }];
 
-  isDropDownVisible = false;
-
+  isDropDownProfileVisible = false;
+  isDropDownSearchVisible = false;
   isOnProfilePage = false;
+  isLoadingSearch = false;
 
   toggleDropDown(itemIndex: number) {
     if (itemIndex === 1) this.showDialog();
-    this.isDropDownVisible = !this.isDropDownVisible;
+    this.isDropDownProfileVisible = !this.isDropDownProfileVisible;
   }
 
   ngDoCheck(): void {
@@ -51,6 +56,8 @@ export class NavigationBarComponent implements OnInit, OnChanges {
       this.userId = +this.jwtHelper.decodeToken(token as string).sub;
       this.profileItems[0].link = '/profile/' + this.userId;
     }
+
+    console.log(this.isLoadingSearch);
   }
 
   showDialog(): void {
@@ -64,6 +71,27 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   }
 
   onSearchInputChange() {
-    _.debounce();
+    this.isLoadingSearch = true;
+    console.log(this.isLoadingSearch);
+    var value: string = this.input.nativeElement.value;
+    if (value.length != 0) {
+      this.userService.searchUser(this.userId, value).subscribe({
+        next: res => {
+          console.log('Hi', res);
+          console.log(this.isLoadingSearch);
+        },
+        error: err => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete' + this.isLoadingSearch);
+          this.isLoadingSearch = false;
+        }
+      });
+    }
+  }
+
+  onToggleDropdownSearch() {
+    this.isDropDownSearchVisible = true;
   }
 }

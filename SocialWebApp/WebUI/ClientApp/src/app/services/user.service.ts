@@ -21,4 +21,13 @@ export class UserService {
       responseType: 'text'
     });
   }
+
+  searchUser(userId: number, searchString: string) {
+    return this.http.get(`${environment.baseApi}/user/search`, {
+      params: {
+        userId,
+        searchString
+      }
+    });
+  }
 }

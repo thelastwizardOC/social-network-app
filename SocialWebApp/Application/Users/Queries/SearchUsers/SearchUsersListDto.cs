@@ -14,5 +14,13 @@ public class SearchUserDto
     public string LastName { get; set; }
     public string UserName { get; set; }
     public string Avatar { get; set; }
-    public bool IsFriend { get; set; }
+    public RelationshipType Relationship { get; set; }
+}
+
+public enum RelationshipType
+{
+    Self,
+    Friend,
+    NotFriend,
+    Pending,
 }
