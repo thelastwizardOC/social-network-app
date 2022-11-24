@@ -6,9 +6,10 @@ import { SearchPageRoute } from './search-page.route';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { UserInfoCardComponent } from './components/user-info-card/user-info-card.component';
 import { ButtonRelationshipPipe } from 'src/app/pipes/relationship.pipe';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [SearchPageContainerComponent, SearchPageComponent, UserInfoCardComponent, ButtonRelationshipPipe],
-  imports: [CommonModule, SearchPageRoute, TuiLoaderModule, TuiButtonModule]
+  imports: [CommonModule, SearchPageRoute, TuiLoaderModule, TuiButtonModule, InfiniteScrollModule]
 })
 export class SearchResultPageModule {}

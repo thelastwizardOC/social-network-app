@@ -27,14 +27,13 @@ public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, SearchU
         try
         {
             var users = from u in _context.User select u; 
-            users = users.Where(u => u.UserName.Contains(request.SearchString)
+            var userList = await users.Where(u => u.UserName.Contains(request.SearchString)
                                      || u.FirstName.Contains(request.SearchString)
-                                     || u.LastName.Contains(request.SearchString)).OrderBy(u => u.FirstName).AsNoTracking();
+                                     || u.LastName.Contains(request.SearchString)).OrderBy(u => u.FirstName).AsNoTracking().ToListAsync();
 
-            int totalCount = users.Count();
-            var paginatedList = await users.Skip(request.Offset).Take(request.Limit).ToListAsync();
+            int totalCount = userList.Count();
             bool hasNextPage = totalCount > request.Limit + request.Offset;
-            var searchUsersResult = _mapper.Map<List<User>, List<SearchUserDto>>(paginatedList);
+            var searchUsersResult = _mapper.Map<List<User>, List<SearchUserDto>>(userList);
 
             var friends = await (from f in _context.UserFriends select new {f.SourceUserId, f.FriendId}).AsNoTracking().ToListAsync();
             
@@ -53,10 +52,11 @@ public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, SearchU
                     i.Relationship = RelationshipType.NotFriend;
                 }
             });
+            var paginatedList = searchUsersResult.OrderBy(user => user.Relationship).Skip(request.Offset).Take(request.Limit);
             
             return new SearchUsersListDto()
             {
-                Users = searchUsersResult.OrderBy(user => user.Relationship).ToList(),
+                Users = paginatedList.ToList(),
                 TotalCount = totalCount,
                 HasNextPage = hasNextPage
             };

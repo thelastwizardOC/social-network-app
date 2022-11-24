@@ -84,6 +84,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     if (value.length != 0) {
       this.userService.searchUser(this.userId, value, 0, 5).subscribe({
         next: (res: ISearchUserResponse) => {
+          console.log(res);
           this.searchUsers = res.users;
         },
         error: err => {
@@ -105,6 +106,8 @@ export class NavigationBarComponent implements OnInit, OnChanges {
 
   onSearchEnter() {
     this.isDropDownSearchVisible = false;
-    this.route.navigate(['search'], { queryParams: { searchString: trim(this.input.nativeElement.value) } });
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate(['search'], { queryParams: { searchString: trim(this.input.nativeElement.value) } });
+    });
   }
 }

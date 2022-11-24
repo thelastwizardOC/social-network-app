@@ -16,13 +16,15 @@ export class SearchPageContainerComponent implements OnInit {
   userId!: number;
   hasNextPage: boolean = false;
   isLoading: boolean = false;
-  limit: number = 10;
+  limit: number = 8;
   offset: number = 0;
 
   ngOnInit(): void {
     this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.route.queryParams.subscribe((params: any) => {
       this.searchString = params['searchString'];
+      this.userList = [];
+      this.offset = 0;
       this.onSearchUser();
     });
   }
@@ -42,5 +44,11 @@ export class SearchPageContainerComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  handleOnScroll() {
+    if (this.hasNextPage) {
+      this.onSearchUser();
+    }
   }
 }

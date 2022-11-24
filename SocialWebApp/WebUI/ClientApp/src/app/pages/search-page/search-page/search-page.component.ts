@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ISearchUser } from 'src/app/interface/user';
 
 @Component({
@@ -9,6 +9,7 @@ import { ISearchUser } from 'src/app/interface/user';
 export class SearchPageComponent implements OnInit {
   @Input() userList!: ISearchUser[];
   @Input() isLoading: boolean = false;
+  @Output() onScroll = new EventEmitter();
 
   constructor() {}
 

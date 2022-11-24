@@ -138,3 +138,21 @@ $primary-color: #379cf3;
 .relationship {
   color: var(--tui-base-05);
 }
+
+.item-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 300px;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.loader {
+  margin-bottom: 20px;
+}

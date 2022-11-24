@@ -19,8 +19,8 @@ public class SearchUserDto
 
 public enum RelationshipType
 {
-    Friend,
     Self,
+    Friend,
     NotFriend,
     Pending,
 }

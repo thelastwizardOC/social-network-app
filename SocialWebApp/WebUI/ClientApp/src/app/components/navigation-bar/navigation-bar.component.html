@@ -18,10 +18,10 @@
     </tui-hosted-dropdown>
 
     <ng-template #dropdownSearch class="dropdown-search">
-      <tui-data-list emptyContent="Try searching for friends">
+      <tui-data-list [emptyContent]="searchInput.value !== '' && !isLoadingSearch ? 'No user found' : 'Try searching for friends'">
         <a *ngFor="let user of searchUsers; index as i" tuiOption [href]="'profile/' + user.id">
-          <div style="display: flex; flex-direction: row; align-items: center; width: 250px">
-            <img [src]="user.avatar" alt="" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px" />
+          <div class="item-container">
+            <img [src]="user.avatar" class="user-avatar" />
             <div>
               <p class="tui-text_body-m username">{{ user.firstName + ' ' + user.lastName }}</p>
               <p class="tui-text_body-s relationship">{{ user.relationship | relationship }}</p>
@@ -29,7 +29,7 @@
           </div>
         </a>
       </tui-data-list>
-      <tui-loader *ngIf="isLoadingSearch" style="margin-bottom: 20px"></tui-loader>
+      <tui-loader *ngIf="isLoadingSearch" class="loader"></tui-loader>
     </ng-template>
   </div>
   <div class="navigation-bar-right">
