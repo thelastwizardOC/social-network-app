@@ -10,11 +10,11 @@ export interface IUser {
   gender: number;
   phoneNo: string;
   createdAt?: string;
-  updatedAt?:string;
-  token?:string;
+  updatedAt?: string;
+  token?: string;
 }
 export enum Gender {
-  male,
-  female,
-  other,
+  MALE,
+  FEMALE,
+  OTHER
 }

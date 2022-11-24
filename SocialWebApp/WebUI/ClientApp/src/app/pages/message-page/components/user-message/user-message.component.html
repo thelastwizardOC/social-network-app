@@ -1,0 +1,10 @@
+<div [ngClass]="{ receive: type === messageType.RECEIVE, send: type === messageType.SEND, container: true }">
+  <tui-avatar [rounded]="true" *ngIf="type === messageType.RECEIVE" [avatarUrl]="mockImg"></tui-avatar>
+  <div class="message-info">
+    <p class="message-text">
+      Xin chao toi la kem Xin chao toi la kem day Xin chao toi la kemaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Xin chao
+      toi la kem day Xin chao toi la kem day Xin chao toi la kem day la kem Xin chao toi la kem day
+    </p>
+    <p class="message-time">1:50 PM</p>
+  </div>
+</div>
