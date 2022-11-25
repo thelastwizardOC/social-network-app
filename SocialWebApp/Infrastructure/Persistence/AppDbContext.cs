@@ -20,6 +20,7 @@ public class AppDbContext : DbContext, IApplicationDbContext
     public DbSet<Photo> Photo { get; set; }
     
     public DbSet<PostLike> PostLike { get; set; }
+    public DbSet<PostPhoto> PostPhoto { get; set; }
 
     public int SaveChanges()
     {

@@ -1,23 +1,30 @@
 <form [formGroup]="postForm" (ngSubmit)="onPostSummited()">
   <app-user-info></app-user-info>
 
-  <tui-text-area
-    formControlName="postStatusValue"
-    [tuiAutoFocus]="true"
-    [expandable]="true"
-    class="status-container no-shadow"
-  ></tui-text-area>
+  <tui-text-area formControlName="postStatusValue" [tuiAutoFocus]="true" [expandable]="true" class="status-container no-shadow"
+    >What do you think?</tui-text-area
+  >
+
+  <ng-container *ngIf="files.length > 0">
+    <app-carousel [imageUrls]="files"></app-carousel>
+  </ng-container>
 
   <tui-island class="tui-space_vertical-4" size="s">
     <div class="tui-container tui-container_fullwidth">
       <div class="tui-row tui-row_align_center add-file__frame">
-        <app-add-file></app-add-file>
-        <button tuiButton type="submit" size="m" [disabled]="!(postForm.valid && postForm.dirty)" class="tui-form__button">Post</button>
+        <app-add-file (handleOpenPostDialog)="handleOpenDialog.emit()" (handleImagesUploaded)="onImagesUploaded()"></app-add-file>
+        <button
+          tuiButton
+          type="submit"
+          [showLoader]="isSendingData"
+          size="m"
+          [disabled]="!(postForm.valid && postForm.dirty)"
+          class="confirm_button"
+        >
+          Post
+        </button>
       </div>
     </div>
   </tui-island>
-  <tui-error
-    formControlName="postStatusValue"
-    [error]="[] | tuiFieldError | async"
-  ></tui-error>
+  <tui-error formControlName="postStatusValue" [error]="[] | tuiFieldError | async"></tui-error>
 </form>

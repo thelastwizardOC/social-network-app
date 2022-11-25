@@ -4,9 +4,10 @@ import { IPost } from 'src/app/interface/post';
 @Component({
   selector: 'app-newsfeed',
   templateUrl: './newsfeed.component.html',
-  styleUrls: ['./newsfeed.component.scss'],
+  styleUrls: ['./newsfeed.component.scss']
 })
 export class NewsfeedComponent implements OnInit {
+  @Output() handlePostSucceeded = new EventEmitter();
   @Input() userId!: number;
   @Input() posts: IPost[] = [];
   @Input() isLoading: boolean = false;

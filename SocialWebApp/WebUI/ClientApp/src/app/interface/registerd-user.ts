@@ -3,11 +3,11 @@ export interface IRegisterUser {
   firstName: string;
   lastName: string;
   userName: string;
-  password:string;
+  password: string;
   dob: string;
   email: string;
   gender: number;
   phoneNo: string;
   createdAt?: string;
-  updatedAt?:string;
+  updatedAt?: string;
 }

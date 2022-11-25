@@ -5,7 +5,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ErrorService {
-
   getClientMessage(error: Error): string {
     if (!navigator.onLine) {
       return 'No Internet Connection';
@@ -14,7 +13,6 @@ export class ErrorService {
   }
 
   getServerMessage(error: HttpErrorResponse): string {
-    return typeof (error.error)== "string" ? error.error: error.message;
+    return typeof error.error == 'string' ? error.error : error.message;
   }
-
 }

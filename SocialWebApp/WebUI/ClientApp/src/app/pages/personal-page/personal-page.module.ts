@@ -13,6 +13,7 @@ import { PersonalPageRoute } from './personal-page.route';
 import { PersonalComponent } from './personal/personal.component';
 import { UploadImageDialogComponent } from './components/upload-image-dialog/upload-image-dialog.component';
 import { PhotoTabComponent } from './components/photo-tab/photo-tab.component';
+import { NewPostModule } from '../../components/new-post/new-post.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PhotoTabComponent } from './components/photo-tab/photo-tab.component';
     PostModule,
     TuiInputFilesModule,
     ReactiveFormsModule,
-    TuiDialogModule
+    TuiDialogModule,
+    NewPostModule
   ]
 })
 export class PersonalPageModule {}

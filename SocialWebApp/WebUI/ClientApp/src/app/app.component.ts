@@ -15,7 +15,9 @@ export class AppComponent {
 
   ngDoCheck(): void {
     const currentRoute = this.route.url;
-    currentRoute == '/auth/login' || currentRoute == '/auth/register' || currentRoute == '/error'  ? (this.isNavBarVisible = false) : (this.isNavBarVisible = true);
+    currentRoute == '/auth/login' || currentRoute == '/auth/register' || currentRoute == '/error'
+      ? (this.isNavBarVisible = false)
+      : (this.isNavBarVisible = true);
   }
   readonly arrow = TUI_ARROW;
 }

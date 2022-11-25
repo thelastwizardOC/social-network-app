@@ -1,10 +1,11 @@
 using Application.Common.Exceptions;
+using Application.Common.Models;
+using Application.Posts.Commands.CreatePost;
 using Application.Posts.Commands.LikePost;
 using Application.Posts.Queries;
 using Application.Posts.Queries.GetPersonalPosts;
 using Application.Posts.Queries.GetNewsfeedPosts;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Entities;
 
 
 namespace WebUI.Controllers;
@@ -61,6 +62,40 @@ public class PostController : ApiControllerBase
         catch (NotFoundException e)
         {
             return NotFound();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
+        }
+    }
+
+    [HttpPost("create")]
+    public async Task<ActionResult<bool>> CreatePost([FromForm] ICollection<IFormFile> files,[FromForm]string status,[FromForm]int userId)
+    {
+        try
+        {
+            List<FileDto> fileDtos = new List<FileDto>();
+            foreach (var file in files)
+            {
+                var fileDto = new FileDto
+                {
+                    Content = file.OpenReadStream(),
+                    Name = file.FileName,
+                    ContentType = file.ContentType,
+                };
+                fileDtos.Add(fileDto);
+            }
+
+            var result = await Mediator.Send(new CreatePostCommand(userId, fileDtos, status));
+            return result;
+        }
+        catch (ValidationException e)
+        {
+            return BadRequest(e.Message);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {

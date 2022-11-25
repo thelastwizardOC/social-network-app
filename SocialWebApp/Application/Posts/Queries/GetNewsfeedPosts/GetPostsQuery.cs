@@ -45,7 +45,7 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, PaginatedPost
                 {
                     Id = p.Id,
                     Status = p.Status,
-                    Photo = p.Photo,
+                    Photos = p.Photos,
                     NumberOfComments = p.NumberOfComments,
                     NumberOfLikes = p.NumberOfLikes,
                     CreatedAt = p.CreatedAt,

@@ -1,13 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import {TuiAlertService, TuiDialogService, TuiNotification} from '@taiga-ui/core';
+import { TuiAlertService, TuiDialogService, TuiNotification } from '@taiga-ui/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  constructor(
-    @Inject(TuiAlertService) private readonly alertService: TuiAlertService
-  ) {}
+  constructor(@Inject(TuiAlertService) private readonly alertService: TuiAlertService) {}
 
   showSuccess(message: string): void {
     this.alertService
@@ -38,5 +36,4 @@ export class NotificationService {
       })
       .subscribe();
   }
-
 }

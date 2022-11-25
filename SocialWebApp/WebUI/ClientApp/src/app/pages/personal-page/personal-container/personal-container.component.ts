@@ -44,6 +44,12 @@ export class PersonalContainerComponent implements OnInit {
     });
   }
 
+  handleAfterPosting() {
+    this.personalPosts = [];
+    this.offset = 0;
+    this.fetchPosts();
+  }
+
   fetchPosts(): void {
     this.isLoading = true;
 

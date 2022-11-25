@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseApi: 'https://social-intern-orient.azurewebsites.net/api',
+  baseApi: 'https://localhost:7108/api',
   mockImg: 'assets/images/skeleton.jpeg'
 };
 

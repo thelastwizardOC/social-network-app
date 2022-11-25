@@ -8,10 +8,10 @@ import { PersonalContainerComponent } from './personal-container/personal-contai
       {
         path: ':id',
         component: PersonalContainerComponent,
-        title: 'Personal',
-      },
-    ]),
+        title: 'Personal'
+      }
+    ])
   ],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class PersonalPageRoute {}

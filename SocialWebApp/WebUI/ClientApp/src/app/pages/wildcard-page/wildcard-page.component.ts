@@ -7,12 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./wildcard-page.component.scss']
 })
 export class WildcardPageComponent implements OnInit {
-
-  constructor( private router: Router,) { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.router.navigate(['/error']);
-
   }
-
 }

@@ -37,4 +37,8 @@ export class PostService {
       }
     );
   }
+
+  createPost(files: FormData): Observable<boolean> {
+    return this.http.post<boolean>(`${environment.baseApi}/Post/create`, files);
+  }
 }

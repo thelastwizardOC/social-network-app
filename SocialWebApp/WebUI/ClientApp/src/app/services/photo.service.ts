@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class PhotoService {
   constructor(private http: HttpClient) {}
@@ -13,8 +13,8 @@ export class PhotoService {
       params: {
         userId,
         limit,
-        offset,
-      },
+        offset
+      }
     });
   }
 }

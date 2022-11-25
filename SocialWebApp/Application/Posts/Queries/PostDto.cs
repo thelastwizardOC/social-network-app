@@ -5,8 +5,8 @@ namespace Application.Posts.Queries;
 public class PostDto
 {
   public int Id { get; set; }
-  public string Status { get; set; }
-  public string Photo { get; set; }
+  public string? Status { get; set; }
+  public List<PostPhoto>? Photos { get; set; }
   public int NumberOfLikes { get; set; }
   public int NumberOfComments { get; set; }
   public DateTime CreatedAt { get; set; }

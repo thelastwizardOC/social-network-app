@@ -1,18 +1,7 @@
 <div class="tui-col_12">
-<app-new-post></app-new-post>
-<div
-  infinite-scroll
-  [infiniteScrollDistance]="2"
-  [infiniteScrollThrottle]="1000"
-  (scrolled)="this.onScroll.emit()"
->
-  <app-post
-    *ngFor="let post of posts"
-    [post]="post"
-    [userId]="userId"
-    (onLike)="onLike.emit($event)"
-  ></app-post>
-  <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading">
-  </tui-loader>
-</div>
+  <app-new-post (handlePostSucceeded)="handlePostSucceeded.emit()"></app-new-post>
+  <div infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="this.onScroll.emit()">
+    <app-post *ngFor="let post of posts" [post]="post" [userId]="userId" (onLike)="onLike.emit($event)"></app-post>
+    <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading"> </tui-loader>
+  </div>
 </div>
