@@ -1,37 +1,44 @@
 using Application.Common.Interfaces;
-using Application.Users.Queries.GetUserInfo;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Users.Queries.SearchFriends;
 
-public class SearchFriendsQuery : IRequest<List<UserDto>>
-{
-    public int SourceUserId { get; set; }
-    public string Keyword { get; set; } = "";
-}
+public record SearchFriendsQuery
+(int UserId, string SearchString = "", int Offset = 0, int Limit = 100) : IRequest<SearchFriendsListDto>;
 
-public class SearchFriendsQueryHandler : IRequestHandler<SearchFriendsQuery, List<UserDto>>
+public class SearchFriendsQueryHandler : IRequestHandler<SearchFriendsQuery, SearchFriendsListDto>
 {
-    private IApplicationDbContext _appDb;
+    private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public SearchFriendsQueryHandler(IApplicationDbContext appDb, IMapper mapper)
+    public SearchFriendsQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
-        _appDb = appDb;
+        _context = context;
         _mapper = mapper;
     }
 
-    public async Task<List<UserDto>> Handle(SearchFriendsQuery request, CancellationToken cancellationToken)
+    public async Task<SearchFriendsListDto> Handle(SearchFriendsQuery request, CancellationToken token)
     {
-        var userFriends = await _appDb.UserFriends.Where(uf => uf.SourceUserId == request.SourceUserId).Include(uf=>uf.Friend).ToListAsync();
-        var searchedUserFriends =
-            userFriends.Where(f => f.Friend.FirstName.ToLower().Contains(request.Keyword.ToLower()) 
-                                   || f.Friend.LastName.ToLower().Contains(request.Keyword.ToLower())
-                                   || f.Friend.UserName.ToLower().Contains(request.Keyword.ToLower())).ToList();
+        var userFriends = _context.User.Join(_context.UserFriends,
+            user => user.Id,
+            userFriends => userFriends.SourceUserId,
+            (user, userFriends) => _mapper.Map<User, SearchFriendDto>(user)).AsNoTracking();
+        var friends = userFriends
+            .Where(u => u.Id == request.UserId 
+                        && u.FirstName == request.SearchString
+                        && u.LastName == request.SearchString
+                        && u.Username == request.SearchString).OrderBy(u => u.FirstName).AsNoTracking();
+        int totalCount = friends.Count();
+        bool hasNextPage = totalCount > request.Limit + request.Offset;
 
-        var userDto = _mapper.Map<List<UserDto>>(searchedUserFriends.Select(u=>u.Friend));
-        return userDto;
+        var paginatedList = await friends.Skip(request.Offset).Take(request.Limit).ToListAsync();
+        
+        return new SearchFriendsListDto()
+        {
+            
+        }
     }
 }
