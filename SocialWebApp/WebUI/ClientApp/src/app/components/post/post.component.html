@@ -16,13 +16,16 @@
     {{ post.status }}
   </p>
   <p *ngIf="hasSeeMore" (click)="onSeeMore()" class="see-more tui-text_body-m">See more</p>
-  <div>
-    <img class="post-img" [src]="post.photo || mockImg" />
+
+  <div *ngIf="postImages.length > 0">
+    <app-carousel [imageUrls]="postImages"></app-carousel>
   </div>
+
   <div class="post-numbers">
     <p class="tui-text_body-m">{{ post.numberOfLikes | plural: 'Like' }}</p>
     <p class="tui-text_body-m">{{ post.numberOfComments | plural: 'Comment' }}</p>
   </div>
+
   <div class="btn-actions">
     <div (click)="onLike.emit(post.id)" class="btn-action">
       <tui-svg [ngClass]="isLiked ? 'likedHeart' : null" [src]="isLiked ? 'tuiIconHeartFilledLarge' : 'tuiIconHeartLarge'"></tui-svg>

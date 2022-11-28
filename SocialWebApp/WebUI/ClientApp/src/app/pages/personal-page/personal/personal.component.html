@@ -49,6 +49,9 @@
 
 <div class="tui-container-fixed" [ngSwitch]="activeItemIndex">
   <div *ngSwitchCase="'0'" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="this.onScroll.emit()">
+    <div class="tui-space_top-4">
+      <app-new-post (handlePostSucceeded)="handlePostSucceeded.emit()"></app-new-post>
+    </div>
     <app-post *ngFor="let post of personalPosts" [post]="post" (onLike)="onLike.emit($event)" [userId]="userId"></app-post>
 
     <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading"> </tui-loader>
@@ -67,6 +70,7 @@
     (onUploadPhotoSuccess)="onPhotoUpload.emit({$event, uploadType});activeItemIndex = 0"
   ></app-upload-image-dialog>
 </ng-template>
+
 <ng-template let-observer [tuiDialogOptions]="{ label: 'Error', size: 's' }" [(tuiDialog)]="userNotFound">
   <p>User Not Found</p>
 </ng-template>

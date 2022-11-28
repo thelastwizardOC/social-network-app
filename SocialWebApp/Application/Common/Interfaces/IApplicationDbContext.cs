@@ -13,6 +13,7 @@ public interface IApplicationDbContext
     public DbSet<Notification> Notification { get; set; }
     public DbSet<Photo> Photo { get; set; }
     public DbSet<PostLike> PostLike { get; set; }
+    public DbSet<PostPhoto> PostPhoto { get; set; }
 
     Task<int> SaveChangesAsync();
     public int SaveChanges();

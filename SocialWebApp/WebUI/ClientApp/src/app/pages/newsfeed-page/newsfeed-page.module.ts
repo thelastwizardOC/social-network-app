@@ -6,9 +6,20 @@ import { PostModule } from 'src/app/components/post/post.module';
 import { NewsfeedContainerComponent } from './newsfeed-container/newsfeed-container.component';
 import { NewsfeedPageRoute } from './newsfeed-page.route';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
+import { NewPostModule } from '../../components/new-post/new-post.module';
 
 @NgModule({
   declarations: [NewsfeedComponent, NewsfeedContainerComponent],
-  imports: [CommonModule, NewsfeedPageRoute, PostModule, TuiButtonModule, TuiSvgModule, PostModule, InfiniteScrollModule, TuiLoaderModule]
+  imports: [
+    CommonModule,
+    NewsfeedPageRoute,
+    PostModule,
+    TuiButtonModule,
+    TuiSvgModule,
+    PostModule,
+    InfiniteScrollModule,
+    TuiLoaderModule,
+    NewPostModule
+  ]
 })
 export class NewsfeedPageModule {}

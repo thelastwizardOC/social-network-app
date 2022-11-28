@@ -1,39 +1,7 @@
-<div class="input-status-wrapper">
-  <p class="tui-text_body-m-2">What do you think?</p>
-  <div>
-    <div class="status-button-wrapper">
-      <div style="display: flex; align-items: center; flex: 1">
-        <tui-svg class="icon-image" src="tuiIconImgLarge"></tui-svg>
-        <p class="tui-text_body-m-2 tui-space_left-2">
-          Add something to your post
-        </p>
-      </div>
-      <button
-        class="btn-post"
-        size="s"
-        tuiButton
-        type="button"
-        appearance="secondary"
-        [disabled]="true"
-      >
-        Post
-      </button>
-    </div>
+<div class="tui-col_12">
+  <app-new-post (handlePostSucceeded)="handlePostSucceeded.emit()"></app-new-post>
+  <div infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="this.onScroll.emit()">
+    <app-post *ngFor="let post of posts" [post]="post" [userId]="userId" (onLike)="onLike.emit($event)"></app-post>
+    <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading"> </tui-loader>
   </div>
-</div>
-
-<div
-  infinite-scroll
-  [infiniteScrollDistance]="2"
-  [infiniteScrollThrottle]="1000"
-  (scrolled)="this.onScroll.emit()"
->
-  <app-post
-    *ngFor="let post of posts"
-    [post]="post"
-    [userId]="userId"
-    (onLike)="onLike.emit($event)"
-  ></app-post>
-  <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading">
-  </tui-loader>
 </div>

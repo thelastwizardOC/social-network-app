@@ -1,9 +1,9 @@
 .newsfeed-page-container {
-  width: 940px;
   margin-top: calc(var(--nav-bar-height) + 10px);
 }
+
 @media screen and (max-width: 47.9625em) {
-  .newsfeed-page-container {
-    width: 100%;
+  .friend-container {
+    display: none;
   }
 }

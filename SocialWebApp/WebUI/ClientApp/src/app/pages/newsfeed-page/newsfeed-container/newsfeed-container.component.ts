@@ -31,6 +31,12 @@ export class NewsfeedContainerComponent implements OnInit {
     this.handleLikePost = _.debounce(this.handleLikePost, 1000);
   }
 
+  handlePostSucceeded() {
+    this.posts = [];
+    this.offset = 0;
+    this.fetchPosts();
+  }
+
   fetchPosts(): void {
     this.isLoading = true;
     this.postService.getNewsfeedPost(this.userId, this.offset, this.limit).subscribe({

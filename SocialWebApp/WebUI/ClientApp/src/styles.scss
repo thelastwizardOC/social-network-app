@@ -26,6 +26,14 @@ body {
   align-self: center;
 }
 
+.confirm_button {
+  &._disabled {
+    > div {
+      background: var(--tui-base-05);
+    }
+  }
+}
+
 .title {
   color: var(--tui-primary);
   font-weight: 700;

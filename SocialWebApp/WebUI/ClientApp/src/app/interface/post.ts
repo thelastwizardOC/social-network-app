@@ -2,8 +2,8 @@ import { IUser } from './user';
 
 export interface IPost {
   id: number;
-  status: string;
-  photo: string;
+  status?: string;
+  photos?: IPostPhoto[];
   numberOfLikes: number;
   numberOfComments: number;
   createdAt: Date;
@@ -22,4 +22,10 @@ export interface IPostLike {
   id: number;
   userId: number;
   postId: number;
+}
+
+export interface IPostPhoto {
+  id: number;
+  postId: number;
+  photo: string;
 }

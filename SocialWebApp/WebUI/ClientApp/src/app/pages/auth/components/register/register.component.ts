@@ -1,32 +1,17 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {TuiCountryIsoCode} from '@taiga-ui/i18n';
-import {tuiInputPasswordOptionsProvider} from '@taiga-ui/kit';
-import {
-  emailValidator,
-  nameValidator,
-  passwordValidator,
-  phoneValidator,
-  userNameValidator
-} from '../../validators/register-validator';
-import {AuthService} from '../../../../services/auth.service';
-import {Router} from '@angular/router';
-import {IRegisterUser} from '../../../../interface/registerd-user';
-import {Gender, IUser} from '../../../../interface/user';
-import {HttpErrorResponse} from '@angular/common/http';
-import {NotificationService} from '../../../../services/notification.service';
-import {GlobalErrorHandler} from '../../../../services/error-handler.service';
-import {TuiDialogContext} from "@taiga-ui/core";
-import {TuiPreviewDialogService} from "@taiga-ui/addon-preview";
-import {TuiValidationError} from "@taiga-ui/cdk";
+import { ChangeDetectionStrategy, Component, Inject, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TuiCountryIsoCode } from '@taiga-ui/i18n';
+import { tuiInputPasswordOptionsProvider } from '@taiga-ui/kit';
+import { emailValidator, nameValidator, passwordValidator, phoneValidator, userNameValidator } from '../../validators/register-validator';
+import { AuthService } from '../../../../services/auth.service';
+import { Router } from '@angular/router';
+import { IRegisterUser } from '../../../../interface/registerd-user';
+import { Gender, IUser } from '../../../../interface/user';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationService } from '../../../../services/notification.service';
+import { GlobalErrorHandler } from '../../../../services/error-handler.service';
+import { TuiDialogContext } from '@taiga-ui/core';
+import { TuiPreviewDialogService } from '@taiga-ui/addon-preview';
 
 @Component({
   selector: 'app-register',
@@ -68,16 +53,14 @@ export class RegisterComponent implements OnInit {
     private notification: NotificationService,
     private errorHandler: GlobalErrorHandler,
     @Inject(TuiPreviewDialogService)
-    private readonly previewService: TuiPreviewDialogService,
-  ) {
-  }
+    private readonly previewService: TuiPreviewDialogService
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   showPreviewTermPolicy() {
     this.previewService.open(this.preview || ``).subscribe({
-      complete: () => console.info(`complete`),
+      complete: () => console.info(`complete`)
     });
   }
 
@@ -114,13 +97,13 @@ export class RegisterComponent implements OnInit {
   }
 
   handleBadRequests(err: HttpErrorResponse) {
-    if (err.error.includes("email")) {
-      this.registerForm.controls.emailValue.setErrors({other: "This email is already in use. Please use another one"})
-      this.registerForm.setErrors({other: ""});
+    if (err.error.includes('email')) {
+      this.registerForm.controls.emailValue.setErrors({ other: 'This email is already in use. Please use another one' });
+      this.registerForm.setErrors({ other: '' });
     }
-    if (err.error.includes("username")) {
-      this.registerForm.controls.userNameValue.setErrors({other: "Someone already has that username. Try another"})
-      this.registerForm.setErrors({other: ""});
+    if (err.error.includes('username')) {
+      this.registerForm.controls.userNameValue.setErrors({ other: 'Someone already has that username. Try another' });
+      this.registerForm.setErrors({ other: '' });
     }
   }
 }

@@ -5,7 +5,7 @@ import { PhotoService } from 'src/app/services/photo.service';
 @Component({
   selector: 'app-photo-tab',
   templateUrl: './photo-tab.component.html',
-  styleUrls: ['./photo-tab.component.scss'],
+  styleUrls: ['./photo-tab.component.scss']
 })
 export class PhotoTabComponent implements OnInit {
   constructor(private photoService: PhotoService, private jwtHelper: JwtHelperService) {}
@@ -27,21 +27,18 @@ export class PhotoTabComponent implements OnInit {
   }
   fetchPhotos(): void {
     this.isLoading = true;
-    this.photoService
-      .getUserPhotos(this.userId, this.offset, this.limit)
-      .subscribe({
-        next: (res: any) => {
-          this.photos = [...this.photos, ...res.photos];
-          this.hasNextPage = res.hasNextPage;
-          this.isLoading = false;
-          this.offset += this.limit;
-          
-        },
-        error: (error) => {
-          console.log({ error });
-          this.isLoading = false;
-        },
-      });
+    this.photoService.getUserPhotos(this.userId, this.offset, this.limit).subscribe({
+      next: (res: any) => {
+        this.photos = [...this.photos, ...res.photos];
+        this.hasNextPage = res.hasNextPage;
+        this.isLoading = false;
+        this.offset += this.limit;
+      },
+      error: error => {
+        console.log({ error });
+        this.isLoading = false;
+      }
+    });
   }
 
   onScroll() {

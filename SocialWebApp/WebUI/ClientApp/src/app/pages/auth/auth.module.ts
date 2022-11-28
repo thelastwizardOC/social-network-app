@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {ErrorHandler, NgModule} from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiValidatorModule } from '@taiga-ui/cdk';
 import {
@@ -32,7 +32,7 @@ import { BrandLogoComponent } from './components/brand-logo/brand-logo.component
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TermPolicyComponent } from './accessories/term-policy/term-policy.component';
-import {TuiPreviewModule} from "@taiga-ui/addon-preview";
+import { TuiPreviewModule } from '@taiga-ui/addon-preview';
 
 @NgModule({
   declarations: [AuthComponent, LoginComponent, BrandLogoComponent, RegisterComponent, TermPolicyComponent],

@@ -1,4 +1,4 @@
-@import "src/styles/variables";
+@import 'src/styles/variables';
 
 .note {
   font-size: 0.8rem;
@@ -38,17 +38,6 @@
 
 .tui-form__buttons {
   margin-top: 0.25rem;
-
-  .tui-form__button {
-    width: 100%;
-
-    &._disabled {
-
-      > div {
-        background: var(--tui-base-05);
-      }
-    }
-  }
 }
 
 .radio-group {
