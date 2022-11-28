@@ -31,13 +31,9 @@ public class GetPersonalPostsQueryHandler : IRequestHandler<GetPersonalPostsQuer
             var foundUser = await _appDb.User.FirstOrDefaultAsync(u=>u.Id==request.UserId);
             if (foundUser == null) throw new NotFoundException();
             var post = await _appDb.Post.Where(p => p.User.Id == request.UserId).Include(p => p.PostLikes)
+                .Include(p => p.Photos)
                 .OrderByDescending(p => p.CreatedAt).Include(p => p.User).Skip(request.Offset).Take(request.Limit)
                 .ToListAsync();
-            for (int i = 0; i < post.Count; i++)
-            {
-                var p = await _appDb.PostPhoto.ToListAsync();
-                post[i].Photos = p;
-            }
             
             List<PostDto> postDtos = _mapper.Map<List<PostDto>>(post);
             int totalCount = postDtos.Count();
