@@ -1,19 +1,17 @@
 using Application.Posts.Queries;
-using Application.Posts.Queries.GetPersonalPosts;
 using Application.Users.Queries.Login;
 using Application.Users.Commands.CreateUser;
 using Application.Users.Queries.GetUserInfo;
 using AutoMapper;
 using Domain.Entities;
 using Application.Photos.Queries.GetPhotoByUserQuery;
+using Application.Users.Queries.SearchUsers;
 
 namespace Application.Common.Mappings;
 
 public class MappingProfile : Profile
 {
- 
-  
-        public MappingProfile()
+    public MappingProfile()
         {
             CreateMap<User, UserDto>();
             CreateMap<NewUserDto, User>();
@@ -21,7 +19,6 @@ public class MappingProfile : Profile
             CreateMap<User, LoginUserDto>();
             CreateMap<Post, PostDto>();
             CreateMap<Photo, PhotoDto>();
-
-            
+            CreateMap<User, SearchUserDto>();
         }
 }

@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="avatar-container">
+    <img [src]="user.avatar" class="avatar" />
+  </div>
+  <div class="info-container">
+    <p class="tui-text_body-m" class="profile-name">{{ user.firstName }} {{ user.lastName }}</p>
+    <p class="tui-text_body-s" class="username">{{ user.userName }}</p>
+  </div>
+  <button tuiButton size="s" [appearance]="user.relationship > 1 ? 'primary' : 'secondary'" class="btn">
+    {{ user.relationship | buttonRelationship }}
+  </button>
+</div>

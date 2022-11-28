@@ -15,4 +15,5 @@ public class UserFriends
   public int FriendId { get; set; }
   public User Friend { get; set; }
 
+  public bool Pending { get; set; }
 }

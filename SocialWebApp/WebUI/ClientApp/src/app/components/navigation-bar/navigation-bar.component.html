@@ -3,11 +3,34 @@
     <a href="" class="logo-container">
       <img class="logo" src="assets/svg/nav-logo.svg" />
     </a>
+    <tui-hosted-dropdown [content]="dropdownSearch" [(open)]="isDropDownSearchVisible">
+      <div class="search-box-container">
+        <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
+        <input
+          class="tui-text_body-m-2"
+          type="text"
+          placeholder="Search on Honest"
+          (keyup)="onSearch($event)"
+          (click)="onToggleDropdownSearch()"
+          #searchInput
+        />
+      </div>
+    </tui-hosted-dropdown>
 
-    <div class="search-box-container">
-      <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
-      <input class="tui-text_body-m-2" type="text" placeholder="Search on Honest" />
-    </div>
+    <ng-template #dropdownSearch class="dropdown-search">
+      <tui-data-list [emptyContent]="searchInput.value !== '' && !isLoadingSearch ? 'No user found' : 'Try searching for friends'">
+        <a *ngFor="let user of searchUsers; index as i" tuiOption [href]="'profile/' + user.id">
+          <div class="item-container">
+            <img [src]="user.avatar" class="user-avatar" />
+            <div>
+              <p class="tui-text_body-m username">{{ user.firstName + ' ' + user.lastName }}</p>
+              <p class="tui-text_body-s relationship">{{ user.relationship | relationship }}</p>
+            </div>
+          </div>
+        </a>
+      </tui-data-list>
+      <tui-loader *ngIf="isLoadingSearch" class="loader"></tui-loader>
+    </ng-template>
   </div>
   <div class="navigation-bar-right">
     <div class="menu-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -20,13 +43,13 @@
       <tui-svg src="assets/svg/bell-icon.svg"></tui-svg>
     </div>
 
-    <tui-hosted-dropdown [content]="dropdown" [(open)]="isDropDownVisible">
+    <tui-hosted-dropdown [content]="dropdownProfile" [(open)]="isDropDownProfileVisible">
       <div [class]="isOnProfilePage == true ? 'profile-btn-active' : 'menu-btn'">
         <tui-svg src="assets/svg/profile-icon.svg"></tui-svg>
       </div>
     </tui-hosted-dropdown>
 
-    <ng-template #dropdown>
+    <ng-template #dropdownProfile>
       <tui-data-list>
         <a *ngFor="let item of profileItems; index as i" tuiOption (click)="toggleDropDown(i)" [routerLink]="item.link">
           {{ item.label }}

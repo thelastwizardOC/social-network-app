@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IUser } from '../interface/user';
+import { ISearchUserResponse, IUser } from '../interface/user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,17 @@ export class UserService {
     return this.http.post(`${environment.baseApi}/user/upload-${type}`, file, {
       params,
       responseType: 'text'
+    });
+  }
+
+  searchUser(userId: number, searchString: string, offset: number, limit: number) {
+    return this.http.get<ISearchUserResponse>(`${environment.baseApi}/user/search`, {
+      params: {
+        userId,
+        searchString,
+        offset,
+        limit
+      }
     });
   }
 }

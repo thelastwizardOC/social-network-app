@@ -28,6 +28,11 @@ const routes: Routes = [
     canActivate: [AccessGuard]
   },
   {
+    path: 'search',
+    loadChildren: async () => await (await import('./pages/search-page/search-page.module')).SearchResultPageModule,
+    canActivate: [AccessGuard]
+  },
+  {
     path: 'notification',
     component: NotificationComponent
   },

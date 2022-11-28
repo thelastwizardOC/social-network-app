@@ -14,6 +14,7 @@ import { ErrorComponent } from './pages/error-page/error.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { PersonalPageModule } from './pages/personal-page/personal-page.module';
 import { WildcardPageComponent } from './pages/wildcard-page/wildcard-page.component';
+import { SearchResultPageModule } from './pages/search-page/search-page.module';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -30,6 +31,7 @@ export function tokenGetter() {
     TuiDialogModule,
     TuiAlertModule,
     PersonalPageModule,
+    SearchResultPageModule,
     HttpClientModule,
     NavigationBarModule,
     JwtModule.forRoot({

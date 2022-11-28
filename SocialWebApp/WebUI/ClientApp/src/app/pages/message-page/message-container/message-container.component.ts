@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SignalrService } from 'src/app/services/signalr.service';
 
 @Component({
   selector: 'app-message-container',
@@ -10,21 +9,14 @@ export class MessageContainerComponent implements OnInit {
   title = 'chat-ui';
   text: string = '';
 
-  constructor(public signalRService: SignalrService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.signalRService.connect();
-  }
+  ngOnInit(): void {}
 
   sendMessage(): void {
     // this.signalRService.sendMessageToApi(this.text).subscribe({
     //   next: _ => this.text = '',
     //   error: (err) => console.error(err)
     // });
-
-    this.signalRService.sendMessageToHub(this.text).subscribe({
-      next: _ => (this.text = ''),
-      error: err => console.error(err)
-    });
   }
 }
