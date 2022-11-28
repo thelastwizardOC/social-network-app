@@ -8,6 +8,7 @@ using Domain.Entities;
 using Application.Photos.Queries.GetPhotoByUserQuery;
 using Application.Users.Queries.SearchFriends;
 using Application.Users.Queries.SearchUsers;
+using Application.Users.Queries.SearchFriends;
 
 namespace Application.Common.Mappings;
 
@@ -24,5 +25,6 @@ public class MappingProfile : Profile
             CreateMap<Post, PostDto>();
             CreateMap<Photo, PhotoDto>();
             CreateMap<User, SearchUserDto>();
+            CreateMap<User, SearchFriendDto>();
         }
 }
