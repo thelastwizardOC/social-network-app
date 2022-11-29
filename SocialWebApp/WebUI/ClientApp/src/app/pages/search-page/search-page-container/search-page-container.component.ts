@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { trim } from 'lodash';
 import { ISearchUser } from 'src/app/interface/user';
 import { UserService } from 'src/app/services/user.service';
 
@@ -22,7 +23,7 @@ export class SearchPageContainerComponent implements OnInit {
   ngOnInit(): void {
     this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.route.queryParams.subscribe((params: any) => {
-      this.searchString = params['searchString'];
+      this.searchString = trim(params['searchString']);
       this.userList = [];
       this.offset = 0;
       this.onSearchUser();
@@ -31,6 +32,11 @@ export class SearchPageContainerComponent implements OnInit {
 
   onSearchUser() {
     this.isLoading = true;
+    if (this.searchString === '') {
+      this.userList = [];
+      this.isLoading = false;
+      return;
+    }
     this.userService.searchUser(this.userId, this.searchString, this.offset, this.limit).subscribe({
       next: res => {
         this.userList = [...this.userList, ...res.users];
