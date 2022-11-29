@@ -20,13 +20,6 @@
     .title {
       flex: 1;
     }
-    .btn {
-      cursor: pointer;
-      color: var(--tui-primary);
-      &:hover {
-        color: var(--tui-chart-2);
-      }
-    }
   }
 
   .tui-row {

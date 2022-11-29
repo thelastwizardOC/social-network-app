@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ISearchUserResponse, IUser } from '../interface/user';
+import { ISearchFriendResponse, ISearchUserResponse, IUser } from '../interface/user';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +33,17 @@ export class UserService {
 
   searchUser(userId: number, searchString: string, offset: number, limit: number) {
     return this.http.get<ISearchUserResponse>(this.baseUserApiUrl + '/search', {
+      params: {
+        userId,
+        searchString,
+        offset,
+        limit
+      }
+    });
+  }
+
+  searchFriends(userId: number, searchString: string, offset: number, limit: number) {
+    return this.http.get<ISearchFriendResponse>(`${environment.baseApi}/user/search-friend`, {
       params: {
         userId,
         searchString,

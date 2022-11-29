@@ -14,6 +14,7 @@ import { PersonalComponent } from './personal/personal.component';
 import { UploadImageDialogComponent } from './components/upload-image-dialog/upload-image-dialog.component';
 import { PhotoTabComponent } from './components/photo-tab/photo-tab.component';
 import { NewPostModule } from '../../components/new-post/new-post.module';
+import { FriendTabComponent } from './components/friend-tab/friend-tab.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NewPostModule } from '../../components/new-post/new-post.module';
     InfoItemComponent,
     GenderPipe,
     UploadImageDialogComponent,
-    PhotoTabComponent
+    PhotoTabComponent,
+    FriendTabComponent
   ],
   imports: [
     CommonModule,

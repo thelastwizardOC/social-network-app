@@ -42,8 +42,7 @@
 </div>
 <tui-tabs class="tabs-bar" [(activeItemIndex)]="activeItemIndex">
   <button tuiTab>Posts</button>
-  <button tuiTab disabled>Friends</button>
-
+  <button tuiTab>Friends</button>
   <button tuiTab>Photos</button>
 </tui-tabs>
 
@@ -56,7 +55,9 @@
 
     <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading"> </tui-loader>
   </div>
-  <div *ngSwitchCase="'1'">Two</div>
+  <div *ngSwitchCase="'1'">
+    <app-friend-tab></app-friend-tab>
+  </div>
 
   <div *ngSwitchCase="'2'">
     <app-photo-tab></app-photo-tab>
