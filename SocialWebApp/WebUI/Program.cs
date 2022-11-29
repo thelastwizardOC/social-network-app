@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Application;
 using Application.Common.Models;
 using Infrastructure;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -18,6 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddSignalR();
 
 builder.Services.AddControllers().AddNewtonsoftJson(option =>
 {
@@ -44,6 +46,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();
+app.MapHub<NotificationService>("/notificationService");
 
 app.UseEndpoints(endpoints =>
 {
