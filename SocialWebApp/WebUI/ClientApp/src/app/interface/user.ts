@@ -1,5 +1,5 @@
 export interface IUser {
-  id?: number;
+  id: number;
   firstName: string;
   lastName: string;
   userName: string;
@@ -13,6 +13,21 @@ export interface IUser {
   updatedAt?: string;
   token?: string;
 }
+export interface IUserHub {
+  Avatar: string;
+  Cover: string;
+  CreatedAt: string;
+  Dob: string;
+  Email: string;
+  FirstName: string;
+  Gender: number;
+  Id: number;
+  LastName: string;
+  PhoneNo: string;
+  UpdatedAt: string;
+  UserName: string;
+}
+
 export enum Gender {
   MALE,
   FEMALE,

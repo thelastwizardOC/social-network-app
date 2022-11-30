@@ -1,3 +1,4 @@
+using Application.Users.Queries.GetUserInfo;
 using Domain.Entities;
 
 namespace Application.Posts.Queries;
@@ -13,6 +14,6 @@ public class PostDto
   public DateTime UpdatedAt { get; set; }
   public List<Comment>? Comments { get; set; }
   public int UserId { get; set; }
-  public User User { get; set; }
+  public UserDto User { get; set; }
   public List<PostLike>? PostLikes { get; set; }
 }

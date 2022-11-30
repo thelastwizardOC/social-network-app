@@ -1,6 +1,12 @@
 <div class="container">
-  <tui-svg src="tuiIconPicture"></tui-svg>
-  <tui-svg src="tuiIconLink"></tui-svg>
-  <input placeholder="Start a new message" />
-  <tui-svg src="tuiIconPlay"></tui-svg>
+  <label for="photo">
+    <tui-svg src="tuiIconPicture"></tui-svg>
+  </label>
+  <label for="document">
+    <tui-svg src="tuiIconLink"></tui-svg>
+  </label>
+  <input placeholder="Type your message" [draggable]="false" (keydown.enter)="handleSendMessage()" [(ngModel)]="messageText" />
+  <tui-svg class="btn-send" (click)="handleSendMessage()" src="tuiIconPlay"></tui-svg>
+  <input accept=".png,.jpeg,.jpg" hidden id="photo" type="file" (change)="onSendPhoto.emit($event)" />
+  <input accept=".docx,.pdf,.txt,.xlsx" hidden id="document" type="file" (change)="onSendDocument.emit($event)" />
 </div>

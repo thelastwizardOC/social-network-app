@@ -25,11 +25,11 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule,
     BrowserAnimationsModule,
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule,
+    AuthModule,
     PersonalPageModule,
     SearchResultPageModule,
     HttpClientModule,

@@ -8,9 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infrastructure.File;
 using Azure.Storage.Blobs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
 
@@ -18,7 +18,7 @@ public static class DependencyInjection
 {
   public static IServiceCollection AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
   {
-    services.AddDbContext<AppDbContext>();
+    services.AddDbContext<AppDbContext>(x => x.UseSqlServer(configuration.GetConnectionString("SqlServer")));
     services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<AppDbContext>());
     services.AddAuth(configuration);
     services.AddSingleton<IDateTimeProvider, DateTimeProvider>();

@@ -1,11 +1,7 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Application;
 using Infrastructure;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using WebUI;
 
 var builder = WebApplication.CreateBuilder(args);
 

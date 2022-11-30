@@ -9,6 +9,6 @@ namespace Application.Common.Interfaces
 {
     public interface IFileStorageService
     {
-        Task<string> UploadAsync(FileDto file);
+        Task<string> UploadAsync(FileDto file,string path="/user/photos");
     }
 }

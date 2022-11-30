@@ -20,11 +20,11 @@ namespace Infrastructure.File
             _blobServiceClient = blobServiceClient;
         }
 
-        public async Task<string> UploadAsync(FileDto file)
+        public async Task<string> UploadAsync(FileDto file,string path="/user/photos")
         {
             var containerClient = _blobServiceClient.GetBlobContainerClient("public-uploads");
 
-            var blobClient = containerClient.GetBlobClient(file.GetPathWithFileName());
+            var blobClient = containerClient.GetBlobClient(file.GetPathWithFileName(path));
             await blobClient.UploadAsync(file.Content, new BlobHttpHeaders { ContentType = file.ContentType });
 
             var url = blobClient.Uri.ToString();

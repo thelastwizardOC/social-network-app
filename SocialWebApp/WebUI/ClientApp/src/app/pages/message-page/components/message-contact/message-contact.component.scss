@@ -14,4 +14,29 @@
       font-weight: 700;
     }
   }
+  &-right {
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    .btn-more {
+      cursor: pointer;
+    }
+  }
+  .unread-message {
+    font-weight: bold;
+  }
+  .message-content {
+    --line-to-show: 1;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--line-to-show); /* number of lines to show */
+    -webkit-box-orient: vertical;
+  }
+}
+.btn-clear {
+  cursor: pointer;
+  font-weight: bold;
 }

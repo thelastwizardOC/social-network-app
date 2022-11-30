@@ -1,13 +1,41 @@
-<div class="container">
+<div
+  class="container"
+  (click)="
+    onContactClick.emit({ chosenUser: !isCurrentUserLastSend ? friendMessage.sender : friendMessage.receiver, messageId: friendMessage.id })
+  "
+>
   <div class="container-left">
     <tui-avatar
-      avatarUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuoovVYEMl5PlyrnrmjPY_0bH_k0RaXYByiMVOWeEhWeG9wxWP2ozVw0Ab51hiQzxErpo&usqp=CAU"
+      avatarUrl="{{ !isCurrentUserLastSend ? friendMessage.sender?.avatar : friendMessage.receiver!.avatar }}"
       [rounded]="true"
     ></tui-avatar>
     <div>
-      <p class="user-name">Tri Nguyen</p>
-      <p>Hello</p>
+      <p class="user-name">
+        {{
+          !isCurrentUserLastSend
+            ? friendMessage.sender!.firstName + ' ' + friendMessage.sender!.lastName
+            : friendMessage.receiver!.firstName + ' ' + friendMessage.receiver!.lastName
+        }}
+      </p>
+      <p *ngIf="friendMessage.type === messageContentType.TEXT" class="message-content {{ !friendMessage.isRead && 'unread-message' }}">
+        {{ friendMessage.content }}
+      </p>
+
+      <p *ngIf="friendMessage.type === messageContentType.IMAGE" class="message-content {{ !friendMessage.isRead && 'unread-message' }}">
+        <tui-svg src="tuiIconPicture"></tui-svg> Media file sent
+      </p>
+      <p *ngIf="friendMessage.type === messageContentType.DOC" class="message-content {{ !friendMessage.isRead && 'unread-message' }}">
+        <tui-svg src="tuiIconDefaultDocLarge"></tui-svg> Document file sent
+      </p>
     </div>
   </div>
-  <p class="message-time">1 minute</p>
+  <div class="container-right">
+    <tui-svg class="btn-more" src="tuiIconMoreHorLarge" [tuiHint]="tooltip" tuiHintDirection="right" tui></tui-svg>
+    <ng-template #tooltip>
+      <strong (click)="onHideMessage.emit(!isCurrentUserLastSend ? friendMessage.senderId : friendMessage.receiverId)" class="btn-clear">
+        <tui-svg src="tuiIconSpoilerDeleteLarge"></tui-svg> Hide user's messages
+      </strong>
+    </ng-template>
+    <p class="message-time">{{ friendMessage.createdAt | dateFromNow }}</p>
+  </div>
 </div>

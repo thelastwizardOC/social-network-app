@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IMessage, MessageType } from 'src/app/interface/message';
+import { IMessage, MessageContentType, MessageType } from 'src/app/interface/message';
 import { IUser } from 'src/app/interface/user';
 import { environment } from 'src/environments/environment';
 
@@ -9,10 +9,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./user-message.component.scss']
 })
 export class UserMessageComponent implements OnInit {
-  // @Input() userInfo!: IUser;
-  // @Input() message!: IMessage;
+  @Input() message!: IMessage;
   @Input() type!: MessageType;
+  @Input() chosenFriend: IUser | undefined;
   messageType = MessageType;
+  messageContentType = MessageContentType;
   mockImg: string = environment.mockImg;
   constructor() {}
 
