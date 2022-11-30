@@ -6,7 +6,6 @@ namespace Infrastructure.Persistence;
 
 public class AppDbContext : DbContext, IApplicationDbContext
 {
-    public AppDbContext() {}
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     { }
@@ -27,10 +26,10 @@ public class AppDbContext : DbContext, IApplicationDbContext
         return base.SaveChanges();
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Server=social-intern-orient.database.windows.net;Database=socialDB;User=intern_orient;Password=Pass123$;TrustServerCertificate=True");
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //      optionsBuilder.UseSqlServer("Server=social-intern-orient.database.windows.net;Database=socialDB;User=intern_orient;Password=Pass123$;TrustServerCertificate=True");
+    // }
     
     protected override void OnModelCreating(ModelBuilder modelbuilder)
     {

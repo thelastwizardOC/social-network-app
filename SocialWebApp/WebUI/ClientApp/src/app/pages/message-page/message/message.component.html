@@ -1,43 +1,75 @@
-<div class="message-container">
+<div class="message-container" (click)="keyword = ''">
   <div class="message-header">
     <div class="message-header-left">
       <p>Direct</p>
     </div>
     <div class="message-header-right">
-      <tui-avatar
-        avatarUrl="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png"
-        [rounded]="true"
-      >
-      </tui-avatar>
-      <p>Hoang Nguyen</p>
+      <ng-container *ngIf="chosenFriend">
+        <tui-avatar avatarUrl="{{ chosenFriend.avatar }}" [rounded]="true"> </tui-avatar>
+        <p>{{ chosenFriend.firstName + ' ' + chosenFriend.lastName }}</p>
+      </ng-container>
     </div>
   </div>
   <div class="message-body">
     <div class="message-body-left">
-      <app-message-contact></app-message-contact>
-      <app-message-contact></app-message-contact>
-      <app-message-contact></app-message-contact>
+      <div
+        [tuiDropdown]="dropdownContent"
+        [tuiDropdownManual]="keyword.length > 0 && searchedFriends.length > 0"
+        class="search-box-container"
+      >
+        <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
+        <input
+          [(ngModel)]="keyword"
+          class="tui-text_body-m-2"
+          type="text"
+          placeholder="Search your friend"
+          (keyup)="onSearchFriend.emit(keyword)"
+        />
+        <ng-template #dropdownContent>
+          <tui-data-list class="items-container">
+            <a (click)="onClickSearchFriend.emit(user); keyword = ''" *ngFor="let user of searchedFriends" tuiOption class="item-container">
+              <tui-avatar [rounded]="true" class="tui-space_right-2" avatarUrl="{{ user.avatar }}"> </tui-avatar>
+              <div>
+                <p class="tui-text_body-m username">{{ user.firstName + ' ' + user.lastName }}</p>
+              </div>
+            </a>
+          </tui-data-list>
+        </ng-template>
+      </div>
+
+      <tui-loader [showLoader]="isLoading"></tui-loader>
+      <app-message-contact
+        *ngFor="let friendMessage of friendsMessages"
+        [friendMessage]="friendMessage"
+        [userId]="userId"
+        (onContactClick)="onContactClick.emit($event)"
+        (onHideMessage)="onHideMessage.emit($event)"
+      ></app-message-contact>
+
+      <p class="empty-message" *ngIf="!isLoading && friendsMessages.length === 0">You don't have any message yet</p>
     </div>
     <div class="message-body-right">
-      <div class="messages-container">
-        <app-user-message [type]="0"> </app-user-message>
-        <app-user-message [type]="1"> </app-user-message>
-        <app-user-message [type]="0"> </app-user-message>
-        <app-user-message [type]="0"> </app-user-message>
-        <app-user-message [type]="1"> </app-user-message>
-        <app-user-message [type]="1"> </app-user-message>
-        <app-user-message [type]="1"> </app-user-message>
-        <app-user-message [type]="0"> </app-user-message>
-        <app-user-message [type]="0"> </app-user-message>
-        <app-user-message [type]="1"> </app-user-message>
-        <app-user-message [type]="1"> </app-user-message>
-        <app-user-message [type]="1"> </app-user-message>
-        <app-user-message [type]="0"> </app-user-message>
-        <app-user-message [type]="0"> </app-user-message>
-        <app-user-message [type]="1"> </app-user-message>
-        <app-user-message [type]="1"> </app-user-message>
+      <div
+        [scrollWindow]="false"
+        infinite-scroll
+        (scrolledUp)="onMessageScroll.emit()"
+        [infiniteScrollThrottle]="1000"
+        class="messages-container"
+      >
+        <ng-container *ngFor="let message of listMessages">
+          <app-user-message
+            [chosenFriend]="chosenFriend"
+            [type]="message.senderId === userId ? messageType.SEND : messageType.RECEIVE"
+            [message]="message"
+            >{{ message.content }}
+          </app-user-message>
+        </ng-container>
       </div>
-      <app-message-input></app-message-input>
+      <app-message-input
+        (onSendPhoto)="onSendPhoto.emit($event)"
+        (onSendDocument)="onSendDocument.emit($event)"
+        (onSend)="onSend.emit($event)"
+      ></app-message-input>
     </div>
   </div>
 </div>

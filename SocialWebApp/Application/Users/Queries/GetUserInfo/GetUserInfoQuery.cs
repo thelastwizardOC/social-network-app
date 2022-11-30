@@ -1,3 +1,4 @@
+using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;
@@ -26,6 +27,7 @@ public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserDto
     try
     {
       var user = await _appDb.User.FirstOrDefaultAsync(u => u.Id == request.UserId);
+      if (user == null) throw new NotFoundException();
       var userDto = _mapper.Map<UserDto>(user);
       return userDto;
     }

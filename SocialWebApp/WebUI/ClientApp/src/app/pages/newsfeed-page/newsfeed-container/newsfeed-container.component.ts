@@ -15,15 +15,10 @@ export class NewsfeedContainerComponent implements OnInit {
   isLoading: boolean = false;
   hasNextPage: boolean = false;
   userId: number = 0;
-  limit: number = 3;
+  limit: number = 7;
   offset: number = 0;
 
-  constructor(
-    private postService: PostService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private jwtHelper: JwtHelperService
-  ) {}
+  constructor(private postService: PostService, private jwtHelper: JwtHelperService) {}
 
   ngOnInit(): void {
     this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;

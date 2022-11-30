@@ -1,3 +1,4 @@
+using Application.Messages.Queries.GetUserMessage;
 using Application.Posts.Queries;
 using Application.Users.Queries.Login;
 using Application.Users.Commands.CreateUser;
@@ -5,6 +6,7 @@ using Application.Users.Queries.GetUserInfo;
 using AutoMapper;
 using Domain.Entities;
 using Application.Photos.Queries.GetPhotoByUserQuery;
+using Application.Users.Queries.SearchFriends;
 using Application.Users.Queries.SearchUsers;
 
 namespace Application.Common.Mappings;
@@ -16,7 +18,9 @@ public class MappingProfile : Profile
             CreateMap<User, UserDto>();
             CreateMap<NewUserDto, User>();
             CreateMap<User, NewUserVm>();
+            CreateMap<UserFriends, UserFriendDto>();
             CreateMap<User, LoginUserDto>();
+            CreateMap<Message,UserMessageDto>();
             CreateMap<Post, PostDto>();
             CreateMap<Photo, PhotoDto>();
             CreateMap<User, SearchUserDto>();

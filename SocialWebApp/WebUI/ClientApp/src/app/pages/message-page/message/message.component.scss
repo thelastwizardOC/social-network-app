@@ -10,6 +10,8 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--tui-base-03);
+  font-size: 15px;
+
   & > div {
     padding: 10px 20px;
   }
@@ -23,6 +25,7 @@
     display: flex;
     align-items: center;
     border-left: 1px solid var(--tui-base-03);
+    height: 68px;
 
     & > p {
       margin-left: 10px;
@@ -38,6 +41,38 @@
     padding: 20px;
     flex: 1;
     overflow-y: auto;
+
+    .empty-message {
+      text-align: center;
+      font-size: 15px;
+      margin-top: 100px;
+      font-weight: 700;
+    }
+
+    .search-box-container {
+      position: relative;
+      display: flex;
+      width: 80%;
+      align-items: center;
+      padding: 10px;
+
+      border-radius: 20px;
+      background-color: var(--tui-base-03);
+      margin: 0 auto 20px auto;
+      tui-svg {
+        margin-right: 10px;
+        margin-left: 10px;
+      }
+      input {
+        flex: 1;
+        width: 500px;
+        border: none;
+        background-color: transparent;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
   }
   &-right {
     display: flex;
@@ -50,10 +85,28 @@
     .messages-container {
       --input-height: 80px;
       --header-height: 68px;
+      display: flex;
+      flex-direction: column-reverse;
       padding: 20px 10px 0 0;
       margin-left: -20px;
       height: calc(85vh - (var(--input-height) + var(--header-height)));
       overflow-y: auto;
+    }
+  }
+}
+.items-container {
+  width: 412px;
+  max-height: 310px;
+  overflow-y: auto;
+  .item-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 0 !important;
+    height: 60px;
+    min-height: 60px;
+    .username {
+      font-weight: 600;
     }
   }
 }

@@ -8,22 +8,31 @@ import { ISearchUserResponse, IUser } from '../interface/user';
   providedIn: 'root'
 })
 export class UserService {
+  baseUserApiUrl: string = environment.baseApi + '/user';
   constructor(private http: HttpClient) {}
 
   getUserInfo(userId: number): Observable<IUser> {
-    return this.http.get<IUser>(`${environment.baseApi}/user/${userId}`);
+    return this.http.get<IUser>(this.baseUserApiUrl + `/${userId}`);
+  }
+  searchUserFriend(sourceUserId: number, keyword: string): Observable<IUser[]> {
+    return this.http.get<IUser[]>(this.baseUserApiUrl + '/friend', {
+      params: {
+        sourceUserId,
+        keyword
+      }
+    });
   }
 
   uploadPhoto(file: FormData, userid: number, type: string) {
     const params = new HttpParams().append('userid', userid);
-    return this.http.post(`${environment.baseApi}/user/upload-${type}`, file, {
+    return this.http.post(this.baseUserApiUrl + `/upload-${type}`, file, {
       params,
       responseType: 'text'
     });
   }
 
   searchUser(userId: number, searchString: string, offset: number, limit: number) {
-    return this.http.get<ISearchUserResponse>(`${environment.baseApi}/user/search`, {
+    return this.http.get<ISearchUserResponse>(this.baseUserApiUrl + '/search', {
       params: {
         userId,
         searchString,

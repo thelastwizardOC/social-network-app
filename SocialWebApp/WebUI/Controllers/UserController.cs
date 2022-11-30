@@ -3,6 +3,7 @@ using Application.Common.Models;
 using Application.Users.Commands.UploadAvatar;
 using Application.Users.Commands.UploadCover;
 using Application.Users.Queries.GetUserInfo;
+using Application.Users.Queries.SearchFriends;
 using Application.Users.Queries.SearchUsers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,14 +14,43 @@ public class UserController : ApiControllerBase
     [HttpGet("{userId}")]
     public async Task<ActionResult<UserDto>> GetUserInfo(int userId)
     {
-        if (userId == null) return NotFound();
-        
-        var foundUser= await Mediator.Send(new GetUserInfoQuery()
+        try
         {
-            UserId = userId
-        });
-        if (foundUser == null) return NotFound();
-        return Ok(foundUser);
+            var foundUser = await Mediator.Send(new GetUserInfoQuery() { UserId = userId });
+            return Ok(foundUser);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound();
+        }
+        catch (ValidationException e)
+        {
+            return BadRequest();
+
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
+        }
+     
+    }
+    [HttpGet("friend")]
+    public async Task<ActionResult<List<UserFriendDto>>> GetUserFriends([FromQuery]SearchFriendsQuery query)
+    {
+        try
+        {
+            var foundUser = await Mediator.Send(query);
+            return Ok(foundUser);
+        }
+        catch (ValidationException e)
+        {
+            return BadRequest();
+
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
+        }
     }
     
     [HttpPost("upload-avatar")]

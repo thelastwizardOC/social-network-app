@@ -11,8 +11,15 @@
   ::ng-deep svg {
     cursor: pointer;
   }
+  .btn {
+    font-size: 20px;
+  }
+  .btn-send {
+    color: var(--tui-primary);
+  }
   input {
     border: none;
+    height: 16px;
     margin-left: 10px;
     flex: 1;
     &:focus {

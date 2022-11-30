@@ -16,4 +16,5 @@ public class UserFriends
   public User Friend { get; set; }
 
   public bool Pending { get; set; }
+  public bool IsHide { get; set; }
 }

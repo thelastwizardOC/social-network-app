@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Application;
+using Application.Common.Models;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
@@ -33,13 +34,24 @@ var app = builder.Build();
   app.UseSwagger();
   app.UseSwaggerUI();
 
-app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+app.UseCors(policy => policy.WithOrigins(builder.Configuration.GetValue<string>("FrontEndUrl"))
+    .AllowCredentials()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(_ => true)
+    .AllowAnyMethod());
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
-
+app.UseRouting();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/signalr");    
+});
+
+
 
 app.MapControllers();
 

@@ -1,5 +1,6 @@
 using Application.Common.Exceptions;
 using Application.Common.Interfaces;
+using Application.Users.Queries.GetUserInfo;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -50,7 +51,7 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, PaginatedPost
                     NumberOfLikes = p.NumberOfLikes,
                     CreatedAt = p.CreatedAt,
                     UpdatedAt = p.UpdatedAt,
-                    User = new User()
+                    User = new UserDto()
                     {
                         Id = u.Id,
                         FirstName = u.FirstName,
@@ -66,16 +67,19 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, PaginatedPost
                         UpdatedAt = u.UpdatedAt
                     }
                 }
-            ).Skip(request.Offset).Take(request.Limit).ToListAsync();
-            foreach (var post in posts)
+            ).ToListAsync();
+            int totalPost = posts.Count();
+            bool hasNextPage = totalPost > request.Offset + request.Limit;
+
+            var paginatedPosts = posts.Skip(request.Offset).Take(request.Limit);
+            foreach (var post in paginatedPosts)
             {
                 var postLike =await _appDb.PostLike.Where(pl => pl.PostId == post.Id).ToListAsync();
                 post.PostLikes=postLike;
             }
             
-            List<PostDto> postDtos = _mapper.Map<List<PostDto>>(posts);
+            List<PostDto> postDtos = _mapper.Map<List<PostDto>>(paginatedPosts);
             int totalCount = postDtos.Count();
-            bool hasNextPage = _appDb.Post.Count(p => p.User.Id == request.UserId) > request.Offset + request.Limit;
 
 
             return new PaginatedPostDto() { Items = postDtos, TotalCount = totalCount, HasNextPage = hasNextPage };
