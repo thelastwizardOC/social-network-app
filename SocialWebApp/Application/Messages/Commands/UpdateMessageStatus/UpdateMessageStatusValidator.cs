@@ -6,7 +6,7 @@ public class UpdateMessageStatusCommandValidator:AbstractValidator<UpdateMessage
 {
     public UpdateMessageStatusCommandValidator()
     {
-        RuleFor(x => x.MessageId).NotNull().WithMessage("MessaageId must be not null").GreaterThanOrEqualTo(0)
+        RuleFor(x => x.MessageId).NotNull().WithMessage("MessageId must be not null").GreaterThanOrEqualTo(0)
             .WithMessage("MessaageId must be larger than 0");
        
 
