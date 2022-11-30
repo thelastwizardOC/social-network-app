@@ -28,7 +28,7 @@
         <ng-template #dropdownContent>
           <tui-data-list class="items-container">
             <a (click)="onClickSearchFriend.emit(user); keyword = ''" *ngFor="let user of searchedFriends" tuiOption class="item-container">
-              <tui-avatar class="tui-space_right-2" avatarUrl="{{ user.avatar }}"> </tui-avatar>
+              <tui-avatar [rounded]="true" class="tui-space_right-2" avatarUrl="{{ user.avatar }}"> </tui-avatar>
               <div>
                 <p class="tui-text_body-m username">{{ user.firstName + ' ' + user.lastName }}</p>
               </div>

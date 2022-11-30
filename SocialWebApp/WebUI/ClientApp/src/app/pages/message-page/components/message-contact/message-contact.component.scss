@@ -12,6 +12,7 @@
     }
     .user-name {
       font-weight: 700;
+      font-size: 15px;
     }
   }
   &-right {
@@ -25,9 +26,13 @@
   }
   .unread-message {
     font-weight: bold;
+    color: var(--tui-base-09) !important;
   }
   .message-content {
     --line-to-show: 1;
+    font-size: 15px;
+    color: (var(--tui-base-05));
+
     word-break: break-word;
     overflow: hidden;
     text-overflow: ellipsis;

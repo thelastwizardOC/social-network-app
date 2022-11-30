@@ -33,7 +33,7 @@
     <tui-svg class="btn-more" src="tuiIconMoreHorLarge" [tuiHint]="tooltip" tuiHintDirection="right" tui></tui-svg>
     <ng-template #tooltip>
       <strong (click)="onHideMessage.emit(!isCurrentUserLastSend ? friendMessage.senderId : friendMessage.receiverId)" class="btn-clear">
-        <tui-svg src="tuiIconSpoilerDeleteLarge"></tui-svg> Hide user's messages
+        Hide conversation
       </strong>
     </ng-template>
     <p class="message-time">{{ friendMessage.createdAt | dateFromNow }}</p>

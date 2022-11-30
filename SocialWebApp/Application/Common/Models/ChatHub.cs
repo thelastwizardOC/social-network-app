@@ -17,6 +17,6 @@ public class ChatHub:Hub<IChatHub>
 
     public override async Task OnConnectedAsync()
     {
-        await Clients.All.NewUserConnected("a new user connectd");
+        await Clients.All.NewUserConnected("a new user connected");
     }
 }
