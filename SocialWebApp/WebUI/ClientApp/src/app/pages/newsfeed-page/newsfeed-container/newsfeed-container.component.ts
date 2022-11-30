@@ -26,7 +26,7 @@ export class NewsfeedContainerComponent implements OnInit {
     this.handleUpdatePostLike = _.debounce(this.handleUpdatePostLike, 500);
   }
 
-  handlePostSucceeded() {
+  handleReloadPage() {
     this.posts = [];
     this.offset = 0;
     this.fetchPosts();

@@ -1,0 +1,14 @@
+.input-comment {
+  flex-grow: unset;
+}
+
+.community-comment__box {
+  background-color: var(--tui-base-03);
+  border-radius: var(--tui-radius-m);
+  padding: var(--tui-padding-m);
+}
+
+.action-expansion {
+  color: var(--tui-base-07);
+  font-weight: 600;
+}

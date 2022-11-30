@@ -1,6 +1,7 @@
 using Application.Common.Exceptions;
 using Application.Common.Models;
 using Application.Posts.Commands.CreatePost;
+using Application.Posts.Commands.DeletePost;
 using Application.Posts.Commands.LikePost;
 using Application.Posts.Queries;
 using Application.Posts.Queries.GetPersonalPosts;
@@ -99,4 +100,23 @@ public class PostController : ApiControllerBase
             return StatusCode(500);
         }
     }
+
+    [HttpDelete("delete/{userId}")]
+    public async Task<ActionResult<PaginatedPostDto>> DeletePost(int userId, int postId)
+    {
+        try
+        {
+            if (userId == null || postId == null) return BadRequest();
+            return await Mediator.Send(new DeletePostCommand(postId, userId));
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
+        }
+    }
+    
 }

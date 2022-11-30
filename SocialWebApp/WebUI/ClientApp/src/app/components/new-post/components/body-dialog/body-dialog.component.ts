@@ -19,7 +19,7 @@ export class BodyDialogComponent implements OnInit {
   value = '';
   userId!: number;
   postForm = new FormGroup({
-    postStatusValue: new FormControl(``, statusValidator),
+    postStatusValue: new FormControl(``, [statusValidator]),
     imageUrlsValue: new FormControl([])
   });
   constructor(
@@ -68,6 +68,6 @@ export class BodyDialogComponent implements OnInit {
 
 export function statusValidator(field: AbstractControl): Validators | null {
   if (!field.value) return null;
-  if (field.value.split(' ').length > 1000) return { other: `The maximum length of uploaded status is 1000 characters. Please try again.` };
+  if (field.value.split(' ').length > 1000) return { other: `The maximum length of uploaded status is 1000 words. Please try again.` };
   return null;
 }

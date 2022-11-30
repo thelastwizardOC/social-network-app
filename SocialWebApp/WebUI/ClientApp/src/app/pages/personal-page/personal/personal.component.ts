@@ -20,6 +20,7 @@ export class PersonalComponent {
   @Output() onPhotoUpload = new EventEmitter();
   @Output() onLike = new EventEmitter<number>();
   @Output() handlePostSucceeded = new EventEmitter();
+  @Output() handleDeletePost = new EventEmitter();
 
   activeItemIndex: number = 0;
   mockImg: string = environment.mockImg;

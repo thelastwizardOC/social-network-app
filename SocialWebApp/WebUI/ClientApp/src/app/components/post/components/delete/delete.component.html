@@ -1,0 +1,16 @@
+<tui-hosted-dropdown #dropdown [content]="content" [(open)]="dropdownOpen">
+  <button
+    tuiIconButton
+    appearance="flat"
+    icon="tuiIconMoreHorLarge"
+    shape="rounded"
+    type="button"
+    [pseudoHover]="dropdown.open || null"
+  ></button>
+</tui-hosted-dropdown>
+
+<ng-template #content let-activeZone>
+  <tui-data-list tuiDataListDropdownManager [tuiActiveZoneParent]="activeZone">
+    <button *tuiLet="'Delete' as item" tuiOption (click)="deletePost()" size="s">Delete</button>
+  </tui-data-list>
+</ng-template>

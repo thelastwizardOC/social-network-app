@@ -1,5 +1,9 @@
 @import '~@taiga-ui/core/styles/mixins/mixins.scss';
 
+%bot-border {
+  border-bottom: 1px solid var(--tui-base-03);
+}
+
 .post-container {
   border-radius: 10px;
   overflow: hidden;
@@ -8,8 +12,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    padding-bottom: 0;
+    padding: 1rem 1rem 0;
 
     &-left {
       display: flex;
@@ -20,8 +23,7 @@
     --line-to-show: 2;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 0 1rem;
 
     word-break: break-word;
     overflow: hidden;
@@ -34,9 +36,7 @@
   .see-more {
     font-weight: 700;
 
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-bottom: 0.5rem;
+    padding: 0 1rem 0.5rem;
     cursor: pointer;
   }
   .post-img {
@@ -51,17 +51,15 @@
     color: var(--tui-base-05);
   }
   .post-numbers {
-    padding: 1rem;
-    padding-top: 0;
+    padding: 0 1rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     color: var(--tui-base-06);
-    border-bottom: 1px solid var(--tui-base-03);
+    @extend %bot-border;
   }
   .btn-actions {
-    padding: 0.5rem;
     display: flex;
     align-items: center;
 
@@ -70,9 +68,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 0.5rem 0;
 
-      border-right: 1px solid var(--tui-base-03);
       cursor: pointer;
+      @extend %bot-border;
+
+      &:first-child {
+        border-right: 1px solid var(--tui-base-03);
+      }
 
       p {
         margin-left: 1rem;

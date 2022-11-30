@@ -1,0 +1,31 @@
+<div class="tui-col_12">
+  <div class="user-comment-container tui-row_align_start">
+    <tui-avatar [size]="'m'" [rounded]="true" [avatarUrl]="userInfo?.avatar!"></tui-avatar>
+
+    <div class="input-comment tui-space_left-2">
+      <tui-text-area
+        class="comment"
+        [expandable]="true"
+        tuiTextfieldIconLeft="tuiIconArrowRight"
+        [formControl]="commentValue"
+        [tuiTextfieldLabelOutside]="true"
+        [tuiTextfieldSize]="size"
+        >Write a comment...
+      </tui-text-area>
+      <tui-error [formControl]="commentValue" [error]="[] | tuiFieldError | async"></tui-error>
+    </div>
+
+    <button
+      tuiButton
+      type="button"
+      iconRight="tuiIconCheckLarge"
+      class="tui-space_left-3 confirm_button"
+      size="m"
+      [disabled]="!(commentValue.valid && commentValue.dirty)"
+      shape="rounded"
+      (click)="onPressEnter()"
+    >
+      Post
+    </button>
+  </div>
+</div>
