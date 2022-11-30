@@ -1,4 +1,5 @@
 using Application.Messages.Queries.GetUserMessage;
+using Application.Common.Models;
 using Application.Posts.Queries;
 using Application.Users.Queries.Login;
 using Application.Users.Commands.CreateUser;
@@ -25,5 +26,7 @@ public class MappingProfile : Profile
             CreateMap<Photo, PhotoDto>();
             CreateMap<User, SearchUserDto>();
             CreateMap<User, SearchFriendDto>();
+            CreateMap<User, NotificationUserDto>();
+            CreateMap<Notification, NotificationDto>();
         }
 }

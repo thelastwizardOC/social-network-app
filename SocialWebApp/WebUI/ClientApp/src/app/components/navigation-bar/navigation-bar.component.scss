@@ -58,6 +58,7 @@ $primary-color: #379cf3;
 }
 
 @mixin menu-btn($bg) {
+  position: relative;
   display: flex;
   width: 40px;
   aspect-ratio: 1;

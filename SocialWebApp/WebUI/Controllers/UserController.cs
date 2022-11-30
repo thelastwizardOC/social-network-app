@@ -1,7 +1,9 @@
 using Application.Common.Exceptions;
 using Application.Common.Models;
+using Application.Users.Commands.AddFriend;
 using Application.Users.Commands.UploadAvatar;
 using Application.Users.Commands.UploadCover;
+using Application.Users.Queries.GetNotifications;
 using Application.Users.Queries.GetUserInfo;
 using Application.Users.Queries.SearchFriends;
 using Application.Users.Queries.SearchUsers;
@@ -114,5 +116,18 @@ public class UserController : ApiControllerBase
         {
             return StatusCode(500);
         }
+
+    [HttpPost("add-friend")]
+    public async Task<ActionResult<bool>> AddFriend(AddFriendCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return Ok(result);
+    }
+
+    [HttpGet("notification")]
+    public async Task<ActionResult<NotificationDto>> GetNotifications([FromQuery] GetNotificationQuery query)
+    {
+        var result = await Mediator.Send(query);
+        return Ok(result);
     }
 }

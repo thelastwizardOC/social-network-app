@@ -1,13 +1,8 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Application;
 using Application.Common.Models;
 using Infrastructure;
-using Infrastructure.Services;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using WebUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,7 +41,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();
-app.MapHub<NotificationService>("/notificationService");
+
+app.MapHub<NotificationHub>("notificationService");
 
 app.UseEndpoints(endpoints =>
 {

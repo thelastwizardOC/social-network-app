@@ -12,5 +12,4 @@ public class Notification
 
   public User TriggerUser { get; set; }
   public int TriggerUserId { get; set; }
-
 }

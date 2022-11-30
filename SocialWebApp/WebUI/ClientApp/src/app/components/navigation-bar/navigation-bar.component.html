@@ -41,6 +41,21 @@
     </div>
     <div class="menu-btn" routerLink="notification" routerLinkActive="active" (click)="onNavigate()">
       <tui-svg src="assets/svg/bell-icon.svg"></tui-svg>
+      <div
+        style="
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          background-color: red;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          text-align: center;
+        "
+        *ngIf="notifications.length > 0"
+      >
+        {{ this.signalRService.notification }}
+      </div>
     </div>
 
     <tui-hosted-dropdown [content]="dropdownProfile" [(open)]="isDropDownProfileVisible">

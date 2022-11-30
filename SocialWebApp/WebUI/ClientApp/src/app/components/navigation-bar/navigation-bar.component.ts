@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TuiDialogService, TuiHostedDropdownComponent } from '@taiga-ui/core';
 import { debounce, trim } from 'lodash';
+import { INotification } from 'src/app/interface/notification';
 import { ISearchUser, ISearchUserResponse } from 'src/app/interface/user';
+import { SignalrService } from 'src/app/services/signalr.service';
 import { UserService } from './../../services/user.service';
 
 @Component({
@@ -16,6 +18,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   isDialogOpened: boolean = false;
 
   constructor(
+    public signalRService: SignalrService,
     private route: Router,
     private jwtHelper: JwtHelperService,
     private activatedRoute: ActivatedRoute,
@@ -54,12 +57,14 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     const token = localStorage.getItem('jwt');
     if (token !== null) {
       this.userId = +this.jwtHelper.decodeToken(token as string).sub;
       this.profileItems[0].link = '/profile/' + this.userId;
     }
+    this.signalRService.startConnection();
+    this.signalRService.addFriendListener();
   }
 
   showDialog(): void {
