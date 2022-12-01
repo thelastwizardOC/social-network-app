@@ -48,3 +48,17 @@ export interface ISearchUserResponse {
   totalCount: number;
   hasNextPage: boolean;
 }
+
+export interface ISearchFriend {
+  id?: number;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  avatar: string;
+}
+
+export interface ISearchFriendResponse {
+  friends: ISearchFriend[];
+  totalCount: number;
+  hasNextPage: boolean;
+}

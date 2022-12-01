@@ -121,4 +121,17 @@ public class UserController : ApiControllerBase
             return StatusCode(500);
         }
     }
+    [HttpGet("search-friend")]
+    public async Task<ActionResult<SearchFriendsListDto>> SearchFriend([FromQuery] SearchFriendsQuery query)
+    {
+        try
+        {
+            var result = await Mediator.Send(query);
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
+        }
+    }
 }

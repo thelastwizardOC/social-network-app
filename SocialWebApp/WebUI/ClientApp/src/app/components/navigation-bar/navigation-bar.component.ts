@@ -32,16 +32,16 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   @ViewChild(TuiHostedDropdownComponent)
   component?: TuiHostedDropdownComponent;
   userId!: number;
-
   profileItems = [{ label: 'See Your Profile', link: '/' }, { label: 'Log Out' }];
-
   isDropDownProfileVisible = false;
   isDropDownSearchVisible = false;
   isOnProfilePage = false;
   isLoadingSearch = false;
   searchUsers: ISearchUser[] = [];
+  onInput: boolean = false;
 
   toggleDropDown(itemIndex: number) {
+    this.onNavigate();
     if (itemIndex === 1) this.showDialog();
     this.isDropDownProfileVisible = !this.isDropDownProfileVisible;
   }
@@ -49,7 +49,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   ngDoCheck(): void {
     const currentRoute = this.route.url;
     currentRoute.includes('/profile') == true ? (this.isOnProfilePage = true) : (this.isOnProfilePage = false);
-    if (currentRoute.includes('/search?') && this.input.nativeElement.value === '') {
+    if (currentRoute.includes('/search?') && this.input.nativeElement.value === '' && !this.onInput) {
       this.input.nativeElement.value = localStorage.getItem('searchString');
     }
   }
@@ -73,8 +73,8 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   }
 
   onSearch(event: KeyboardEvent) {
+    this.onInput = true;
     if (this.input.nativeElement.value === '') return;
-
     if (event.key == 'Enter') {
       localStorage.setItem('searchString', this.input.nativeElement.value);
       this.onSearchEnter();
@@ -89,7 +89,6 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     if (value.length != 0) {
       this.userService.searchUser(this.userId, value, 0, 5).subscribe({
         next: (res: ISearchUserResponse) => {
-          console.log(res);
           this.searchUsers = res.users;
         },
         error: err => {
@@ -107,13 +106,21 @@ export class NavigationBarComponent implements OnInit, OnChanges {
 
   onToggleDropdownSearch() {
     this.isDropDownSearchVisible = true;
+    if (this.input.nativeElement.value !== '') {
+      this.isLoadingSearch = true;
+      this.onSearchInputChange();
+    }
   }
 
   onSearchEnter() {
-    console.log(this.input.nativeElement.value);
     this.isDropDownSearchVisible = false;
-    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    this.route.navigateByUrl('/', { skipLocationChange: false }).then(() => {
       this.route.navigate(['search'], { queryParams: { searchString: trim(this.input.nativeElement.value) } });
     });
+  }
+
+  onNavigate() {
+    this.input.nativeElement.value = '';
+    this.searchUsers = [];
   }
 }
