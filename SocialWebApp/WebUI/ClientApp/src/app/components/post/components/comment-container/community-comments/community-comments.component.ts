@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IUserCommented } from '../../../../../interface/user';
-import { communityComment } from '../comment.mock';
+import { environment } from '../../../../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-community-comments',
@@ -8,14 +9,25 @@ import { communityComment } from '../comment.mock';
   styleUrls: ['./community-comments.component.scss']
 })
 export class CommunityCommentsComponent implements OnInit {
-  @Input() userCommentList: IUserCommented[] = communityComment;
+  @Input() userCommentList!: IUserCommented[];
   expanded: boolean = false;
+  mockImg: string = environment.mockImg;
 
-  constructor() {}
+  constructor(private route: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const i = this.userCommentList.sort((a, b) => {
+      return a.createdAt > b.createdAt ? 1 : 0;
+    });
+  }
 
   onToggleViewMore() {
     this.expanded = !this.expanded;
+  }
+
+  handleNavigateAccount(userId: number) {
+    this.route.navigateByUrl(`/profile/${userId}`, { skipLocationChange: false }).then(() => {
+      //this.route.navigate(['profile'], { queryParams: { searchString: trim(this.input.nativeElement.value) } });
+    });
   }
 }

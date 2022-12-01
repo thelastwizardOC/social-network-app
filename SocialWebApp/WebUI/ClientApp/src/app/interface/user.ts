@@ -66,8 +66,9 @@ export interface ISearchFriendResponse {
   hasNextPage: boolean;
 }
 export interface IUserCommented {
+  id: number;
   user: IUser;
   content: string;
-  createdAt: string;
+  createdAt: Date;
   post: IPost;
 }

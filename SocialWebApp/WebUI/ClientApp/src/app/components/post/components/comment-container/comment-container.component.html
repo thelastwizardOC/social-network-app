@@ -1,2 +1,2 @@
-<app-user-comment [userInfo]="userInfo"></app-user-comment>
-<app-community-comments></app-community-comments>
+<app-user-comment [postId]="postId" (onRefreshPost)="onRefreshPost.emit()"></app-user-comment>
+<app-community-comments [userCommentList]="userCommentList"></app-community-comments>

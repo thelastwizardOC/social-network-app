@@ -1,7 +1,6 @@
 <div class="tui-container_adaptive personal-page-container">
   <app-personal
     [loggedInUserId]="loggedInUserId"
-    [userId]="userId"
     [userNotFound]="userNotFound"
     [userInfo]="userInfo"
     [personalPosts]="personalPosts"
@@ -9,7 +8,6 @@
     [uploadedAvatar]="avatar"
     (onScroll)="handleOnScroll()"
     (onUploadPhotoClick)="showDialog($event)"
-    (onLike)="handleToggleLikePost($event)"
     (onPhotoUpload)="handlePhotoUploaded($event)"
     (handlePostSucceeded)="handleAfterPosting()"
     (handleDeletePost)="handleAfterPosting()"

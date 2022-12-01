@@ -9,7 +9,9 @@
         </p>
       </div>
     </div>
-    <app-delete (handlePostDeleted)="handlePostDeleted()"></app-delete>
+    <div *ngIf="canPostDeleted()">
+      <app-delete (handlePostDeleted)="handlePostDeleted()"></app-delete>
+    </div>
   </div>
 
   <p #postStatusRef class="tui-text_body-m-2 post-status">
@@ -27,7 +29,7 @@
   </div>
 
   <div class="btn-actions">
-    <div (click)="onLike.emit(post.id)" class="btn-action">
+    <div (click)="handleToggleLikePost()" class="btn-action">
       <tui-svg [ngClass]="isLiked ? 'likedHeart' : null" [src]="isLiked ? 'tuiIconHeartFilledLarge' : 'tuiIconHeartLarge'"></tui-svg>
       <p class="tui-text_body-m">Like</p>
     </div>
@@ -40,7 +42,11 @@
   <tui-expand [expanded]="expanded">
     <ng-template tuiExpandContent>
       <div class="tui-space_vertical-2 tui-space_horizontal-4">
-        <app-comment-container [userInfo]="post.user"></app-comment-container>
+        <app-comment-container
+          [postId]="post.id"
+          (onRefreshPost)="onRefreshPost()"
+          [userCommentList]="post.comments"
+        ></app-comment-container>
       </div>
     </ng-template>
   </tui-expand>

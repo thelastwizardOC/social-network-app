@@ -1,7 +1,7 @@
 <div class="cover-image-container">
   <tui-avatar class="cover-image" [avatarUrl]="userInfo?.cover || mockImg"></tui-avatar>
   <button
-    *ngIf="loggedInUserId === userId"
+    *ngIf="loggedInUserId === userInfo?.id"
     appearance="secondary"
     size="m"
     class="btn-add-cover"
@@ -14,16 +14,16 @@
 </div>
 
 <div class="tui-row tui-row_adaptive tui-row_align_center">
-  <div [class]="loggedInUserId === userId ? 'logged-in-user-avatar-container' : 'user-avatar-container'">
+  <div [class]="loggedInUserId === userInfo?.id ? 'logged-in-user-avatar-container' : 'user-avatar-container'">
     <tui-avatar
       class="user-avatar"
       [size]="'xxl'"
       [rounded]="true"
       [avatarUrl]="userInfo?.avatar || mockImg"
-      (click)="loggedInUserId === userId && this.onUploadPhotoClick.emit(template); uploadType = 'avatar'"
+      (click)="loggedInUserId === userInfo?.id && this.onUploadPhotoClick.emit(template); uploadType = 'avatar'"
     ></tui-avatar>
     <tui-avatar
-      *ngIf="loggedInUserId === userId"
+      *ngIf="loggedInUserId === userInfo?.id"
       class="btn-upload-avatar"
       [rounded]="true"
       size="s"
@@ -32,10 +32,10 @@
     ></tui-avatar>
   </div>
   <p class="tui-text_h5 tui-space_left-3">{{ userInfo?.firstName }} {{ userInfo?.lastName }}</p>
-  <button *ngIf="loggedInUserId === userId" class="btn-edit" appearance="secondary" size="m" tuiButton [disabled]="true">
+  <button *ngIf="loggedInUserId === userInfo?.id" class="btn-edit" appearance="secondary" size="m" tuiButton [disabled]="true">
     Edit profile
   </button>
-  <div *ngIf="loggedInUserId !== userId" class="friend-request-btn-container">
+  <div *ngIf="loggedInUserId !== userInfo?.id" class="friend-request-btn-container">
     <button
       button
       tuiButton
@@ -80,7 +80,7 @@
     <div class="tui-space_top-4">
       <app-new-post (handlePostSucceeded)="handlePostSucceeded.emit()"></app-new-post>
     </div>
-    <app-post *ngFor="let post of personalPosts" [post]="post" (onLike)="onLike.emit($event)" [userId]="userId" (onDeletePost)="handleDeletePost.emit()"></app-post>
+    <app-post *ngFor="let post of personalPosts" [post]="post" (onDeletePost)="handleDeletePost.emit()"></app-post>
 
     <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading"> </tui-loader>
   </div>

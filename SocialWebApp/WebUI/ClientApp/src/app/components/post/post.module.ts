@@ -18,6 +18,7 @@ import {
   TuiDataListDropdownManagerModule,
   TuiFieldErrorPipeModule,
   TuiInputModule,
+  TuiProgressModule,
   TuiTextAreaModule
 } from '@taiga-ui/kit';
 import { PluralPipe } from 'src/app/pipes/plural.pipe';
@@ -53,7 +54,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TuiTextAreaModule,
     TuiPrimitiveTextfieldModule,
     TuiActionModule,
-    SharedModule
+    SharedModule,
+    TuiProgressModule
   ],
   exports: [PostComponent]
 })

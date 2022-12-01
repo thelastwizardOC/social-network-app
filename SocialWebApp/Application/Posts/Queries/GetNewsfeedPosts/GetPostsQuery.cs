@@ -35,8 +35,10 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, PaginatedPost
       if (foundUser == null) throw new NotFoundException();
       var listFriends = await _appDb.UserFriends.Where(uf => uf.SourceUserId == request.UserId).ToListAsync();
       var friendIds = new HashSet<int>(listFriends.Select(x => x.FriendId));
-      var posts = await _appDb.Post
-          .Where(p => p.UserId == request.UserId || friendIds.Contains(p.UserId)).Include(p => p.User).Include(p => p.Photos).OrderByDescending(p => p.CreatedAt).ToListAsync();
+      var posts = await _appDb.Post.Where(p=> p.IsDeleted == false)
+        .Where(p => p.UserId == request.UserId || friendIds.Contains(p.UserId)).Include(p => p.User)
+        .Include(p => p.Photos)
+        .Include(p => p.PostLikes).Include(p => p.Comments).OrderByDescending(p => p.CreatedAt).ToListAsync();
       int totalPost = posts.Count();
       bool hasNextPage = totalPost > request.Offset + request.Limit;
 

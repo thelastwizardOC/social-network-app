@@ -5,7 +5,6 @@ namespace Domain.Entities;
 public class Post
 {
   public int Id { get; set; }
-  [MaxLength(1000)]
   public string? Status { get; set; }
   public List<PostPhoto>? Photos { get; set; }
   public int NumberOfLikes { get; set; }

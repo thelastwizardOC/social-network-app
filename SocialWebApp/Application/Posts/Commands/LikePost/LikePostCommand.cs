@@ -32,9 +32,9 @@ public class LikePostCommandHandler : IRequestHandler<LikePostCommand, PostDto>
     var foundUser = await _appDb.User.FirstOrDefaultAsync(u => u.Id == request.UserId);
     if (foundUser == null) throw new NotFoundException();
 
-
-
-    var foundPost = await _appDb.Post.Where(p => p.Id == request.PostId).Include(p => p.User).Include(p => p.PostLikes).FirstOrDefaultAsync();
+    var foundPost = await _appDb.Post.Where(p => p.Id == request.PostId).Include(p => p.User)
+      .Include(p => p.PostLikes).Include(p=>p.Photos)
+      .Include(p => p.Comments).FirstOrDefaultAsync();
     var checkUserLiked =
         await _appDb.PostLike.FirstOrDefaultAsync(p =>
             p.PostId == request.PostId && p.UserId == request.UserId);
