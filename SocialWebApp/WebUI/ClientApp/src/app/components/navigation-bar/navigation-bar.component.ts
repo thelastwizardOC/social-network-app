@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TuiDialogService, TuiHostedDropdownComponent } from '@taiga-ui/core';
 import { debounce, trim } from 'lodash';
@@ -18,6 +18,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   constructor(
     private route: Router,
     private jwtHelper: JwtHelperService,
+    private activatedRoute: ActivatedRoute,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     private userService: UserService
   ) {
@@ -48,11 +49,13 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   ngDoCheck(): void {
     const currentRoute = this.route.url;
     currentRoute.includes('/profile') == true ? (this.isOnProfilePage = true) : (this.isOnProfilePage = false);
+    if (currentRoute.includes('/search?') && this.input.nativeElement.value === '') {
+      this.input.nativeElement.value = localStorage.getItem('searchString');
+    }
   }
 
   ngOnInit(): void {
     const token = localStorage.getItem('jwt');
-
     if (token !== null) {
       this.userId = +this.jwtHelper.decodeToken(token as string).sub;
       this.profileItems[0].link = '/profile/' + this.userId;
@@ -71,7 +74,9 @@ export class NavigationBarComponent implements OnInit, OnChanges {
 
   onSearch(event: KeyboardEvent) {
     if (this.input.nativeElement.value === '') return;
+
     if (event.key == 'Enter') {
+      localStorage.setItem('searchString', this.input.nativeElement.value);
       this.onSearchEnter();
     } else {
       this.isLoadingSearch = true;
@@ -105,6 +110,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   }
 
   onSearchEnter() {
+    console.log(this.input.nativeElement.value);
     this.isDropDownSearchVisible = false;
     this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.route.navigate(['search'], { queryParams: { searchString: trim(this.input.nativeElement.value) } });

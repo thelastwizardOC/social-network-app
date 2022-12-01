@@ -28,8 +28,8 @@ public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, SearchU
         {
             var users = from u in _context.User select u; 
             var userList = await users.Where(u => u.UserName.Contains(request.SearchString)
-                                     || u.FirstName.Contains(request.SearchString)
-                                     || u.LastName.Contains(request.SearchString)).OrderBy(u => u.FirstName).AsNoTracking().ToListAsync();
+                                     || (u.FirstName + ' ' + u.LastName).Contains(request.SearchString)
+                                     || (u.LastName + ' ' + u.FirstName).Contains(request.SearchString)).OrderBy(u => u.FirstName).AsNoTracking().ToListAsync();
 
             int totalCount = userList.Count();
             bool hasNextPage = totalCount > request.Limit + request.Offset;

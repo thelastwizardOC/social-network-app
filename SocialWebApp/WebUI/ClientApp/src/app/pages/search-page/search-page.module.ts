@@ -1,3 +1,4 @@
+import { TuiAvatarModule } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TuiButtonModule, TuiLoaderModule } from '@taiga-ui/core';
@@ -10,6 +11,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [SearchPageContainerComponent, SearchPageComponent, UserInfoCardComponent, ButtonRelationshipPipe],
-  imports: [CommonModule, SearchPageRoute, TuiLoaderModule, TuiButtonModule, InfiniteScrollModule]
+  imports: [CommonModule, SearchPageRoute, TuiLoaderModule, TuiButtonModule, InfiniteScrollModule, TuiAvatarModule]
 })
 export class SearchResultPageModule {}

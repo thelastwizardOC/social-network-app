@@ -35,7 +35,7 @@ export enum Gender {
 }
 
 export interface ISearchUser {
-  id?: number;
+  id: number;
   firstName: string;
   lastName: string;
   userName: string;
