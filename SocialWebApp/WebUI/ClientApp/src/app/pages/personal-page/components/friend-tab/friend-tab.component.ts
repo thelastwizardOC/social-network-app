@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { debounce, trim } from 'lodash';
 import { ISearchFriend } from 'src/app/interface/user';
+import { GlobalErrorHandler } from 'src/app/services/error-handler.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class FriendTabComponent implements OnInit {
   @ViewChild('searchInput') searchInput!: ElementRef;
-  constructor(private userService: UserService, private jwtHelper: JwtHelperService) {}
+  constructor(private userService: UserService, private jwtHelper: JwtHelperService, private errorHandler: GlobalErrorHandler) {}
   friendList: ISearchFriend[] = [];
   userId!: number;
   isLoading: boolean = false;
@@ -21,23 +22,23 @@ export class FriendTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
-    this.searchFriend(false);
-    this.searchFriend = debounce(this.searchFriend, 1000);
+    this.handleSearchFriend(false);
+    this.handleSearchFriend = debounce(this.handleSearchFriend, 1000);
   }
 
   onScroll() {
     if (this.hasNextPage && !this.isLoading) {
-      this.searchFriend(true);
+      this.handleSearchFriend(true);
     }
   }
 
   onSearchInputChange() {
     this.friendList = [];
     this.isLoading = true;
-    this.searchFriend(false);
+    this.handleSearchFriend(false);
   }
 
-  searchFriend(isScrolling: boolean) {
+  handleSearchFriend(isScrolling: boolean) {
     if (!isScrolling) {
       this.friendList = [];
       this.hasNextPage = false;
@@ -53,7 +54,7 @@ export class FriendTabComponent implements OnInit {
         this.hasNextPage = res.hasNextPage;
       },
       error: err => {
-        console.log(err);
+        this.errorHandler.handleError(new Error('Fail to search friends!'));
       },
       complete: () => {
         this.isLoading = false;
