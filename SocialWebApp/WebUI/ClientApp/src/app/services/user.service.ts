@@ -44,4 +44,10 @@ export class UserService {
       }
     });
   }
+
+  handleFriendRequest(userId: number, triggerUserId: number, action: boolean) {
+    const body = JSON.stringify({ userId, triggerUserId, action });
+    const headers = { 'content-type': 'application/json' };
+    return this.http.put<boolean>(`${environment.baseApi}/user/response-add-friend-request`, body, { headers });
+  }
 }

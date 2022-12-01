@@ -11,7 +11,7 @@
           type="text"
           placeholder="Search on Honest"
           (keyup)="onSearch($event)"
-          (click)="onToggleDropdownSearch()"
+          (click)="toggleDropDownSearch()"
           #searchInput
         />
       </div>
@@ -39,9 +39,37 @@
     <div class="menu-btn" routerLink="message" routerLinkActive="active" (click)="onNavigate()">
       <tui-svg src="assets/svg/message-icon.svg"></tui-svg>
     </div>
-    <div class="menu-btn" routerLink="notification" routerLinkActive="active" (click)="onNavigate()">
-      <tui-svg src="assets/svg/bell-icon.svg"></tui-svg>
-    </div>
+    <tui-hosted-dropdown [content]="dropDownNotification" [(open)]="isDropDownNotificationVisible" tuiDropdownAlign="right">
+      <div class="menu-btn" (click)="onNotificationBtnClick()">
+        <tui-svg src="assets/svg/bell-icon.svg"></tui-svg>
+      </div>
+    </tui-hosted-dropdown>
+
+    <ng-template #dropDownNotification>
+      <div class="notification-container">
+        <div class="tui-text_h6 notification-title">Notifications</div>
+        <tui-loader [showLoader]="notificationStore.isLoading"></tui-loader>
+        <div *ngIf="notificationStore.notifications.length === 0 && !notificationStore.isLoading" class="empty-msg">
+          There is no friend request!
+        </div>
+        <div *ngFor="let item of notificationStore.notifications; index as i" tuiOption class="notification-item-container">
+          <tui-avatar
+            [avatarUrl]="
+              item.triggerUser.avatar || 'https://honestorient.blob.core.windows.net/public-uploads/user/photos1dgcqnjq.znj_wallpaperf.jpg'
+            "
+            [rounded]="true"
+            [size]="'l'"
+          ></tui-avatar>
+          <div class="info-container">
+            <p class="tui-text_body-m username">{{ item.triggerUser.firstName }} {{ item.triggerUser.lastName }}</p>
+            <div class="btn-container">
+              <button tuiButton size="s" class="confirm-btn" (click)="onConfirmFriendRequest(item)">Confirm</button>
+              <button tuiButton size="s" class="decline-btn" appearance="secondary" (click)="onDeclineFriendRequest(item)">Decline</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
 
     <tui-hosted-dropdown [content]="dropdownProfile" [(open)]="isDropDownProfileVisible">
       <div [class]="isOnProfilePage == true ? 'profile-btn-active' : 'menu-btn'">
@@ -51,7 +79,7 @@
 
     <ng-template #dropdownProfile>
       <tui-data-list>
-        <a *ngFor="let item of profileItems; index as i" tuiOption (click)="toggleDropDown(i)" [routerLink]="item.link">
+        <a *ngFor="let item of profileItems; index as i" tuiOption (click)="toggleDropDownProfile(i)" [routerLink]="item.link">
           {{ item.label }}
         </a>
       </tui-data-list>

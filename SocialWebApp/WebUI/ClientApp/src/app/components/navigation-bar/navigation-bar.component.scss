@@ -58,6 +58,7 @@ $primary-color: #379cf3;
 }
 
 @mixin menu-btn($bg) {
+  position: relative;
   display: flex;
   width: 40px;
   aspect-ratio: 1;
@@ -155,4 +156,38 @@ $primary-color: #379cf3;
 
 .loader {
   margin-bottom: 20px;
+}
+
+.notification-container {
+  width: 400px;
+  padding: 20px 20px;
+  z-index: auto;
+  > .notification-title {
+    margin-bottom: 20px;
+  }
+  > .empty-msg {
+    text-align: center;
+  }
+  > .notification-item-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    > .info-container {
+      flex: 1;
+      margin-left: 20px;
+      padding: 2px 0;
+      > .username {
+        margin-bottom: 7px;
+        font-weight: 600;
+      }
+      .confirm-btn {
+        width: 100px;
+        margin-right: 50px;
+      }
+      .decline-btn {
+        width: 100px;
+      }
+    }
+  }
 }

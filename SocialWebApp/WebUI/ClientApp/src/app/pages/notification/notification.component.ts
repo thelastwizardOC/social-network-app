@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SignalrService } from 'src/app/services/signalr.service';
 
 @Component({
   selector: 'app-notification',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent implements OnInit {
-  constructor() {}
+  constructor(public signalRService: SignalrService) {}
 
   ngOnInit(): void {}
 }

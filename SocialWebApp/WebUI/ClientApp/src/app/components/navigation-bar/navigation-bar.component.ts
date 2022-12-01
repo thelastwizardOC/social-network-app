@@ -4,6 +4,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { TuiDialogService, TuiHostedDropdownComponent } from '@taiga-ui/core';
 import { debounce, trim } from 'lodash';
 import { ISearchUser, ISearchUserResponse } from 'src/app/interface/user';
+import { NotificationService } from 'src/app/services/notification.service';
+import { INotification } from './../../interface/notification';
+import { NotificationStoreService } from './../../services/notification-store.service';
 import { UserService } from './../../services/user.service';
 
 @Component({
@@ -20,7 +23,9 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     private jwtHelper: JwtHelperService,
     private activatedRoute: ActivatedRoute,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
-    private userService: UserService
+    private userService: UserService,
+    public notificationStore: NotificationStoreService,
+    private notificationService: NotificationService
   ) {
     this.onSearchInputChange = debounce(this.onSearchInputChange, 500);
   }
@@ -35,6 +40,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   profileItems = [{ label: 'See Your Profile', link: '/' }, { label: 'Log Out' }];
   isDropDownProfileVisible = false;
   isDropDownSearchVisible = false;
+  isDropDownNotificationVisible = false;
   isOnProfilePage = false;
   isLoadingSearch = false;
   searchUsers: ISearchUser[] = [];
@@ -42,6 +48,25 @@ export class NavigationBarComponent implements OnInit, OnChanges {
 
   toggleDropDown(itemIndex: number) {
     this.onNavigate();
+  }
+
+  onNotificationBtnClick() {
+    if (!this.isDropDownNotificationVisible) {
+      this.notificationStore.notifications = [];
+      this.notificationStore.isLoading = true;
+      this.notificationStore.getNotifications(this.userId).subscribe({
+        next: res => {
+          this.notificationStore.notifications = res;
+        },
+        error: err => {},
+        complete: () => {
+          this.notificationStore.isLoading = false;
+        }
+      });
+    }
+  }
+
+  toggleDropDownProfile(itemIndex: number) {
     if (itemIndex === 1) this.showDialog();
     this.isDropDownProfileVisible = !this.isDropDownProfileVisible;
   }
@@ -54,7 +79,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     const token = localStorage.getItem('jwt');
     if (token !== null) {
       this.userId = +this.jwtHelper.decodeToken(token as string).sub;
@@ -104,7 +129,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     }
   }
 
-  onToggleDropdownSearch() {
+  toggleDropDownSearch() {
     this.isDropDownSearchVisible = true;
     if (this.input.nativeElement.value !== '') {
       this.isLoadingSearch = true;
@@ -122,5 +147,30 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   onNavigate() {
     this.input.nativeElement.value = '';
     this.searchUsers = [];
+  }
+  onConfirmFriendRequest(item: INotification) {
+    this.userService.handleFriendRequest(this.userId, item.triggerUser.id, true).subscribe({
+      next: res => {
+        console.log(res);
+        var itemIndex = this.notificationStore.notifications.indexOf(item);
+        this.notificationStore.notifications.splice(itemIndex, 1);
+        this.notificationService.showSuccess(`Now, You and ${item.triggerUser.firstName + item.triggerUser.lastName} is the friend`);
+      },
+      error: err => {},
+      complete: () => {}
+    });
+    return;
+  }
+
+  onDeclineFriendRequest(item: INotification) {
+    this.userService.handleFriendRequest(this.userId, item.triggerUser.id, false).subscribe({
+      next: res => {
+        var itemIndex = this.notificationStore.notifications.indexOf(item);
+        this.notificationStore.notifications.splice(itemIndex, 1);
+      },
+      error: err => {},
+      complete: () => {}
+    });
+    return;
   }
 }
