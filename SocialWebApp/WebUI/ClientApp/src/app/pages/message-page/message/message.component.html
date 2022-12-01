@@ -5,18 +5,16 @@
     </div>
     <div class="message-header-right">
       <ng-container *ngIf="chosenFriend">
-        <tui-avatar avatarUrl="{{ chosenFriend.avatar }}" [rounded]="true"> </tui-avatar>
-        <p>{{ chosenFriend.firstName + ' ' + chosenFriend.lastName }}</p>
+        <div class="user-header-container" (click)="router.navigate(['/profile/' + chosenFriend.id])">
+          <tui-avatar avatarUrl="{{ chosenFriend.avatar }}" [rounded]="true"> </tui-avatar>
+          <p>{{ chosenFriend.firstName + ' ' + chosenFriend.lastName }}</p>
+        </div>
       </ng-container>
     </div>
   </div>
   <div class="message-body">
     <div class="message-body-left">
-      <div
-        [tuiDropdown]="dropdownContent"
-        [tuiDropdownManual]="keyword.length > 0 && searchedFriends.length > 0"
-        class="search-box-container"
-      >
+      <div [tuiDropdown]="dropdownContent" [tuiDropdownManual]="keyword.length > 0" class="search-box-container">
         <tui-svg src="tuiIconSearchLarge" class="search-icon"></tui-svg>
         <input
           [(ngModel)]="keyword"
@@ -26,7 +24,11 @@
           (keyup)="onSearchFriend.emit(keyword)"
         />
         <ng-template #dropdownContent>
-          <tui-data-list class="items-container">
+          <tui-data-list
+            [emptyContent]="keyword !== '' && !isSearching ? 'No friend found' : 'Try searching for friends'"
+            class="items-container"
+          >
+            <tui-loader [showLoader]="isSearching"></tui-loader>
             <a (click)="onClickSearchFriend.emit(user); keyword = ''" *ngFor="let user of searchedFriends" tuiOption class="item-container">
               <tui-avatar [rounded]="true" class="tui-space_right-2" avatarUrl="{{ user.avatar }}"> </tui-avatar>
               <div>

@@ -64,6 +64,7 @@ public class ChatController : ApiControllerBase
         try
         {
             var message = await Mediator.Send(command);
+            // message.CreatedAt = DateTime.Now;
             await hubContext.Clients.Group(command.ReceiverId.ToString())
                 .SendAsync("messageReceivedFromApi", message);
             return Ok(message);

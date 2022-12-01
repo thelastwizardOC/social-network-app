@@ -11,8 +11,16 @@ export class MessageStoreService {
   public chosenFriend: IUser | undefined;
   public searchedFriends: IUser[] = [];
   public isLoading: boolean = false;
+  public isSearching: boolean = false;
   public offset: number = 0;
   public limit: number = 10;
   public hasNextPage: boolean = true;
   constructor() {}
+
+  resetStore() {
+    this.friendsMessages = [];
+    this.messages = [];
+    this.offset = 0;
+    this.hasNextPage = true;
+  }
 }

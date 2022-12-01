@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { IMessage, MessageType } from 'src/app/interface/message';
 import { IUser } from 'src/app/interface/user';
 
@@ -7,12 +8,13 @@ import { IUser } from 'src/app/interface/user';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss']
 })
-export class MessageComponent implements OnChanges {
+export class MessageComponent {
   @Input() listMessages: IMessage[] = [];
   @Input() friendsMessages: IMessage[] = [];
   @Input() userId!: number;
   @Input() chosenFriend: IUser | undefined;
   @Input() isLoading!: boolean;
+  @Input() isSearching!: boolean;
   @Input() searchedFriends: IUser[] = [];
   @Output() onSend = new EventEmitter<string>();
   @Output() onContactClick = new EventEmitter<{ chosenUser: IUser | undefined; messageId: number | undefined }>();
@@ -22,11 +24,9 @@ export class MessageComponent implements OnChanges {
   @Output() onSearchFriend = new EventEmitter<string>();
   @Output() onClickSearchFriend = new EventEmitter<IUser>();
   @Output() onHideMessage = new EventEmitter<number>();
+  // @Output() onMarkAsRead = new EventEmitter<number>();
 
   keyword: string = '';
   messageType = MessageType;
-  constructor() {}
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log({ changes });
-  }
+  constructor(public router: Router) {}
 }

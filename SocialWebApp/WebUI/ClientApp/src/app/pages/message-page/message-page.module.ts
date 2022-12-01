@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TuiDataListModule, TuiDropdownModule, TuiHintModule, TuiLoaderModule, TuiSvgModule } from '@taiga-ui/core';
 import { TuiAvatarModule, TuiInputFilesModule, TuiTextAreaModule } from '@taiga-ui/kit';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MessageTimePipe } from 'src/app/pipes/message-time.pipe';
 import { SharedModule } from '../shared.module';
 import { MessageContactComponent } from './components/message-contact/message-contact.component';
 import { MessageInputComponent } from './components/message-input/message-input.component';
@@ -13,7 +14,14 @@ import { MessageContainerComponent } from './message-container/message-container
 import { MessageComponent } from './message/message.component';
 
 @NgModule({
-  declarations: [MessageComponent, MessageContainerComponent, MessageContactComponent, UserMessageComponent, MessageInputComponent],
+  declarations: [
+    MessageComponent,
+    MessageContainerComponent,
+    MessageContactComponent,
+    UserMessageComponent,
+    MessageInputComponent,
+    MessageTimePipe
+  ],
   imports: [
     CommonModule,
     MessagePageRoute,

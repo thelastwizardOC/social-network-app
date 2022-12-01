@@ -3,6 +3,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { MessagePackHubProtocol } from '@microsoft/signalr-protocol-msgpack';
 import { environment } from 'src/environments/environment';
 import { IMessage, IMessageHub, MessageContentType } from '../interface/message';
+import { IUser } from '../interface/user';
 import { messageHubParser } from '../utils/parser';
 import { MessageStoreService } from './message-store.service';
 import { MessageService } from './message.service';
@@ -19,7 +20,9 @@ export class SignalrService {
     this.startConnection();
     this.addListeners(userId);
   };
-
+  public disconnect = () => {
+    this.hubConnection.stop();
+  };
   public sendMessage(message: string, senderId: number, receiverId: number, type: MessageContentType) {
     const sendMessage = this.buildChatMessage(message, senderId, receiverId, type);
     this.messageStore.messages = [sendMessage, ...this.messageStore.messages];
@@ -46,13 +49,6 @@ export class SignalrService {
 
     return promise;
   }
-  public setAsRead(messageId: number) {
-    const foundFriend = this.messageStore.friendsMessages.find(m => m.id === messageId);
-    if (foundFriend && !foundFriend.isRead) {
-      foundFriend.isRead = true;
-      this.messageService.updateReadStatus(messageId).subscribe();
-    }
-  }
 
   public getConnection(): HubConnection {
     return new HubConnectionBuilder()
@@ -73,26 +69,30 @@ export class SignalrService {
   }
 
   public async startConnection() {
+    // this.hubConnection.
     this.hubConnection = this.getConnection();
     this.hubConnection
       .start()
-      .then(() => {
-        // console.log('connection started');
-      })
+      .then(() => {})
       .catch(err => {
         console.log('error while establishing signalr connection: ');
-        // console.log({ err });
       });
   }
   public updateFriendLastMessage(lastMessage: IMessage) {
+    console.log({ lastMessage });
     this.messageStore.friendsMessages = this.messageStore.friendsMessages.map(i => {
       if (
         (i.senderId === lastMessage.senderId && i.receiverId === lastMessage.receiverId) ||
         (i.receiverId === lastMessage.senderId && i.senderId === lastMessage.receiverId)
       ) {
+        i.id = lastMessage.id;
         i.content = lastMessage.content;
         i.type = lastMessage.type;
+        i.isRead = lastMessage.isRead;
+        i.senderId = lastMessage.senderId;
+        i.receiverId = lastMessage.receiverId;
       }
+
       return i;
     });
   }
@@ -101,6 +101,8 @@ export class SignalrService {
       console.log('message received from API Controller');
       console.log({ data });
       const parsedData = messageHubParser(data);
+      console.log({ parsedData });
+
       if (parsedData.senderId === this.messageStore.chosenFriend?.id)
         this.messageStore.messages = [messageHubParser(data), ...this.messageStore.messages];
       this.updateFriendLastMessage(parsedData);

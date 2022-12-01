@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IMessage, MessageContentType } from 'src/app/interface/message';
 import { IUser } from 'src/app/interface/user';
@@ -14,7 +14,7 @@ import { MessageStoreService } from 'src/app/services/message-store.service';
   templateUrl: './message-container.component.html',
   styleUrls: ['./message-container.component.scss']
 })
-export class MessageContainerComponent implements OnInit {
+export class MessageContainerComponent implements OnInit, OnDestroy {
   userId!: number;
   constructor(
     public jwtHelper: JwtHelperService,
@@ -24,12 +24,16 @@ export class MessageContainerComponent implements OnInit {
     public userService: UserService,
     public notificationService: NotificationService
   ) {}
+  ngOnDestroy(): void {
+    this.signalRService.disconnect();
+    this.messageStore.resetStore();
+  }
 
   ngOnInit(): void {
     this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.signalRService.connect(this.userId);
     this.getFriendsMessages();
-    this.handleFetchSearchFriend = _.debounce(this.handleFetchSearchFriend, 1000);
+    this.handleFetchSearchFriend = _.debounce(this.handleFetchSearchFriend, 300);
   }
 
   getMessage(): void {
@@ -79,12 +83,15 @@ export class MessageContainerComponent implements OnInit {
         MessageContentType.TEXT
       );
       this.messageStore.messages = [sendMessage, ...this.messageStore.messages];
-      this.signalRService.updateFriendLastMessage(sendMessage);
 
       /*HANDLE FIRST TIME SEND TO THIS FRIEND */
 
       this.messageService.addMessage(sendMessage).subscribe({
         next: value => {
+          this.signalRService.updateFriendLastMessage(value);
+          /*
+          CHECK IF THIS USER EXIST IN CONTACT BOARD
+          */
           if (
             !this.messageStore.friendsMessages.find(
               fm =>
@@ -92,7 +99,7 @@ export class MessageContainerComponent implements OnInit {
                 (fm.receiverId === value.senderId && fm.senderId === value.receiverId)
             )
           ) {
-            this.messageStore.friendsMessages.unshift(value);
+            // this.messageStore.friendsMessages.unshift(value);
           }
         },
         error: err => console.error(err)
@@ -102,9 +109,9 @@ export class MessageContainerComponent implements OnInit {
   handleSendPhoto(e: Event) {
     const files = (e.target as HTMLInputElement).files;
     if (files) {
-      if (files[0].size > 2200000) return this.notificationService.showError('Image size cannot be larger than 2.2MB');
       if (files[0].type !== 'image/png' && files[0].type !== 'image/jpeg' && files[0].type !== 'image/jpg')
         return this.notificationService.showError('Image type is not supported');
+      if (files[0].size > 2200000) return this.notificationService.showError('Image size cannot be larger than 2.2MB');
 
       // this.signalRService.sendFile(files[0], this.userId, this.signalRService.chosenFriend!.id, MessageContentType.IMAGE);
       const sendFile = this.signalRService.buildChatMessage(
@@ -134,7 +141,6 @@ export class MessageContainerComponent implements OnInit {
     const files = (e.target as HTMLInputElement).files;
 
     if (files) {
-      if (files[0].size > 15000000) return this.notificationService.showError('Document size cannot be larger than 15MB');
       if (
         files[0].type !== 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
         files[0].type !== 'application/pdf' &&
@@ -142,6 +148,7 @@ export class MessageContainerComponent implements OnInit {
         files[0].type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       )
         return this.notificationService.showError('Document type is not supported');
+      if (files[0].size > 15000000) return this.notificationService.showError('Document size cannot be larger than 15MB');
 
       const sendFile = this.signalRService.buildChatMessage(
         files[0] as unknown as string,
@@ -166,15 +173,25 @@ export class MessageContainerComponent implements OnInit {
       });
     }
   }
+  handleMarkAsRead(messageId: number) {
+    const foundFriend = this.messageStore.friendsMessages.find(m => m.id === messageId);
+    if (foundFriend && !foundFriend.isRead) {
+      foundFriend.isRead = true;
+      this.messageService.updateReadStatus(messageId).subscribe();
+    }
+  }
   handleContactClick({ chosenUser, messageId }: { chosenUser: IUser | undefined; messageId: number | undefined }): void {
+    console.log('click');
+    console.log({ chosenUser, messageId });
     if (chosenUser && messageId) {
-      if (!this.messageStore.friendsMessages.find(fm => fm.id === messageId)?.isRead) this.signalRService.setAsRead(messageId);
+      console.log('insiide');
+      if (!this.messageStore.friendsMessages.find(fm => fm.id === messageId)?.isRead) this.handleMarkAsRead(messageId);
 
       if (chosenUser.id === this.messageStore.chosenFriend?.id) return;
       this.messageStore.chosenFriend = chosenUser;
       this.messageStore.chosenFriend = chosenUser;
-      this.messageStore.offset = 0;
       this.messageStore.chosenFriend = chosenUser;
+      this.messageStore.offset = 0;
       this.messageStore.messages = [];
       this.getMessage();
     }
@@ -184,6 +201,7 @@ export class MessageContainerComponent implements OnInit {
   }
   handleSearchFriend(keyword: string) {
     this.messageStore.searchedFriends = [];
+    this.messageStore.isSearching = true;
     this.handleFetchSearchFriend(keyword);
   }
   handleFetchSearchFriend(keyword: string) {
@@ -191,15 +209,19 @@ export class MessageContainerComponent implements OnInit {
       this.userService.searchUserFriend(this.userId, keyword).subscribe({
         next: value => {
           this.messageStore.searchedFriends = value;
+          this.messageStore.isSearching = false;
+        },
+        error: () => {
+          this.messageStore.isSearching = false;
         }
       });
   }
 
   handleClickSearchFriend(chosenUser: IUser) {
+    this.messageStore.chosenFriend = chosenUser;
     this.messageStore.searchedFriends = [];
 
     /* NEED GROUP */
-    this.messageStore.chosenFriend = chosenUser;
     this.messageStore.offset = 0;
     this.messageStore.messages = [];
     this.getMessage();

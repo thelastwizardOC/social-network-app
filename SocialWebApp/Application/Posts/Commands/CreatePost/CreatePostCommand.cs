@@ -51,7 +51,9 @@ public class CreatePostCommandHandler:IRequestHandler<CreatePostCommand, bool>
                 NumberOfComments = 0,
                 NumberOfLikes = 0,
                 IsDeleted = false,
-                UserId = request.UserId
+                UserId = request.UserId,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             await _context.Post.AddAsync(post);
             await _context.SaveChangesAsync();
