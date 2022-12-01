@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -23,6 +24,7 @@ export class PersonalContainerComponent implements OnInit {
   offset: number = 0;
   file!: File;
   avatar: any;
+  loggedInUserId!: number;
 
   personalPosts: IPost[] = [];
   userInfo: IUser | undefined;
@@ -30,10 +32,12 @@ export class PersonalContainerComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private postService: PostService,
-    private dialogService: TuiDialogService
+    private dialogService: TuiDialogService,
+    private jwtHelper: JwtHelperService
   ) {}
 
   ngOnInit(): void {
+    this.loggedInUserId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.route.params.subscribe({
       next: ({ id }) => {
         this.userId = +id;

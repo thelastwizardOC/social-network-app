@@ -1,6 +1,7 @@
 <div class="cover-image-container">
   <tui-avatar class="cover-image" [avatarUrl]="userInfo?.cover || mockImg"></tui-avatar>
   <button
+    *ngIf="loggedInUserId === userId"
     appearance="secondary"
     size="m"
     class="btn-add-cover"
@@ -13,15 +14,16 @@
 </div>
 
 <div class="tui-row tui-row_adaptive tui-row_align_center">
-  <div class="user-avatar-container">
+  <div [class]="loggedInUserId === userId ? 'logged-in-user-avatar-container' : 'user-avatar-container'">
     <tui-avatar
       class="user-avatar"
       [size]="'xxl'"
       [rounded]="true"
       [avatarUrl]="userInfo?.avatar || mockImg"
-      (click)="this.onUploadPhotoClick.emit(template); uploadType = 'avatar'"
+      (click)="loggedInUserId === userId && this.onUploadPhotoClick.emit(template); uploadType = 'avatar'"
     ></tui-avatar>
     <tui-avatar
+      *ngIf="loggedInUserId === userId"
       class="btn-upload-avatar"
       [rounded]="true"
       size="s"
@@ -30,7 +32,9 @@
     ></tui-avatar>
   </div>
   <p class="tui-text_h5 tui-space_left-3">{{ userInfo?.firstName }} {{ userInfo?.lastName }}</p>
-  <button class="btn-edit" appearance="secondary" size="m" tuiButton [disabled]="true">Edit profile</button>
+  <button *ngIf="loggedInUserId === userId" class="btn-edit" appearance="secondary" size="m" tuiButton [disabled]="true">
+    Edit profile
+  </button>
 </div>
 
 <div class="tui-container_fixed user-bio-container">

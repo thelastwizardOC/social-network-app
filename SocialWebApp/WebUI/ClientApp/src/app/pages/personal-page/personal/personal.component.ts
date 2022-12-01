@@ -15,6 +15,7 @@ export class PersonalComponent {
   @Input() personalPosts!: IPost[];
   @Input() isLoading: boolean = false;
   @Input() uploadedAvatar: any;
+  @Input() loggedInUserId!: number;
   @Output() onScroll = new EventEmitter();
   @Output() onUploadPhotoClick = new EventEmitter();
   @Output() onPhotoUpload = new EventEmitter();

@@ -27,8 +27,14 @@
   margin-top: -60px;
   margin-bottom: 20px;
   position: relative;
-  cursor: pointer;
+}
 
+.logged-in-user-avatar-container {
+  margin-left: 60px;
+  margin-top: -60px;
+  margin-bottom: 20px;
+  position: relative;
+  cursor: pointer;
   .btn-upload-avatar {
     position: absolute;
     bottom: 0;
