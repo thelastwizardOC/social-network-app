@@ -7,6 +7,7 @@ import { NewsfeedContainerComponent } from './newsfeed-container/newsfeed-contai
 import { NewsfeedPageRoute } from './newsfeed-page.route';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { NewPostModule } from '../../components/new-post/new-post.module';
+import { TuiAvatarModule } from '@taiga-ui/kit';
 
 @NgModule({
   declarations: [NewsfeedComponent, NewsfeedContainerComponent],
@@ -19,7 +20,8 @@ import { NewPostModule } from '../../components/new-post/new-post.module';
     PostModule,
     InfiniteScrollModule,
     TuiLoaderModule,
-    NewPostModule
+    NewPostModule,
+    TuiAvatarModule
   ]
 })
 export class NewsfeedPageModule {}

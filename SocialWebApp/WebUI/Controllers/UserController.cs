@@ -124,8 +124,23 @@ public class UserController : ApiControllerBase
     [HttpPost("add-friend")]
     public async Task<ActionResult<bool>> AddFriend(AddFriendCommand command)
     {
-        var result = await Mediator.Send(command);
-        return Ok(result);
+        try
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+        catch (ValidationException e)
+        {
+            return BadRequest(e.Errors);
+        }
+        catch (NotFoundException e)
+        { 
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
+        }
     }
 
     [HttpPost("unfriend")]

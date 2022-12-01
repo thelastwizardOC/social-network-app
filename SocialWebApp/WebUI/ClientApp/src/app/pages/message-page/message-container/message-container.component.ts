@@ -70,6 +70,10 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
           this.messageStore.friendsMessages = value;
           this.getMessage();
         }
+        // FIX-BUGS
+        if (value.length === 0 && this.messageStore.navigateFriendInfo) {
+          this.messageStore.chosenFriend = this.messageStore.navigateFriendInfo;
+        }
       },
       error: err => {
         console.log({ err });

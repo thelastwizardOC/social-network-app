@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IPost } from 'src/app/interface/post';
+import { IUser } from 'src/app/interface/user';
 import { PostService } from 'src/app/services/post.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-newsfeed-container',
@@ -15,12 +17,14 @@ export class NewsfeedContainerComponent implements OnInit {
   userId: number = 0;
   limit: number = 7;
   offset: number = 0;
+  loggedInUser: IUser | undefined;
 
-  constructor(private postService: PostService, private jwtHelper: JwtHelperService) {}
+  constructor(private postService: PostService, private jwtHelper: JwtHelperService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.fetchPosts();
+    this.fetchLoggedInUserInfo();
   }
 
   handleReloadPage() {
@@ -32,7 +36,6 @@ export class NewsfeedContainerComponent implements OnInit {
     this.isLoading = true;
     this.postService.getNewsfeedPost(this.userId, this.offset, this.limit).subscribe({
       next: value => {
-        console.log(value);
         this.posts = [...this.posts, ...value.items];
         this.hasNextPage = value.hasNextPage;
         this.offset += this.limit;
@@ -50,5 +53,15 @@ export class NewsfeedContainerComponent implements OnInit {
     if (this.hasNextPage) {
       this.fetchPosts();
     }
+  }
+
+  fetchLoggedInUserInfo() {
+    this.userService.getUserInfo(this.userId, this.userId).subscribe({
+      next: res => {
+        this.loggedInUser = res;
+      },
+      error: err => {},
+      complete: () => {}
+    });
   }
 }

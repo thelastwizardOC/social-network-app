@@ -33,7 +33,7 @@ public class GetPostsQueryHandler : IRequestHandler<GetPostsQuery, PaginatedPost
     {
       var foundUser = await _appDb.User.FirstOrDefaultAsync(u => u.Id == request.UserId);
       if (foundUser == null) throw new NotFoundException();
-      var listFriends = await _appDb.UserFriends.Where(uf => uf.SourceUserId == request.UserId).ToListAsync();
+      var listFriends = await _appDb.UserFriends.Where(uf => uf.SourceUserId == request.UserId && uf.Pending == false).ToListAsync();
       var friendIds = new HashSet<int>(listFriends.Select(x => x.FriendId));
       var posts = await _appDb.Post.Where(p=> p.IsDeleted == false)
         .Where(p => p.UserId == request.UserId || friendIds.Contains(p.UserId)).Include(p => p.User)

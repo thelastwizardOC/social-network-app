@@ -66,13 +66,7 @@
           There is no friend request!
         </div>
         <div *ngFor="let item of notificationStore.notifications; index as i" tuiOption class="notification-item-container">
-          <tui-avatar
-            [avatarUrl]="
-              item.triggerUser.avatar || 'https://honestorient.blob.core.windows.net/public-uploads/user/photos1dgcqnjq.znj_wallpaperf.jpg'
-            "
-            [rounded]="true"
-            [size]="'m'"
-          ></tui-avatar>
+          <tui-avatar [avatarUrl]="item.triggerUser.avatar" [rounded]="true" [size]="'m'"></tui-avatar>
           <div class="info-container">
             <p class="tui-text_body-m username">{{ item.triggerUser.firstName }} {{ item.triggerUser.lastName }}</p>
             <div class="btn-container">

@@ -128,9 +128,7 @@ export class PersonalContainerComponent implements OnInit {
   }
   handleUpdatePostLike(postId: number, status: LikeStatus): void {
     this.postService.likePost(postId, this.userId, status).subscribe({
-      next: value => {
-        console.log({ value });
-      },
+      next: value => {},
       error: err => {
         console.log({ err });
       }

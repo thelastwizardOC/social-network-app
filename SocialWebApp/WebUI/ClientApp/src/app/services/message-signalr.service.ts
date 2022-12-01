@@ -41,9 +41,7 @@ export class SignalrService {
   public addUserToGroup(userId: number) {
     var promise = this.hubConnection
       .invoke('AddUserToGroupAsync', userId)
-      .then(() => {
-        // console.log('add group sent');
-      })
+      .then(() => {})
       .catch(err => console.log('error while sending a message to hub: ' + err));
 
     return promise;
@@ -91,7 +89,6 @@ export class SignalrService {
   public addListeners(userId: number) {
     this.hubConnection.on('messageReceivedFromApi', (data: IMessageHub) => {
       console.log('message received from API Controller');
-      console.log({ data });
       const parsedData = messageHubParser(data);
       console.log({ parsedData });
       /*

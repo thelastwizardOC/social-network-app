@@ -16,7 +16,6 @@ export class MessageContactComponent implements OnChanges {
   messageContentType = MessageContentType;
 
   constructor() {}
-
   ngOnChanges(changes: SimpleChanges): void {
     console.log({ changes });
     if (this.friendMessage.receiverId === this.userId) this.isLastSendFromCurrentUser = false;
