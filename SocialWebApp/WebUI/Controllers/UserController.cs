@@ -105,6 +105,7 @@ public class UserController : ApiControllerBase
             return StatusCode(500);
         }
     }
+
     [HttpGet("search-friend")]
     public async Task<ActionResult<SearchFriendsListDto>> SearchFriend([FromQuery] SearchFriendsQuery query)
     {
@@ -117,6 +118,7 @@ public class UserController : ApiControllerBase
         {
             return StatusCode(500);
         }
+    }
 
     [HttpPost("add-friend")]
     public async Task<ActionResult<bool>> AddFriend(AddFriendCommand command)
