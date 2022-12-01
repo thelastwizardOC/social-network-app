@@ -8,7 +8,6 @@ import { IUser, IUserCommented } from '../../../../interface/user';
   encapsulation: ViewEncapsulation.None
 })
 export class CommentContainerComponent implements OnInit {
-  @Input() userInfo!: IUser;
   @Input() postId!: number;
   @Output() onRefreshPost = new EventEmitter();
   @Input() userCommentList!: IUserCommented[];

@@ -7,6 +7,8 @@ import { PostService } from '../../../../../services/post.service';
 import { GlobalErrorHandler } from '../../../../../services/error-handler.service';
 import { IPost } from '../../../../../interface/post';
 import { CurrentPostService } from '../../../current-post.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from '../../../../../services/user.service';
 
 @Component({
   selector: 'app-user-comment',
@@ -14,17 +16,35 @@ import { CurrentPostService } from '../../../current-post.service';
   styleUrls: ['./user-comment.component.scss']
 })
 export class UserCommentComponent implements OnInit {
-  @Input() userInfo!: IUser;
   @Input() postId!: number;
   @Output() onRefreshPost = new EventEmitter();
+  userInfo: IUser | undefined;
   mockImage: string = environment.mockImg;
   size: TuiSizeM | TuiSizeS = `m`;
   commentValue = new FormControl(``, [commentValidator]);
   isSent: boolean = false;
 
-  constructor(private postService: PostService, private currentPostService: CurrentPostService, private errorHandler: GlobalErrorHandler) {}
+  constructor(
+    private postService: PostService,
+    private currentPostService: CurrentPostService,
+    private errorHandler: GlobalErrorHandler,
+    private userService: UserService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchUserInfo();
+  }
+
+  fetchUserInfo(): void {
+    this.userService.getUserInfo(this.currentPostService.getUserId(), this.currentPostService.getUserId()).subscribe({
+      next: value => {
+        this.userInfo = value;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log('Cannot find user');
+      }
+    });
+  }
 
   onPostComment() {
     const commentText: string | null = this.commentValue.value;
@@ -33,7 +53,7 @@ export class UserCommentComponent implements OnInit {
       this.commentValue.setErrors({ other: 'Comment has no value' });
       return;
     }
-    this.postService.commentPost(this.postId, this.userInfo.id, commentText! || '.').subscribe({
+    this.postService.commentPost(this.postId, this.currentPostService.getUserId(), commentText! || '.').subscribe({
       next: value => {
         this.commentValue.setValue('');
         this.currentPostService.updatePost(value);

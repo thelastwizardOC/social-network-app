@@ -32,7 +32,6 @@ public class CommentPostCommandHandler:IRequestHandler<CommentPostCommand, PostD
          // Add comment to the comment table
          await _appDb.Comment.AddAsync(new Comment()
             { Content = request.Content, PostId = request.PostId, UserId = request.UserId, CreatedAt = DateTime.UtcNow });
-         await _appDb.SaveChangesAsync();
          //Find and return current post
          var currentPost = await _appDb.Post.Where(p => p.Id == request.PostId && p.IsDeleted == false)
             .Include(p => p.Photos)
@@ -40,6 +39,7 @@ public class CommentPostCommandHandler:IRequestHandler<CommentPostCommand, PostD
             .Include(p => p.User).Include(p => p.PostLikes).FirstOrDefaultAsync();
          if (currentPost == null) throw new NotFoundException();
          currentPost.NumberOfComments++;
+         await _appDb.SaveChangesAsync();
          var postDto = _mapper.Map<PostDto>(currentPost);
          return postDto;
       }

@@ -1,6 +1,6 @@
 <div class="tui-col_12">
   <div class="user-comment-container tui-row_align_start">
-    <tui-avatar [size]="'m'" [rounded]="true" [avatarUrl]="userInfo?.avatar!"></tui-avatar>
+    <tui-avatar [size]="'m'" [rounded]="true" [avatarUrl]="userInfo?.avatar! || mockImage"></tui-avatar>
 
     <div class="input-comment tui-space_left-2">
       <tui-text-area

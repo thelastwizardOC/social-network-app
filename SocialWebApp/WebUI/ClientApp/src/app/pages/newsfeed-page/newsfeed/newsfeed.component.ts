@@ -8,11 +8,9 @@ import { IPost } from 'src/app/interface/post';
 })
 export class NewsfeedComponent implements OnInit {
   @Output() handleReloadPage = new EventEmitter();
-  @Input() userId!: number;
   @Input() posts: IPost[] = [];
   @Input() isLoading: boolean = false;
   @Output() onScroll = new EventEmitter();
-  @Output() onLike = new EventEmitter<number>();
 
   constructor() {}
 

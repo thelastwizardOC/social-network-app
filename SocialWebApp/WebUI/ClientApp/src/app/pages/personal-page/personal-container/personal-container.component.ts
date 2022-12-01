@@ -47,7 +47,6 @@ export class PersonalContainerComponent implements OnInit {
         this.userId = +id;
         this.fetchPosts();
         this.fetchUserInfo();
-        this.handleUpdatePostLike = _.debounce(this.handleUpdatePostLike, 500);
       }
     });
   }
@@ -103,6 +102,7 @@ export class PersonalContainerComponent implements OnInit {
       if (event.uploadType === 'cover') this.userInfo.cover = event.$event.res;
     }
   }
+
   handleToggleLikePost(postId: number) {
     let status: LikeStatus;
     const foundPost = { ...(this.personalPosts.find(p => p.id === postId) as IPost) };

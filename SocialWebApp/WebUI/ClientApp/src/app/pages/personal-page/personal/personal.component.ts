@@ -11,7 +11,6 @@ import { environment } from 'src/environments/environment';
 export class PersonalComponent {
   @Input() userNotFound: boolean = false;
   @Input() userInfo: IUser | undefined;
-  @Input() userId!: number;
   @Input() personalPosts!: IPost[];
   @Input() isLoading: boolean = false;
   @Input() uploadedAvatar: any;
@@ -20,7 +19,6 @@ export class PersonalComponent {
   @Output() onScroll = new EventEmitter();
   @Output() onUploadPhotoClick = new EventEmitter();
   @Output() onPhotoUpload = new EventEmitter();
-  @Output() onLike = new EventEmitter<number>();
   @Output() handlePostSucceeded = new EventEmitter();
   @Output() handleDeletePost = new EventEmitter();
   @Output() handleOnActionPress = new EventEmitter();

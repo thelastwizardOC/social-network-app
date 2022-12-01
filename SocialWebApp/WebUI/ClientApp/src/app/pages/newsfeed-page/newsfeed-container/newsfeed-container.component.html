@@ -7,10 +7,7 @@
       <app-newsfeed
         [posts]="posts"
         [isLoading]="isLoading"
-        [userId]="userId"
         (onScroll)="handleOnScroll()"
-        (onLike)="handleToggleLikePost($event)"
-        (handlePostSucceeded)="handleReloadPage()"
         (handleReloadPage)="handleReloadPage()"
       ></app-newsfeed>
     </div>
