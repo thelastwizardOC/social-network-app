@@ -16,13 +16,15 @@ export class PersonalComponent {
   @Input() isLoading: boolean = false;
   @Input() uploadedAvatar: any;
   @Input() loggedInUserId!: number;
+  @Input() isLoadingAddfriend!: boolean;
   @Output() onScroll = new EventEmitter();
   @Output() onUploadPhotoClick = new EventEmitter();
   @Output() onPhotoUpload = new EventEmitter();
   @Output() onLike = new EventEmitter<number>();
   @Output() handlePostSucceeded = new EventEmitter();
   @Output() handleDeletePost = new EventEmitter();
-
+  @Output() handleOnActionPress = new EventEmitter();
+  @Output() onMessageClick = new EventEmitter();
   activeItemIndex: number = 0;
   mockImg: string = environment.mockImg;
   uploadType!: 'avatar' | 'cover';

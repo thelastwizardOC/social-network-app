@@ -14,12 +14,12 @@ namespace WebUI.Controllers;
 
 public class UserController : ApiControllerBase
 {
-    [HttpGet("{userId}")]
-    public async Task<ActionResult<UserDto>> GetUserInfo(int userId)
+    [HttpGet]
+    public async Task<ActionResult<UserDto>> GetUserInfo([FromQuery] GetUserInfoQuery query)
     {
         try
         {
-            var foundUser = await Mediator.Send(new GetUserInfoQuery() { UserId = userId });
+            var foundUser = await Mediator.Send(query);
             return Ok(foundUser);
         }
         catch (NotFoundException e)

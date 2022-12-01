@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserService } from 'src/app/services/user.service';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { ISearchUser } from 'src/app/interface/user';
+import { ISearchUser, IUser } from 'src/app/interface/user';
 
 @Component({
   selector: 'app-user-info-card',
@@ -9,14 +11,32 @@ import { ISearchUser } from 'src/app/interface/user';
 })
 export class UserInfoCardComponent implements OnInit {
   @Input() user!: ISearchUser;
+  @Output() onNavigateMessage = new EventEmitter<IUser>();
+  loggedInUserId!: number;
+  isLoading: boolean = false;
+  constructor(private route: Router, private UserService: UserService, private jwtHelper: JwtHelperService) {}
 
-  constructor(private route: Router) {}
+  ngOnInit(): void {
+    this.loggedInUserId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
+  }
 
-  ngOnInit(): void {}
-
-  handleOnButtonPress(user: ISearchUser, relationship: number) {
-    if (relationship === 0) {
-      this.route.navigate(['profile/' + user.id]);
+  handleOnButtonPress() {
+    if (this.user.relationship === 0) {
+      this.route.navigate(['profile/' + this.user.id]);
+    }
+    if (this.user.relationship === 1) {
+      this.onNavigateMessage.emit(this.user as IUser);
+    } else {
+      this.isLoading = true;
+      this.UserService.addFriendRequest(this.loggedInUserId, this.user.id).subscribe({
+        next: res => {
+          this.user.relationship = 3;
+        },
+        error: err => {},
+        complete: () => {
+          this.isLoading = false;
+        }
+      });
     }
   }
 }

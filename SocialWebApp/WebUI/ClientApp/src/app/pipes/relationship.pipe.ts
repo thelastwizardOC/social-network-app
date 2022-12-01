@@ -17,6 +17,19 @@ export class ButtonRelationshipPipe implements PipeTransform {
   transform(value: any, ...args: any[]) {
     if (value === 1) return 'Message';
     if (value === 0) return 'View profile';
+    if (value === 3) return 'Waiting for accept';
     return 'Add friend';
+  }
+}
+
+@Pipe({
+  name: 'profileButtonRelationship'
+})
+export class ProfileButtonRelationshipPipe implements PipeTransform {
+  transform(value: any, ...args: any[]) {
+    if (value === 1) return 'Unfriend';
+    if (value === 3) return 'Waiting for accept';
+    if (value === 2) return 'Add friend';
+    return '';
   }
 }

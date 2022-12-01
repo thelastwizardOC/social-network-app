@@ -59,3 +59,24 @@
 ::ng-deep .tabs-bar {
   padding: 0 10px;
 }
+
+::ng-deep .btn-relationship {
+  width: 200px;
+  margin-right: 20px;
+  &._disabled {
+    color: var(--tui-base-09);
+    background-color: red;
+    div {
+      background-color: red;
+    }
+  }
+}
+
+::ng-deep .btn-msg {
+  width: 100px;
+  &:disabled {
+    span {
+      color: var(--tui-base-09);
+    }
+  }
+}

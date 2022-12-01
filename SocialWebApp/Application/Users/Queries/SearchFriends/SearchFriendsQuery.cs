@@ -26,21 +26,11 @@ public class SearchFriendsQueryHandler : IRequestHandler<SearchFriendsQuery, Sea
         var userFriends = await _context.UserFriends.Where(uf => uf.SourceUserId == request.UserId)
             .Include(uf => uf.Friend).ToListAsync();
         var searchedUserFriends =
-            userFriends.Where(f => (f.Friend.FirstName + ' ' + f.Friend.LastName).Contains(lowerCaseKeyword)
-                                   || (f.Friend.LastName + ' ' + f.Friend.FirstName).Contains(lowerCaseKeyword)
+            userFriends.Where(f => (f.Friend.FirstName + ' ' + f.Friend.LastName).ToLower().Contains(lowerCaseKeyword)
+                                   || (f.Friend.LastName + ' ' + f.Friend.FirstName).ToLower().Contains(lowerCaseKeyword)
                                    || f.Friend.UserName.ToLower().Contains(lowerCaseKeyword)).ToList();
-        // var friendList =
-        //     await (from u in _context.User
-        //         join uf in _context.UserFriends
-        //             on u.Id equals uf.FriendId
-        //         where uf.SourceUserId == request.UserId &&
-        //               (u.FirstName + ' ' + u.LastName).Contains(request.SearchString)
-        //               || (u.LastName + ' ' + u.FirstName).Contains(request.SearchString) ||
-        //               u.UserName.Contains(request.SearchString)
-        //         orderby u.FirstName
-        //         select u).ToListAsync();
 
-         int totalCount = searchedUserFriends.Count();
+        int totalCount = searchedUserFriends.Count();
         bool hasNextPage = totalCount > request.Limit + request.Offset;
 
         var paginatedList = searchedUserFriends.Select(u => u.Friend).Skip(request.Offset).Take(request.Limit).ToList();

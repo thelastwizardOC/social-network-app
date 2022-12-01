@@ -35,6 +35,31 @@
   <button *ngIf="loggedInUserId === userId" class="btn-edit" appearance="secondary" size="m" tuiButton [disabled]="true">
     Edit profile
   </button>
+  <div *ngIf="loggedInUserId !== userId" style="margin-left: auto; margin-right: 50px">
+    <button
+      button
+      tuiButton
+      size="s"
+      (click)="handleOnActionPress.emit()"
+      [disabled]="userInfo?.relationship === 3"
+      [showLoader]="isLoadingAddfriend"
+      appearance="primary"
+      class="btn-relationship"
+      type="button"
+    >
+      {{ userInfo?.relationship | profileButtonRelationship }}
+    </button>
+    <button
+      tuiButton
+      size="s"
+      [disabled]="userInfo?.relationship !== 1"
+      (click)="onMessageClick.emit()"
+      appearance="primary"
+      class="btn-msg"
+    >
+      Message
+    </button>
+  </div>
 </div>
 
 <div class="tui-container_fixed user-bio-container">
@@ -60,7 +85,7 @@
     <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading"> </tui-loader>
   </div>
   <div *ngSwitchCase="'1'">
-    <app-friend-tab></app-friend-tab>
+    <app-friend-tab [user]="userInfo"></app-friend-tab>
   </div>
 
   <div *ngSwitchCase="'2'">

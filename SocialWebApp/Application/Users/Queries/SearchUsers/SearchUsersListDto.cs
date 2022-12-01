@@ -1,3 +1,5 @@
+using Application.Common.Models;
+
 namespace Application.Users.Queries.SearchUsers;
 
 public class SearchUsersListDto
@@ -15,12 +17,4 @@ public class SearchUserDto
     public string UserName { get; set; }
     public string Avatar { get; set; }
     public RelationshipType Relationship { get; set; }
-}
-
-public enum RelationshipType
-{
-    Self,
-    Friend,
-    NotFriend,
-    Pending,
 }

@@ -12,6 +12,7 @@ export class SignalrService {
 
   private hubConnection!: signalR.HubConnection;
   public notification!: INotification;
+  newNotification: boolean = false;
   startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(`${environment.baseUrl}/notificationService`, { accessTokenFactory: () => localStorage.getItem('jwt') as string })
@@ -24,6 +25,7 @@ export class SignalrService {
 
   addFriendListener = () => {
     this.hubConnection.on('addFriendNotification', res => {
+      this.newNotification = true;
       this.notificationStore.notifications = [...this.notificationStore.notifications, res];
     });
   };

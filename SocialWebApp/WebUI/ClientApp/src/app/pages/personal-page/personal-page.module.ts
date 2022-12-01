@@ -15,6 +15,7 @@ import { UploadImageDialogComponent } from './components/upload-image-dialog/upl
 import { PhotoTabComponent } from './components/photo-tab/photo-tab.component';
 import { NewPostModule } from '../../components/new-post/new-post.module';
 import { FriendTabComponent } from './components/friend-tab/friend-tab.component';
+import { ProfileButtonRelationshipPipe } from 'src/app/pipes/relationship.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FriendTabComponent } from './components/friend-tab/friend-tab.component
     GenderPipe,
     UploadImageDialogComponent,
     PhotoTabComponent,
-    FriendTabComponent
+    FriendTabComponent,
+    ProfileButtonRelationshipPipe
   ],
   imports: [
     CommonModule,

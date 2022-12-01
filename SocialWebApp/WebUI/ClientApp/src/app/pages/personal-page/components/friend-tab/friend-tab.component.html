@@ -13,7 +13,7 @@
     </div>
   </div>
   <tui-loader *ngIf="isLoading && friendList.length === 0"></tui-loader>
-  <div *ngIf="!isLoading && friendList.length === 0" class="empty-msg tui-text_body-l">No friend found!</div>
+  <div *ngIf="!isLoading && friendList.length === 0" class="empty-msg tui-text_body-l">No friends found!</div>
   <div class="tui-row tui-row_adaptive">
     <a class="tui-col_6" *ngFor="let item of friendList; let i = index" [href]="'profile/' + item.id">
       <img [src]="item.avatar" alt="" />

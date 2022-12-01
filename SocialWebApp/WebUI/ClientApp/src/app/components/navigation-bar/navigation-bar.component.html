@@ -18,7 +18,7 @@
     </tui-hosted-dropdown>
 
     <ng-template #dropdownSearch class="dropdown-search">
-      <tui-data-list [emptyContent]="searchInput.value !== '' && !isLoadingSearch ? 'No user found' : 'Try searching for friends'">
+      <tui-data-list [emptyContent]="searchInput.value !== '' && !isLoadingSearch ? 'No users found' : 'Try searching for friends'">
         <a *ngFor="let user of searchUsers; index as i" tuiOption [href]="'profile/' + user.id">
           <div class="item-container">
             <img [src]="user.avatar" class="user-avatar" />
@@ -42,6 +42,19 @@
     <tui-hosted-dropdown [content]="dropDownNotification" [(open)]="isDropDownNotificationVisible" tuiDropdownAlign="right">
       <div class="menu-btn" (click)="onNotificationBtnClick()">
         <tui-svg src="assets/svg/bell-icon.svg"></tui-svg>
+        <!-- <div
+          style="
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            text-align: center;
+          "
+          *ngIf="notificationSignalRService.newNotification"
+        ></div> -->
       </div>
     </tui-hosted-dropdown>
 
@@ -58,7 +71,7 @@
               item.triggerUser.avatar || 'https://honestorient.blob.core.windows.net/public-uploads/user/photos1dgcqnjq.znj_wallpaperf.jpg'
             "
             [rounded]="true"
-            [size]="'l'"
+            [size]="'m'"
           ></tui-avatar>
           <div class="info-container">
             <p class="tui-text_body-m username">{{ item.triggerUser.firstName }} {{ item.triggerUser.lastName }}</p>
