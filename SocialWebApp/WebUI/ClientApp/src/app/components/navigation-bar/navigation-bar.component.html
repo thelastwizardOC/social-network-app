@@ -33,13 +33,13 @@
     </ng-template>
   </div>
   <div class="navigation-bar-right">
-    <div class="menu-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <div class="menu-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="onNavigate()">
       <tui-svg src="assets/svg/home-icon.svg"></tui-svg>
     </div>
-    <div class="menu-btn" routerLink="message" routerLinkActive="active">
+    <div class="menu-btn" routerLink="message" routerLinkActive="active" (click)="onNavigate()">
       <tui-svg src="assets/svg/message-icon.svg"></tui-svg>
     </div>
-    <div class="menu-btn" routerLink="notification" routerLinkActive="active">
+    <div class="menu-btn" routerLink="notification" routerLinkActive="active" (click)="onNavigate()">
       <tui-svg src="assets/svg/bell-icon.svg"></tui-svg>
     </div>
 
