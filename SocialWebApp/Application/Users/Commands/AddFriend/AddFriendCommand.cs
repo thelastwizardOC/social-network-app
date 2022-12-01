@@ -33,7 +33,15 @@ public class AddFriendCommandHandler : IRequestHandler<AddFriendCommand, bool>
         {
             CreatedAt = DateTime.Now,
             SourceUserId = request.SourceUserId,
-            FriendId = request.ReceiveUserId
+            FriendId = request.ReceiveUserId,
+            Pending = true,
+        });
+        _context.UserFriends.Add(new UserFriends()
+        {
+            CreatedAt = DateTime.Now,
+            SourceUserId = request.ReceiveUserId,
+            FriendId = request.SourceUserId,
+            Pending = true,
         });
         _context.Notification.Add(new Notification()
         {

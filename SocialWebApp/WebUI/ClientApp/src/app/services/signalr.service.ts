@@ -1,3 +1,4 @@
+import { NotificationStoreService } from './notification-store.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
@@ -7,7 +8,7 @@ import { INotification } from '../interface/notification';
   providedIn: 'root'
 })
 export class SignalrService {
-  constructor() {}
+  constructor(private notificationStore: NotificationStoreService) {}
 
   private hubConnection!: signalR.HubConnection;
   public notification!: INotification;
@@ -23,7 +24,7 @@ export class SignalrService {
 
   addFriendListener = () => {
     this.hubConnection.on('addFriendNotification', res => {
-      this.notification = res;
+      this.notificationStore.notifications = [...this.notificationStore.notifications, res];
     });
   };
 }

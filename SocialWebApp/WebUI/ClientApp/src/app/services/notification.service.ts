@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { TuiAlertService, TuiDialogService, TuiNotification } from '@taiga-ui/core';
+import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TUI_ARROW } from '@taiga-ui/kit';
+import { SignalrService } from './services/signalr.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { TUI_ARROW } from '@taiga-ui/kit';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private route: Router) {}
+  constructor(private route: Router, public signalRService: SignalrService) {}
   title = 'ClientApp';
 
   isNavBarVisible = false;
@@ -20,4 +21,9 @@ export class AppComponent {
       : (this.isNavBarVisible = true);
   }
   readonly arrow = TUI_ARROW;
+
+  ngOnInit() {
+    this.signalRService.startConnection();
+    this.signalRService.addFriendListener();
+  }
 }
