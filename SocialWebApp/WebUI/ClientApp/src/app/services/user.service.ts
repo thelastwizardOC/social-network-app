@@ -58,6 +58,14 @@ export class UserService {
     });
   }
 
+  unfriendRequest(userId: number, friendId: number) {
+    const body = JSON.stringify({ userId, friendId });
+    const headers = { 'content-type': 'application/json' };
+    return this.http.post<boolean>(`${environment.baseApi}/user/unfriend`, body, {
+      headers
+    });
+  }
+
   handleFriendRequest(userId: number, triggerUserId: number, action: boolean) {
     const body = JSON.stringify({ userId, triggerUserId, action });
     const headers = { 'content-type': 'application/json' };

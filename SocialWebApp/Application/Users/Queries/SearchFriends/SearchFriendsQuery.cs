@@ -26,9 +26,9 @@ public class SearchFriendsQueryHandler : IRequestHandler<SearchFriendsQuery, Sea
         var userFriends = await _context.UserFriends.Where(uf => uf.SourceUserId == request.UserId)
             .Include(uf => uf.Friend).ToListAsync();
         var searchedUserFriends =
-            userFriends.Where(f => (f.Friend.FirstName + ' ' + f.Friend.LastName).ToLower().Contains(lowerCaseKeyword)
+            userFriends.Where(f => f.Pending == false && ((f.Friend.FirstName + ' ' + f.Friend.LastName).ToLower().Contains(lowerCaseKeyword)
                                    || (f.Friend.LastName + ' ' + f.Friend.FirstName).ToLower().Contains(lowerCaseKeyword)
-                                   || f.Friend.UserName.ToLower().Contains(lowerCaseKeyword)).ToList();
+                                   || f.Friend.UserName.ToLower().Contains(lowerCaseKeyword))).OrderBy(f => f.Friend.FirstName).ToList();
 
         int totalCount = searchedUserFriends.Count();
         bool hasNextPage = totalCount > request.Limit + request.Offset;

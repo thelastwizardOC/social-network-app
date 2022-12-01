@@ -43,8 +43,8 @@ export class AuthService {
         })
         .subscribe({
           next: (res: IAuthenticationResponse) => resolve(res),
-          error: _ => {
-            reject;
+          error: error => {
+            reject(error);
             return false;
           }
         });

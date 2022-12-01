@@ -16,7 +16,7 @@ export class PersonalComponent {
   @Input() isLoading: boolean = false;
   @Input() uploadedAvatar: any;
   @Input() loggedInUserId!: number;
-  @Input() isLoadingAddfriend!: boolean;
+  @Input() isLoadingFriendRequest!: boolean;
   @Output() onScroll = new EventEmitter();
   @Output() onUploadPhotoClick = new EventEmitter();
   @Output() onPhotoUpload = new EventEmitter();

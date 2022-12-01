@@ -26,7 +26,7 @@ export class PersonalContainerComponent implements OnInit {
   file!: File;
   avatar: any;
   loggedInUserId!: number;
-  isLoadingAddfriend: boolean = false;
+  isLoadingFriendRequest: boolean = false;
 
   personalPosts: IPost[] = [];
   userInfo: IUser | undefined;
@@ -79,8 +79,6 @@ export class PersonalContainerComponent implements OnInit {
   fetchUserInfo(): void {
     this.userService.getUserInfo(this.loggedInUserId, this.userId).subscribe({
       next: value => {
-        console.log(value);
-
         this.userInfo = value;
       },
       error: (err: HttpErrorResponse) => {
@@ -140,14 +138,26 @@ export class PersonalContainerComponent implements OnInit {
   }
 
   handleOnActionPress() {
+    this.isLoadingFriendRequest = true;
     if (this.userInfo?.relationship === 2) {
       this.userService.addFriendRequest(this.loggedInUserId, this.userInfo.id).subscribe({
         next: res => {
-          console.log(res);
           this.fetchUserInfo();
         },
         error: err => {},
-        complete: () => {}
+        complete: () => {
+          this.isLoadingFriendRequest = false;
+        }
+      });
+    } else if (this.userInfo?.relationship === 1) {
+      this.userService.unfriendRequest(this.loggedInUserId, this.userInfo.id).subscribe({
+        next: res => {
+          this.fetchUserInfo();
+        },
+        error: err => {},
+        complete: () => {
+          this.isLoadingFriendRequest = false;
+        }
       });
     }
   }

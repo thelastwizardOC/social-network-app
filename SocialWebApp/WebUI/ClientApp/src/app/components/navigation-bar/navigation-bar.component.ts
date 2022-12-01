@@ -72,6 +72,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   toggleDropDownProfile(itemIndex: number) {
     if (itemIndex === 1) this.showDialog();
     this.isDropDownProfileVisible = !this.isDropDownProfileVisible;
+    this.onNavigate();
   }
 
   ngDoCheck(): void {
@@ -154,7 +155,6 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   onConfirmFriendRequest(item: INotification) {
     this.userService.handleFriendRequest(this.userId, item.triggerUser.id, true).subscribe({
       next: res => {
-        console.log(res);
         var itemIndex = this.notificationStore.notifications.indexOf(item);
         this.notificationStore.notifications.splice(itemIndex, 1);
         this.notificationService.showSuccess(`Now, You and ${item.triggerUser.firstName + item.triggerUser.lastName} is the friend`);

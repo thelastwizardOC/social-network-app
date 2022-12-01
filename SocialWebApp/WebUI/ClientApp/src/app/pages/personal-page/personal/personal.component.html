@@ -35,14 +35,14 @@
   <button *ngIf="loggedInUserId === userId" class="btn-edit" appearance="secondary" size="m" tuiButton [disabled]="true">
     Edit profile
   </button>
-  <div *ngIf="loggedInUserId !== userId" style="margin-left: auto; margin-right: 50px">
+  <div *ngIf="loggedInUserId !== userId" class="friend-request-btn-container">
     <button
       button
       tuiButton
       size="s"
       (click)="handleOnActionPress.emit()"
-      [disabled]="userInfo?.relationship === 3"
-      [showLoader]="isLoadingAddfriend"
+      [disabled]="userInfo ? userInfo.relationship === 3 : true"
+      [showLoader]="isLoadingFriendRequest"
       appearance="primary"
       class="btn-relationship"
       type="button"
@@ -52,7 +52,7 @@
     <button
       tuiButton
       size="s"
-      [disabled]="userInfo?.relationship !== 1"
+      [disabled]="userInfo ? userInfo.relationship !== 1 : true"
       (click)="onMessageClick.emit()"
       appearance="primary"
       class="btn-msg"

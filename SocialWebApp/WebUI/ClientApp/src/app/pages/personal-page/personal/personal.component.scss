@@ -60,23 +60,30 @@
   padding: 0 10px;
 }
 
+.friend-request-btn-container {
+  margin-left: auto;
+  margin-right: 50px;
+}
+
 ::ng-deep .btn-relationship {
   width: 200px;
   margin-right: 20px;
   &._disabled {
-    color: var(--tui-base-09);
-    background-color: red;
+    color: var(--tui-base-01);
     div {
-      background-color: red;
+      background-color: var(--tui-base-05);
+      color: var(--tui-base-01);
     }
   }
 }
 
 ::ng-deep .btn-msg {
   width: 100px;
-  &:disabled {
-    span {
-      color: var(--tui-base-09);
+  &._disabled {
+    color: var(--tui-base-01);
+    div {
+      background-color: var(--tui-base-05);
+      color: var(--tui-base-01);
     }
   }
 }

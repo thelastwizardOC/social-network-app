@@ -2,6 +2,7 @@ using Application.Common.Exceptions;
 using Application.Common.Models;
 using Application.Users.Commands.AddFriend;
 using Application.Users.Commands.HandleAddFriendRequest;
+using Application.Users.Commands.Unfriend;
 using Application.Users.Commands.UploadAvatar;
 using Application.Users.Commands.UploadCover;
 using Application.Users.Queries.GetNotifications;
@@ -122,6 +123,13 @@ public class UserController : ApiControllerBase
 
     [HttpPost("add-friend")]
     public async Task<ActionResult<bool>> AddFriend(AddFriendCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return Ok(result);
+    }
+
+    [HttpPost("unfriend")]
+    public async Task<ActionResult<bool>> Unfriend(UnfriendCommand command)
     {
         var result = await Mediator.Send(command);
         return Ok(result);
