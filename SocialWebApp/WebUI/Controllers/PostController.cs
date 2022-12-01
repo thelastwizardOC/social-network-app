@@ -1,5 +1,6 @@
 using Application.Common.Exceptions;
 using Application.Common.Models;
+using Application.Posts.Commands.CommentPost;
 using Application.Posts.Commands.CreatePost;
 using Application.Posts.Commands.DeletePost;
 using Application.Posts.Commands.LikePost;
@@ -119,4 +120,24 @@ public class PostController : ApiControllerBase
         }
     }
     
+    [HttpPut("comment/{userId}")]
+    public async Task<ActionResult<PostDto>> CommentPost(int userId, int postId,[FromBody] string content)
+    {
+        try
+        {
+            return Ok(await Mediator.Send(new CommentPostCommand(content, postId, userId)));
+        }
+        catch (ValidationException e)
+        {
+            return BadRequest(e.Message);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500);
+        }
+    }
 }

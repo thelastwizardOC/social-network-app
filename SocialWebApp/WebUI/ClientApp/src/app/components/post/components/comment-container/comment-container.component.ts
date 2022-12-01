@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { IUser } from '../../../../interface/user';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { IUser, IUserCommented } from '../../../../interface/user';
 
 @Component({
   selector: 'app-comment-container',
@@ -9,6 +9,9 @@ import { IUser } from '../../../../interface/user';
 })
 export class CommentContainerComponent implements OnInit {
   @Input() userInfo!: IUser;
+  @Input() postId!: number;
+  @Output() onRefreshPost = new EventEmitter();
+  @Input() userCommentList!: IUserCommented[];
 
   constructor() {}
 

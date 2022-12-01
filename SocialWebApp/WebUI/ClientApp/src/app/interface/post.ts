@@ -1,4 +1,4 @@
-import { IUser } from './user';
+import { IUser, IUserCommented } from './user';
 
 export interface IPost {
   id: number;
@@ -10,6 +10,7 @@ export interface IPost {
   updatedAt: Date;
   user: IUser;
   postLikes: IPostLike[];
+  comments: IUserCommented[];
 }
 
 export interface IPostResponse {

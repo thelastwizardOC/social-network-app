@@ -40,7 +40,12 @@
   <tui-expand [expanded]="expanded">
     <ng-template tuiExpandContent>
       <div class="tui-space_vertical-2 tui-space_horizontal-4">
-        <app-comment-container [userInfo]="post.user"></app-comment-container>
+        <app-comment-container
+          [userInfo]="post.user"
+          [postId]="post.id"
+          (onRefreshPost)="onRefreshPost()"
+          [userCommentList]="post.comments"
+        ></app-comment-container>
       </div>
     </ng-template>
   </tui-expand>

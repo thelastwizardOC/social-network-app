@@ -1,6 +1,6 @@
 <div class="tui-space_vertical-2">
   <tui-carousel [draggable]="true" [itemsCount]="3" [duration]="3000" [(index)]="index">
-    <ng-container *ngFor="let item of imageUrls; let i = index">
+    <ng-container *ngFor="let item of imageUrls; index as i">
       <img *tuiItem alt="" draggable="false" src="{{ item }}" class="item" [class.item_active]="i === index + 1" />
     </ng-container>
   </tui-carousel>

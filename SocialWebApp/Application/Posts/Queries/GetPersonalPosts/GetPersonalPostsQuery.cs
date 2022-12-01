@@ -33,6 +33,7 @@ public class GetPersonalPostsQueryHandler : IRequestHandler<GetPersonalPostsQuer
             var post = await _appDb.Post.Where(p => p.User.Id == request.UserId).Where(p => p.IsDeleted == false)
                 .Include(p => p.PostLikes)
                 .Include(p => p.Photos)
+                .Include(p=>p.Comments)
                 .OrderByDescending(p => p.CreatedAt).Include(p => p.User).Skip(request.Offset).Take(request.Limit)
                 .ToListAsync();
             

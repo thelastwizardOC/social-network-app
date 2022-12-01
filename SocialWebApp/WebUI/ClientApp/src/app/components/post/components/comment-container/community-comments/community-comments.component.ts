@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IUserCommented } from '../../../../../interface/user';
-import { communityComment } from '../comment.mock';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-community-comments',
@@ -8,8 +8,9 @@ import { communityComment } from '../comment.mock';
   styleUrls: ['./community-comments.component.scss']
 })
 export class CommunityCommentsComponent implements OnInit {
-  @Input() userCommentList: IUserCommented[] = communityComment;
+  @Input() userCommentList!: IUserCommented[];
   expanded: boolean = false;
+  mockImg: string = environment.mockImg;
 
   constructor() {}
 
@@ -17,5 +18,9 @@ export class CommunityCommentsComponent implements OnInit {
 
   onToggleViewMore() {
     this.expanded = !this.expanded;
+  }
+
+  handleParseDate(date: string): Date {
+    return new Date(date);
   }
 }

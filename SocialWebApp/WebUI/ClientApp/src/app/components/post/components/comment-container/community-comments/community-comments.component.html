@@ -1,14 +1,14 @@
 <div class="tui-col_12 tui-space_top-4">
   <div *ngFor="let userInfo of userCommentList; index as i">
     <div *ngIf="i < 2" class="user-comment-container tui-row_align_start tui-space_top-3">
-      <tui-avatar [size]="'m'" [rounded]="true" [avatarUrl]="userInfo.user.avatar!"></tui-avatar>
+      <tui-avatar [size]="'m'" [rounded]="true" [avatarUrl]="userInfo.user.avatar! || mockImg"></tui-avatar>
 
       <div class="input-comment tui-space_left-2">
         <div class="comment community-comment__box">
-          <span class="tui-text_body-s-2">{{ userInfo.user.firstName +" "+ userInfo.user.lastName }}</span>
+          <span class="tui-text_body-s-2">{{ userInfo.user.firstName + ' ' + userInfo.user.lastName }}</span>
           <p class="tui-text_body-m-2">{{ userInfo.content }}</p>
         </div>
-        <span class="tui-text_body-s tui-space_left-3">{{ userInfo.createdAt }}</span>
+        <span class="tui-text_body-s tui-space_left-3">{{ handleParseDate(userInfo.createdAt) | dateFromNow }}</span>
       </div>
     </div>
   </div>
@@ -21,10 +21,10 @@
 
           <div class="input-comment tui-space_left-2">
             <div class="comment community-comment__box">
-              <span class="tui-text_body-s-2">{{ userInfo.user.firstName +" "+ userInfo.user.lastName}}</span>
+              <span class="tui-text_body-s-2">{{ userInfo.user.firstName + ' ' + userInfo.user.lastName }}</span>
               <p class="tui-text_body-m-2">{{ userInfo.content }}</p>
             </div>
-            <span class="tui-text_body-s tui-space_left-3">{{ userInfo.createdAt }}</span>
+            <span class="tui-text_body-s tui-space_left-3">{{ handleParseDate(userInfo.createdAt) | dateFromNow }}</span>
           </div>
         </div>
       </div>

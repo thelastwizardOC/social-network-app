@@ -80,7 +80,13 @@
     <div class="tui-space_top-4">
       <app-new-post (handlePostSucceeded)="handlePostSucceeded.emit()"></app-new-post>
     </div>
-    <app-post *ngFor="let post of personalPosts" [post]="post" (onLike)="onLike.emit($event)" [userId]="userId" (onDeletePost)="handleDeletePost.emit()"></app-post>
+    <app-post
+      *ngFor="let post of personalPosts"
+      [post]="post"
+      (onLike)="onLike.emit($event)"
+      [userId]="userId"
+      (onDeletePost)="handleDeletePost.emit()"
+    ></app-post>
 
     <tui-loader class="tui-space_top-5" [size]="'l'" [showLoader]="isLoading"> </tui-loader>
   </div>

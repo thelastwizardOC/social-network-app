@@ -29,7 +29,6 @@ public class DeletePostCommandHandler:IRequestHandler<DeletePostCommand, Paginat
                 throw new NotFoundException("Post is not found");
             if (post.UserId != request.UserId)
             {
-                Console.WriteLine(post.User.Id +"----"+ request.UserId);
                 throw new Exception("Invalid user");
             }
 
@@ -38,7 +37,7 @@ public class DeletePostCommandHandler:IRequestHandler<DeletePostCommand, Paginat
 
             var postList = await _context.Post.Where(p => p.User.Id == request.UserId).Where(p => p.IsDeleted == false)
                 .Include(p => p.PostLikes)
-                .Include(p => p.Photos)
+                .Include(p => p.Photos).Include(p=> p.Comments)
                 .OrderByDescending(p => p.CreatedAt).Include(p => p.User)
                 .ToListAsync();
             List<PostDto> postDtos = _mapper.Map<List<PostDto>>(postList);
