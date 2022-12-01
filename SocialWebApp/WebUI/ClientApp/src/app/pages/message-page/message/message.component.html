@@ -25,7 +25,7 @@
         />
         <ng-template #dropdownContent>
           <tui-data-list
-            [emptyContent]="keyword !== '' && !isSearching ? 'No friend found' : 'Try searching for friends'"
+            [emptyContent]="keyword !== '' && !isSearching ? 'No friends found' : 'Try searching for friends'"
             class="items-container"
           >
             <tui-loader [showLoader]="isSearching"></tui-loader>

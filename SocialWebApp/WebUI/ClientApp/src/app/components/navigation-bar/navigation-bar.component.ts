@@ -5,6 +5,7 @@ import { TuiDialogService, TuiHostedDropdownComponent } from '@taiga-ui/core';
 import { debounce, trim } from 'lodash';
 import { ISearchUser, ISearchUserResponse } from 'src/app/interface/user';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SignalrService } from 'src/app/services/signalr.service';
 import { INotification } from './../../interface/notification';
 import { NotificationStoreService } from './../../services/notification-store.service';
 import { UserService } from './../../services/user.service';
@@ -25,7 +26,8 @@ export class NavigationBarComponent implements OnInit, OnChanges {
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     private userService: UserService,
     public notificationStore: NotificationStoreService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    public notificationSignalRService: SignalrService
   ) {
     this.onSearchInputChange = debounce(this.onSearchInputChange, 500);
   }
@@ -51,6 +53,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   }
 
   onNotificationBtnClick() {
+    this.notificationSignalRService.newNotification = false;
     if (!this.isDropDownNotificationVisible) {
       this.notificationStore.notifications = [];
       this.notificationStore.isLoading = true;
@@ -69,6 +72,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   toggleDropDownProfile(itemIndex: number) {
     if (itemIndex === 1) this.showDialog();
     this.isDropDownProfileVisible = !this.isDropDownProfileVisible;
+    this.onNavigate();
   }
 
   ngDoCheck(): void {
@@ -151,7 +155,6 @@ export class NavigationBarComponent implements OnInit, OnChanges {
   onConfirmFriendRequest(item: INotification) {
     this.userService.handleFriendRequest(this.userId, item.triggerUser.id, true).subscribe({
       next: res => {
-        console.log(res);
         var itemIndex = this.notificationStore.notifications.indexOf(item);
         this.notificationStore.notifications.splice(itemIndex, 1);
         this.notificationService.showSuccess(`Now, You and ${item.triggerUser.firstName + item.triggerUser.lastName} is the friend`);

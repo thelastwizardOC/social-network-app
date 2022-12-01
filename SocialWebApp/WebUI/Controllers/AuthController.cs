@@ -5,6 +5,7 @@ using Application.Users.Commands.RefreshToken;
 using Application.Users.Queries.Login;
 using Domain.Common.Errors;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers;

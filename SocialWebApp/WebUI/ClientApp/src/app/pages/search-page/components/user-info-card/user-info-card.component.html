@@ -3,16 +3,18 @@
     <tui-avatar [avatarUrl]="user.avatar" [rounded]="true"></tui-avatar>
   </div>
   <div class="info-container" [routerLink]="'/profile/' + user.id">
-    <p class="tui-text_body-m" class="profile-name">{{ user.firstName }} {{ user.lastName }}</p>
-    <p class="tui-text_body-s" class="username">{{ user.userName }}</p>
+    <p class="profile-name tui-text_body-m">{{ user.firstName }} {{ user.lastName }}</p>
+    <p class="username tui-text_body-m">{{ user.userName }}</p>
   </div>
   <button
     tuiButton
     size="s"
     [appearance]="user.relationship > 1 ? 'primary' : 'secondary'"
     class="btn"
-    (click)="handleOnButtonPress(user, user.relationship)"
+    (click)="handleOnButtonPress()"
+    [disabled]="user.relationship === 3"
+    [showLoader]="isLoading"
   >
-    {{ user.relationship | buttonRelationship }}
+    <p class="tui-text_body-m">{{ user.relationship | buttonRelationship }}</p>
   </button>
 </div>

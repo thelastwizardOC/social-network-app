@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { debounce, trim } from 'lodash';
-import { ISearchFriend } from 'src/app/interface/user';
+import { ISearchFriend, IUser } from 'src/app/interface/user';
 import { GlobalErrorHandler } from 'src/app/services/error-handler.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,16 +12,15 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class FriendTabComponent implements OnInit {
   @ViewChild('searchInput') searchInput!: ElementRef;
+  @Input() user: IUser | undefined;
   constructor(private userService: UserService, private jwtHelper: JwtHelperService, private errorHandler: GlobalErrorHandler) {}
   friendList: ISearchFriend[] = [];
-  userId!: number;
   isLoading: boolean = false;
   hasNextPage: boolean = false;
   limit: number = 6;
   offset: number = 0;
 
   ngOnInit(): void {
-    this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.handleSearchFriend(false);
     this.handleSearchFriend = debounce(this.handleSearchFriend, 1000);
   }
@@ -47,18 +46,20 @@ export class FriendTabComponent implements OnInit {
     this.isLoading = true;
     var value: string = '';
     if (this.searchInput) value = trim(this.searchInput.nativeElement.value);
-    this.userService.searchFriends(this.userId, value, this.offset, this.limit).subscribe({
-      next: res => {
-        this.friendList = [...this.friendList, ...res.friends];
-        this.offset += this.limit;
-        this.hasNextPage = res.hasNextPage;
-      },
-      error: err => {
-        this.errorHandler.handleError(new Error('Fail to search friends!'));
-      },
-      complete: () => {
-        this.isLoading = false;
-      }
-    });
+    if (this.user) {
+      this.userService.searchFriends(this.user.id, value, this.offset, this.limit).subscribe({
+        next: res => {
+          this.friendList = [...this.friendList, ...res.friends];
+          this.offset += this.limit;
+          this.hasNextPage = res.hasNextPage;
+        },
+        error: err => {
+          this.errorHandler.handleError(new Error('Fail to search friends!'));
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      });
+    }
   }
 }

@@ -1,6 +1,7 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { IPost, LikeStatus } from 'src/app/interface/post';
@@ -8,6 +9,7 @@ import { IUser } from 'src/app/interface/user';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
 import * as _ from 'lodash';
+import { MessageStoreService } from 'src/app/services/message-store.service';
 
 @Component({
   selector: 'app-personal-container',
@@ -23,17 +25,23 @@ export class PersonalContainerComponent implements OnInit {
   offset: number = 0;
   file!: File;
   avatar: any;
+  loggedInUserId!: number;
+  isLoadingFriendRequest: boolean = false;
 
   personalPosts: IPost[] = [];
   userInfo: IUser | undefined;
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private userService: UserService,
     private postService: PostService,
-    private dialogService: TuiDialogService
+    private dialogService: TuiDialogService,
+    private jwtHelper: JwtHelperService,
+    private messageStore: MessageStoreService
   ) {}
 
   ngOnInit(): void {
+    this.loggedInUserId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.route.params.subscribe({
       next: ({ id }) => {
         this.userId = +id;
@@ -69,7 +77,7 @@ export class PersonalContainerComponent implements OnInit {
   }
 
   fetchUserInfo(): void {
-    this.userService.getUserInfo(this.userId).subscribe({
+    this.userService.getUserInfo(this.loggedInUserId, this.userId).subscribe({
       next: value => {
         this.userInfo = value;
       },
@@ -127,5 +135,37 @@ export class PersonalContainerComponent implements OnInit {
         console.log({ err });
       }
     });
+  }
+
+  handleOnActionPress() {
+    this.isLoadingFriendRequest = true;
+    if (this.userInfo?.relationship === 2) {
+      this.userService.addFriendRequest(this.loggedInUserId, this.userInfo.id).subscribe({
+        next: res => {
+          this.fetchUserInfo();
+        },
+        error: err => {},
+        complete: () => {
+          this.isLoadingFriendRequest = false;
+        }
+      });
+    } else if (this.userInfo?.relationship === 1) {
+      this.userService.unfriendRequest(this.loggedInUserId, this.userInfo.id).subscribe({
+        next: res => {
+          this.fetchUserInfo();
+        },
+        error: err => {},
+        complete: () => {
+          this.isLoadingFriendRequest = false;
+        }
+      });
+    }
+  }
+
+  onMessageClick() {
+    if (this.userInfo) {
+      this.messageStore.navigateFriendInfo = this.userInfo;
+      this.router.navigate(['/message']);
+    }
   }
 }

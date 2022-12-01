@@ -22,7 +22,7 @@ export class UserInfoComponent implements OnInit {
   }
 
   fetchUserInfo(): void {
-    this.userService.getUserInfo(this.userId).subscribe({
+    this.userService.getUserInfo(this.userId, this.userId).subscribe({
       next: value => {
         this.userInfo = value;
       },

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { trim } from 'lodash';
-import { ISearchUser } from 'src/app/interface/user';
+import { ISearchUser, IUser } from 'src/app/interface/user';
+import { MessageStoreService } from 'src/app/services/message-store.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,7 +12,13 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./search-page-container.component.scss']
 })
 export class SearchPageContainerComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private userService: UserService, private jwtHelper: JwtHelperService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private jwtHelper: JwtHelperService,
+    private router: Router,
+    private messageStore: MessageStoreService
+  ) {}
   searchString: string = '';
   userList: ISearchUser[] = [];
   userId!: number;
@@ -55,6 +62,12 @@ export class SearchPageContainerComponent implements OnInit {
   handleOnScroll() {
     if (this.hasNextPage) {
       this.onSearchUser();
+    }
+  }
+  handleNavigateMessage(userInfo: IUser) {
+    if (userInfo) {
+      this.messageStore.navigateFriendInfo = userInfo;
+      this.router.navigate(['/message']);
     }
   }
 }

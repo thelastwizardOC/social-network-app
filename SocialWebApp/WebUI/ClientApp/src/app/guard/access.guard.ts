@@ -8,16 +8,23 @@ import { AuthService } from '../services/auth.service';
 })
 export class AccessGuard implements CanActivate {
   constructor(private router: Router, private jwtHelper: JwtHelperService, private authService: AuthService) {}
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> | boolean {
     const token = localStorage.getItem('jwt');
 
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return true;
     }
-    const isRefreshSuccess = await this.authService.tryRefreshingTokens(token as string);
-    if (!isRefreshSuccess) {
-      this.router.navigate(['auth/login']);
-    }
-    return isRefreshSuccess;
+
+    return new Promise((resolve, reject) => {
+      this.authService
+        .tryRefreshingTokens(token as string)
+        .then(res => resolve(true))
+        .catch(res => {
+          localStorage.removeItem('jwt');
+          localStorage.removeItem('refreshToken');
+          this.router.navigate(['auth/login']);
+          reject(false);
+        });
+    });
   }
 }

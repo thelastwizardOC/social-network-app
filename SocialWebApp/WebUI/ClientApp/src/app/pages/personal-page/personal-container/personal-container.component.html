@@ -1,5 +1,6 @@
 <div class="tui-container_adaptive personal-page-container">
   <app-personal
+    [loggedInUserId]="loggedInUserId"
     [userId]="userId"
     [userNotFound]="userNotFound"
     [userInfo]="userInfo"
@@ -12,5 +13,8 @@
     (onPhotoUpload)="handlePhotoUploaded($event)"
     (handlePostSucceeded)="handleAfterPosting()"
     (handleDeletePost)="handleAfterPosting()"
+    (handleOnActionPress)="handleOnActionPress()"
+    [isLoadingFriendRequest]="isLoadingFriendRequest"
+    (onMessageClick)="onMessageClick()"
   ></app-personal>
 </div>

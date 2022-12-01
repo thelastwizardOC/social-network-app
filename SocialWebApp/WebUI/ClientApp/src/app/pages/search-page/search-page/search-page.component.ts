@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { ISearchUser } from 'src/app/interface/user';
+import { ISearchUser, IUser } from 'src/app/interface/user';
 
 @Component({
   selector: 'app-search-page',
@@ -10,7 +10,7 @@ export class SearchPageComponent implements OnInit {
   @Input() userList!: ISearchUser[];
   @Input() isLoading: boolean = false;
   @Output() onScroll = new EventEmitter();
-
+  @Output() onNavigateMessage = new EventEmitter<IUser>();
   constructor() {}
 
   ngOnInit(): void {}

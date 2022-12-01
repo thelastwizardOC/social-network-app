@@ -11,8 +11,13 @@ export class UserService {
   baseUserApiUrl: string = environment.baseApi + '/user';
   constructor(private http: HttpClient) {}
 
-  getUserInfo(userId: number): Observable<IUser> {
-    return this.http.get<IUser>(this.baseUserApiUrl + `/${userId}`);
+  getUserInfo(loginUserId: number, userId: number): Observable<IUser> {
+    return this.http.get<IUser>(this.baseUserApiUrl, {
+      params: {
+        loginUserId,
+        userId
+      }
+    });
   }
 
   uploadPhoto(file: FormData, userid: number, type: string) {
@@ -42,6 +47,22 @@ export class UserService {
         offset,
         limit
       }
+    });
+  }
+
+  addFriendRequest(sourceUserId: number, receiveUserId: number) {
+    const body = JSON.stringify({ sourceUserId, receiveUserId });
+    const headers = { 'content-type': 'application/json' };
+    return this.http.post<boolean>(`${environment.baseApi}/user/add-friend`, body, {
+      headers
+    });
+  }
+
+  unfriendRequest(userId: number, friendId: number) {
+    const body = JSON.stringify({ userId, friendId });
+    const headers = { 'content-type': 'application/json' };
+    return this.http.post<boolean>(`${environment.baseApi}/user/unfriend`, body, {
+      headers
     });
   }
 

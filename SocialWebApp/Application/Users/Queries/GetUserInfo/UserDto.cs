@@ -1,3 +1,5 @@
+using Application.Common.Models;
+
 namespace Application.Users.Queries.GetUserInfo;
 
 public class UserDto
@@ -14,4 +16,5 @@ public class UserDto
     public string PhoneNo { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public RelationshipType? Relationship { get; set; }
 }

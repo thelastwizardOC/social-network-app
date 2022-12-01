@@ -57,10 +57,15 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
     this.messageService.getFriendsMessages(this.userId).subscribe({
       next: value => {
         if (value.length > 0) {
-          const latestMessage: IMessage = value[0];
-          this.messageStore.chosenFriend = (
-            latestMessage.senderId === this.userId ? latestMessage.receiver : latestMessage.sender
-          ) as IUser;
+          /* CASE: NAVIGATE FROM PROFILE PAGE */
+          if (this.messageStore.navigateFriendInfo) {
+            this.messageStore.chosenFriend = this.messageStore.navigateFriendInfo;
+          } else {
+            const latestMessage: IMessage = value[0];
+            this.messageStore.chosenFriend = (
+              latestMessage.senderId === this.userId ? latestMessage.receiver : latestMessage.sender
+            ) as IUser;
+          }
           this.messageStore.friendsMessages = value;
           this.getMessage();
         }

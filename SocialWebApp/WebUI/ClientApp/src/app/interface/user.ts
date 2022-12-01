@@ -14,6 +14,7 @@ export interface IUser {
   createdAt?: string;
   updatedAt?: string;
   token?: string;
+  relationship?: number;
 }
 export interface IUserHub {
   Avatar: string;

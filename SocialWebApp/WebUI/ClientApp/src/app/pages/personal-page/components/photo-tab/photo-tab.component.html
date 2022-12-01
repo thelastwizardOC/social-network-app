@@ -13,7 +13,7 @@
     </div>
   </div>
   <tui-loader *ngIf="isLoading && photos.length === 0"></tui-loader>
-  <div *ngIf="!isLoading && photos.length === 0" class="empty-msg tui-text_body-l">No photo found!</div>
+  <div *ngIf="!isLoading && photos.length === 0" class="empty-msg tui-text_body-l">No photos found!</div>
   <div class="tui-row tui-row_adaptive">
     <div class="tui-col_4" *ngFor="let item of photos; let i = index">
       <img [src]="item.photoString" />

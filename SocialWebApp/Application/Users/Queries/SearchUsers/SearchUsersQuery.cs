@@ -1,5 +1,6 @@
 using System.Collections;
 using Application.Common.Interfaces;
+using Application.Common.Models;
 using Application.Posts.Queries;
 using AutoMapper;
 using Domain.Entities;
@@ -26,16 +27,17 @@ public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, SearchU
     {
         try
         {
+            var lowerCaseKeyword = request.SearchString.ToLower();
             var users = from u in _context.User select u; 
-            var userList = await users.Where(u => u.UserName.Contains(request.SearchString)
-                                     || (u.FirstName + ' ' + u.LastName).Contains(request.SearchString)
-                                     || (u.LastName + ' ' + u.FirstName).Contains(request.SearchString)).OrderBy(u => u.FirstName).AsNoTracking().ToListAsync();
+            var userList = await users.Where(u => u.UserName.ToLower().Contains(lowerCaseKeyword)
+                                     || (u.FirstName + ' ' + u.LastName).ToLower().Contains(lowerCaseKeyword)
+                                     || (u.LastName + ' ' + u.FirstName).ToLower().Contains(lowerCaseKeyword)).OrderBy(u => u.FirstName).AsNoTracking().ToListAsync();
 
             int totalCount = userList.Count();
             bool hasNextPage = totalCount > request.Limit + request.Offset;
             var searchUsersResult = _mapper.Map<List<User>, List<SearchUserDto>>(userList);
 
-            var friends = await (from f in _context.UserFriends select new {f.SourceUserId, f.FriendId}).AsNoTracking().ToListAsync();
+            var friends = await (from f in _context.UserFriends select new {f.SourceUserId, f.FriendId, f.Pending}).AsNoTracking().ToListAsync();
             
             searchUsersResult.ForEach(i =>
             {
@@ -43,9 +45,13 @@ public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, SearchU
                 {
                     i.Relationship = RelationshipType.Self;
                 }
-                else if (friends.FirstOrDefault(x => x.FriendId == i.Id || x.SourceUserId == i.Id) != default)
+                else if (friends.FirstOrDefault(x => x.FriendId == i.Id && x.SourceUserId == request.UserId && x.Pending == false) != default)
                 {
                     i.Relationship = RelationshipType.Friend;
+                }
+                else if (friends.FirstOrDefault(x => x.FriendId == i.Id && x.SourceUserId == request.UserId && x.Pending == true) != default)
+                {
+                    i.Relationship = RelationshipType.Pending;
                 }
                 else
                 {

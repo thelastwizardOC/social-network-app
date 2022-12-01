@@ -6,6 +6,7 @@ import { ISearchFriend, IUser } from '../interface/user';
   providedIn: 'root'
 })
 export class MessageStoreService {
+  public navigateFriendInfo: IUser | undefined;
   public messages: IMessage[] = [];
   public friendsMessages: IMessage[] = [];
   public chosenFriend: IUser | undefined;

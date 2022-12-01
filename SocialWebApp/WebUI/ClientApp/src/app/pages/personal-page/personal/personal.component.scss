@@ -27,8 +27,14 @@
   margin-top: -60px;
   margin-bottom: 20px;
   position: relative;
-  cursor: pointer;
+}
 
+.logged-in-user-avatar-container {
+  margin-left: 60px;
+  margin-top: -60px;
+  margin-bottom: 20px;
+  position: relative;
+  cursor: pointer;
   .btn-upload-avatar {
     position: absolute;
     bottom: 0;
@@ -52,4 +58,32 @@
 }
 ::ng-deep .tabs-bar {
   padding: 0 10px;
+}
+
+.friend-request-btn-container {
+  margin-left: auto;
+  margin-right: 50px;
+}
+
+::ng-deep .btn-relationship {
+  width: 200px;
+  margin-right: 20px;
+  &._disabled {
+    color: var(--tui-base-01);
+    div {
+      background-color: var(--tui-base-05);
+      color: var(--tui-base-01);
+    }
+  }
+}
+
+::ng-deep .btn-msg {
+  width: 100px;
+  &._disabled {
+    color: var(--tui-base-01);
+    div {
+      background-color: var(--tui-base-05);
+      color: var(--tui-base-01);
+    }
+  }
 }
