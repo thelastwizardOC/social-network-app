@@ -41,4 +41,12 @@ export class PostService {
   createPost(files: FormData): Observable<boolean> {
     return this.http.post<boolean>(`${environment.baseApi}/Post/create`, files);
   }
+
+  deletePost(postId:number, userId:number): Observable<IPostResponse>{
+    return this.http.delete<IPostResponse>(`${environment.baseApi}/Post/delete/${userId}`, {
+      params: {
+        postId
+      }
+    });
+  }
 }

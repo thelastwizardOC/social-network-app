@@ -1,6 +1,10 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { IPost } from 'src/app/interface/post';
 import { environment } from 'src/environments/environment';
+import {PostService} from "../../services/post.service";
+import {NotificationService} from "../../services/notification.service";
+import {GlobalErrorHandler} from "../../services/error-handler.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-post',
@@ -15,14 +19,12 @@ export class PostComponent implements OnChanges, OnInit {
   @Input()
   post!: IPost;
   @Output() onLike = new EventEmitter<number>();
+  @Output() onDeletePost = new EventEmitter();
   mockImg: string = environment.mockImg;
   hasSeeMore: boolean = false;
   isLiked: boolean = false;
   postImages: string[] = [];
-  onSeeMore(): void {
-    this.hasSeeMore = false;
-    this.postStatusRef.nativeElement.style.setProperty('--line-to-show', 0);
-  }
+  expanded = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hasOwnProperty('post')) {
@@ -32,7 +34,8 @@ export class PostComponent implements OnChanges, OnInit {
       }
     }
   }
-  constructor() {}
+  constructor(private postService:PostService,private notification: NotificationService,
+              private errorHandler: GlobalErrorHandler,) {}
 
   ngOnInit(): void {
     if (this.post.photos) {
@@ -40,5 +43,26 @@ export class PostComponent implements OnChanges, OnInit {
         this.postImages.push(p.photo);
       });
     }
+  }
+
+  onSeeMore(): void {
+    this.hasSeeMore = false;
+    this.postStatusRef.nativeElement.style.setProperty('--line-to-show', 0);
+  }
+
+  handlePostDeleted() {
+    this.postService.deletePost(this.post.id, this.userId).subscribe({
+      next:value=>{
+        this.notification.showSuccess("Delete post successfully")
+        this.onDeletePost.emit();
+      },
+      error: (error:HttpErrorResponse)=>{
+        this.errorHandler.handleError(error);
+      }
+    })
+  }
+
+  toggleCommentExpand(): void {
+    this.expanded = !this.expanded;
   }
 }

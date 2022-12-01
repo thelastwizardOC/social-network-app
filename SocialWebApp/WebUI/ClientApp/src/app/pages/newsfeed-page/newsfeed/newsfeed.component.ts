@@ -7,7 +7,7 @@ import { IPost } from 'src/app/interface/post';
   styleUrls: ['./newsfeed.component.scss']
 })
 export class NewsfeedComponent implements OnInit {
-  @Output() handlePostSucceeded = new EventEmitter();
+  @Output() handleReloadPage = new EventEmitter();
   @Input() userId!: number;
   @Input() posts: IPost[] = [];
   @Input() isLoading: boolean = false;

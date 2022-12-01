@@ -1,3 +1,5 @@
+import { IPost } from './post';
+
 export interface IUser {
   id: number;
   firstName: string;
@@ -61,4 +63,10 @@ export interface ISearchFriendResponse {
   friends: ISearchFriend[];
   totalCount: number;
   hasNextPage: boolean;
+}
+export interface IUserCommented {
+  user: IUser;
+  content: string;
+  createdAt: string;
+  post: IPost;
 }

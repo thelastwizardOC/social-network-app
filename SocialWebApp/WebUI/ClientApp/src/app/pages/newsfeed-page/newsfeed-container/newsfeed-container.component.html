@@ -10,7 +10,8 @@
         [userId]="userId"
         (onScroll)="handleOnScroll()"
         (onLike)="handleToggleLikePost($event)"
-        (handlePostSucceeded)="handlePostSucceeded()"
+        (handlePostSucceeded)="handleReloadPage()"
+        (handleReloadPage)="handleReloadPage()"
       ></app-newsfeed>
     </div>
     <div class="tui-col_md-4 tui-col_lg-3 friend-container">

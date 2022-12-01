@@ -9,7 +9,7 @@
         </p>
       </div>
     </div>
-    <tui-svg src="tuiIconMoreHorLarge"></tui-svg>
+    <app-delete (handlePostDeleted)="handlePostDeleted()"></app-delete>
   </div>
 
   <p #postStatusRef class="tui-text_body-m-2 post-status">
@@ -31,9 +31,17 @@
       <tui-svg [ngClass]="isLiked ? 'likedHeart' : null" [src]="isLiked ? 'tuiIconHeartFilledLarge' : 'tuiIconHeartLarge'"></tui-svg>
       <p class="tui-text_body-m">Like</p>
     </div>
-    <div class="btn-action">
+    <div class="btn-action" (click)="toggleCommentExpand()">
       <tui-svg src="tuiIconCommentLarge"></tui-svg>
       <p class="tui-text_body-m">Comment</p>
     </div>
   </div>
+
+  <tui-expand [expanded]="expanded">
+    <ng-template tuiExpandContent>
+      <div class="tui-space_vertical-2 tui-space_horizontal-4">
+        <app-comment-container [userInfo]="post.user"></app-comment-container>
+      </div>
+    </ng-template>
+  </tui-expand>
 </div>

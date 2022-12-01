@@ -30,7 +30,8 @@ public class GetPersonalPostsQueryHandler : IRequestHandler<GetPersonalPostsQuer
         {
             var foundUser = await _appDb.User.FirstOrDefaultAsync(u=>u.Id==request.UserId);
             if (foundUser == null) throw new NotFoundException();
-            var post = await _appDb.Post.Where(p => p.User.Id == request.UserId).Include(p => p.PostLikes)
+            var post = await _appDb.Post.Where(p => p.User.Id == request.UserId).Where(p => p.IsDeleted == false)
+                .Include(p => p.PostLikes)
                 .Include(p => p.Photos)
                 .OrderByDescending(p => p.CreatedAt).Include(p => p.User).Skip(request.Offset).Take(request.Limit)
                 .ToListAsync();
