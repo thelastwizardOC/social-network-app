@@ -1,6 +1,6 @@
 <div class="container">
   <div class="avatar-container" [routerLink]="'/profile/' + user.id">
-    <tui-avatar [avatarUrl]="user.avatar" class="avatar"></tui-avatar>
+    <tui-avatar [avatarUrl]="user.avatar" [rounded]="true"></tui-avatar>
   </div>
   <div class="info-container" [routerLink]="'/profile/' + user.id">
     <p class="tui-text_body-m" class="profile-name">{{ user.firstName }} {{ user.lastName }}</p>
