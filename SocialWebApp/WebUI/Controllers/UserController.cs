@@ -34,25 +34,6 @@ public class UserController : ApiControllerBase
         }
      
     }
-    [HttpGet("friend")]
-    public async Task<ActionResult<List<UserFriendDto>>> GetUserFriends([FromQuery]SearchFriendsQuery query)
-    {
-        try
-        {
-            var foundUser = await Mediator.Send(query);
-            return Ok(foundUser);
-        }
-        catch (ValidationException e)
-        {
-            return BadRequest();
-
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500);
-        }
-    }
-    
     [HttpPost("upload-avatar")]
     public async Task<ActionResult<string>> UploadAvatar(int userId, IFormFile formFile)
     {

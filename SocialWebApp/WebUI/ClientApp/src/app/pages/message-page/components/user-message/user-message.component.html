@@ -8,8 +8,8 @@
     </tui-avatar>
 
     <a target="_blank" *ngIf="message.type === messageContentType.DOC" class="message-text" [href]="message.content">{{
-      message.content
+      message.content.split('_')[1]
     }}</a>
-    <p class="message-time">{{ message.createdAt | dateFromNow: true }}</p>
+    <p class="message-time">{{ message.createdAt | messageTime }}</p>
   </div>
 </div>

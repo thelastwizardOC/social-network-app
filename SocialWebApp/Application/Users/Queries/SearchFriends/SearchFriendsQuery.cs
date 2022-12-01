@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Users.Queries.SearchFriends;
 
 public record SearchFriendsQuery
-(int UserId, string SearchString = "", int Offset = 0, int Limit = 100) : IRequest<SearchFriendsListDto>;
+    (int UserId, string SearchString = "", int Offset = 0, int Limit = 100) : IRequest<SearchFriendsListDto>;
 
 public class SearchFriendsQueryHandler : IRequestHandler<SearchFriendsQuery, SearchFriendsListDto>
 {
@@ -22,18 +22,28 @@ public class SearchFriendsQueryHandler : IRequestHandler<SearchFriendsQuery, Sea
 
     public async Task<SearchFriendsListDto> Handle(SearchFriendsQuery request, CancellationToken token)
     {
-        var friendList =
-            await (from u in _context.User
-            join uf in _context.UserFriends
-            on u.Id equals uf.FriendId
-            where uf.SourceUserId == request.UserId && (u.FirstName.Contains(request.SearchString) || u.LastName.Contains(request.SearchString) || u.UserName.Contains(request.SearchString))
-            orderby u.FirstName
-            select u).ToListAsync();
+        var lowerCaseKeyword = request.SearchString.ToLower();
+        var userFriends = await _context.UserFriends.Where(uf => uf.SourceUserId == request.UserId)
+            .Include(uf => uf.Friend).ToListAsync();
+        var searchedUserFriends =
+            userFriends.Where(f => (f.Friend.FirstName + ' ' + f.Friend.LastName).Contains(lowerCaseKeyword)
+                                   || (f.Friend.LastName + ' ' + f.Friend.FirstName).Contains(lowerCaseKeyword)
+                                   || f.Friend.UserName.ToLower().Contains(lowerCaseKeyword)).ToList();
+        // var friendList =
+        //     await (from u in _context.User
+        //         join uf in _context.UserFriends
+        //             on u.Id equals uf.FriendId
+        //         where uf.SourceUserId == request.UserId &&
+        //               (u.FirstName + ' ' + u.LastName).Contains(request.SearchString)
+        //               || (u.LastName + ' ' + u.FirstName).Contains(request.SearchString) ||
+        //               u.UserName.Contains(request.SearchString)
+        //         orderby u.FirstName
+        //         select u).ToListAsync();
 
-        int totalCount = friendList.Count();
+         int totalCount = searchedUserFriends.Count();
         bool hasNextPage = totalCount > request.Limit + request.Offset;
 
-        var paginatedList = friendList.Skip(request.Offset).Take(request.Limit).ToList();
+        var paginatedList = searchedUserFriends.Select(u => u.Friend).Skip(request.Offset).Take(request.Limit).ToList();
 
         return new SearchFriendsListDto()
         {

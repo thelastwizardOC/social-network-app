@@ -46,7 +46,7 @@ public class AddFileCommandHandler : IRequestHandler<AddFileCommand, UserMessage
             ReceiverId = request.ReceiverId,
             SenderId = request.SenderId,
             Type = request.Type,
-            CreatedAt = DateTime.Now
+            CreatedAt = DateTime.UtcNow
         };
         await _appDb.Message.AddAsync(addMessage);
         await _appDb.SaveChangesAsync();

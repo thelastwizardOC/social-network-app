@@ -19,7 +19,7 @@ export interface IPostResponse {
 }
 
 export interface IPostLike {
-  id: number;
+  id?: number;
   userId: number;
   postId: number;
 }
@@ -28,4 +28,8 @@ export interface IPostPhoto {
   id: number;
   postId: number;
   photo: string;
+}
+export enum LikeStatus {
+  LIKE,
+  UNLIKE
 }

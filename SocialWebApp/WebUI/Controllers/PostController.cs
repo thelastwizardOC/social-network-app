@@ -5,6 +5,7 @@ using Application.Posts.Commands.LikePost;
 using Application.Posts.Queries;
 using Application.Posts.Queries.GetPersonalPosts;
 using Application.Posts.Queries.GetNewsfeedPosts;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -31,11 +32,11 @@ public class PostController : ApiControllerBase
     }
 
     [HttpPost("like")]
-    public async Task<ActionResult<PostDto>> LikePost(int postId, int userId)
+    public async Task<ActionResult<PostDto>> LikePost(int postId, int userId,LikeStatus status)
     {
         try
         {
-            return await Mediator.Send(new LikePostCommand() { PostId = postId, UserId = userId });
+            return await Mediator.Send(new LikePostCommand() { PostId = postId, UserId = userId,Status=status });
         }
         catch (NotFoundException e)
         {

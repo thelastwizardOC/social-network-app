@@ -17,14 +17,22 @@
             : friendMessage.receiver!.firstName + ' ' + friendMessage.receiver!.lastName
         }}
       </p>
-      <p *ngIf="friendMessage.type === messageContentType.TEXT" class="message-content {{ !friendMessage.isRead && 'unread-message' }}">
+      <p
+        *ngIf="friendMessage.type === messageContentType.TEXT"
+        class="message-content {{ !friendMessage.isRead && friendMessage.senderId !== userId && 'unread-message' }}"
+      >
         {{ friendMessage.content }}
       </p>
-
-      <p *ngIf="friendMessage.type === messageContentType.IMAGE" class="message-content {{ !friendMessage.isRead && 'unread-message' }}">
+      <p
+        *ngIf="friendMessage.type === messageContentType.IMAGE"
+        class="message-content {{ !friendMessage.isRead && friendMessage.senderId !== userId && 'unread-message' }}"
+      >
         <tui-svg src="tuiIconPicture"></tui-svg> Media file sent
       </p>
-      <p *ngIf="friendMessage.type === messageContentType.DOC" class="message-content {{ !friendMessage.isRead && 'unread-message' }}">
+      <p
+        *ngIf="friendMessage.type === messageContentType.DOC"
+        class="message-content {{ !friendMessage.isRead && friendMessage.senderId !== userId && 'unread-message' }}"
+      >
         <tui-svg src="tuiIconDefaultDocLarge"></tui-svg> Document file sent
       </p>
     </div>
@@ -36,6 +44,6 @@
         Hide conversation
       </strong>
     </ng-template>
-    <p class="message-time">{{ friendMessage.createdAt | dateFromNow }}</p>
+    <p class="message-time">{{ friendMessage.createdAt | messageTime }}</p>
   </div>
 </div>

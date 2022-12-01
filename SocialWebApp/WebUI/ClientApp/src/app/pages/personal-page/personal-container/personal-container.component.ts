@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { IPost } from 'src/app/interface/post';
+import { IPost, LikeStatus } from 'src/app/interface/post';
 import { IUser } from 'src/app/interface/user';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
@@ -39,7 +39,7 @@ export class PersonalContainerComponent implements OnInit {
         this.userId = +id;
         this.fetchPosts();
         this.fetchUserInfo();
-        this.handleLikePost = _.debounce(this.handleLikePost, 1000);
+        this.handleUpdatePostLike = _.debounce(this.handleUpdatePostLike, 500);
       }
     });
   }
@@ -95,19 +95,36 @@ export class PersonalContainerComponent implements OnInit {
       if (event.uploadType === 'cover') this.userInfo.cover = event.$event.res;
     }
   }
-  handleLikePost(postId: number) {
-    this.postService.likePost(postId, this.userId).subscribe({
+  handleToggleLikePost(postId: number) {
+    let status: LikeStatus;
+    const foundPost = { ...(this.personalPosts.find(p => p.id === postId) as IPost) };
+    const checkPostLiked = foundPost.postLikes.find(p => p.userId === this.userId);
+
+    if (checkPostLiked) {
+      status = LikeStatus.UNLIKE;
+      foundPost.numberOfLikes--;
+      foundPost.postLikes = foundPost.postLikes.filter(p => p.userId !== this.userId);
+    } else {
+      status = LikeStatus.LIKE;
+      foundPost.numberOfLikes++;
+      foundPost.postLikes = [...foundPost.postLikes, { postId: foundPost.id, userId: this.userId }];
+    }
+    this.personalPosts = this.personalPosts.map(post => {
+      if (post.id === postId) {
+        return foundPost!;
+      }
+      return post;
+    });
+
+    this.handleUpdatePostLike(postId, status);
+  }
+  handleUpdatePostLike(postId: number, status: LikeStatus): void {
+    this.postService.likePost(postId, this.userId, status).subscribe({
       next: value => {
-        this.personalPosts = this.personalPosts.map(post => {
-          if (post.id === postId) {
-            return value;
-          }
-          return post;
-        });
+        console.log({ value });
       },
       error: err => {
         console.log({ err });
-        // this.router.navigate(['/error']);
       }
     });
   }

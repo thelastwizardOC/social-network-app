@@ -26,10 +26,14 @@
     align-items: center;
     border-left: 1px solid var(--tui-base-03);
     height: 68px;
-
-    & > p {
-      margin-left: 10px;
-      font-weight: 700;
+    .user-header-container {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      & > p {
+        margin-left: 10px;
+        font-weight: 700;
+      }
     }
   }
 }

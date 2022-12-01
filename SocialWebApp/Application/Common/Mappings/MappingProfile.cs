@@ -19,7 +19,6 @@ public class MappingProfile : Profile
             CreateMap<User, UserDto>();
             CreateMap<NewUserDto, User>();
             CreateMap<User, NewUserVm>();
-            CreateMap<UserFriends, UserFriendDto>();
             CreateMap<User, LoginUserDto>();
             CreateMap<Message,UserMessageDto>();
             CreateMap<Post, PostDto>();

@@ -31,7 +31,9 @@ public class AddMessageCommandHandler : IRequestHandler<AddMessageCommand, UserM
 
   public async Task<UserMessageDto> Handle(AddMessageCommand request, CancellationToken cancellationToken)
   {
-      
+
+          // var time = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,
+          // TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"));
           bool isFriend = await _appDb.UserFriends.AnyAsync(u =>
               (u.SourceUserId == request.SenderId && u.FriendId == request.ReceiverId) ||
               (u.SourceUserId == request.ReceiverId && u.FriendId == request.SenderId));
@@ -44,8 +46,14 @@ public class AddMessageCommandHandler : IRequestHandler<AddMessageCommand, UserM
               ReceiverId = request.ReceiverId,
               SenderId = request.SenderId,
               Type = request.Type,
-              CreatedAt = DateTime.Now,
+              CreatedAt = DateTime.UtcNow
           };
+          
+          /* MARK AS UNHIDE IF CURRENT STATUS IS HIDE*/
+          var userFriend = await _appDb.UserFriends.FirstOrDefaultAsync(uf =>
+              uf.SourceUserId == request.SenderId && uf.FriendId == request.ReceiverId);
+
+          if (userFriend.IsHide) userFriend.IsHide = false;
           await _appDb.Message.AddAsync(addMessage);
           await _appDb.SaveChangesAsync();
 
