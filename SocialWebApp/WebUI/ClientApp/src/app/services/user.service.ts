@@ -14,14 +14,6 @@ export class UserService {
   getUserInfo(userId: number): Observable<IUser> {
     return this.http.get<IUser>(this.baseUserApiUrl + `/${userId}`);
   }
-  searchUserFriend(sourceUserId: number, keyword: string): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.baseUserApiUrl + '/friend', {
-      params: {
-        sourceUserId,
-        keyword
-      }
-    });
-  }
 
   uploadPhoto(file: FormData, userid: number, type: string) {
     const params = new HttpParams().append('userid', userid);
@@ -42,7 +34,7 @@ export class UserService {
     });
   }
 
-  searchFriends(userId: number, searchString: string, offset: number, limit: number) {
+  searchFriends(userId: number, searchString: string, offset: number = 0, limit: number = 100) {
     return this.http.get<ISearchFriendResponse>(`${environment.baseApi}/user/search-friend`, {
       params: {
         userId,

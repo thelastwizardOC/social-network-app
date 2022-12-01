@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IMessage, MessageContentType } from 'src/app/interface/message';
-import { IUser } from 'src/app/interface/user';
+import { ISearchFriend, IUser } from 'src/app/interface/user';
 import { MessageService } from 'src/app/services/message.service';
 import { SignalrService } from 'src/app/services/message-signalr.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -89,6 +89,7 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
       this.messageService.addMessage(sendMessage).subscribe({
         next: value => {
           this.signalRService.updateFriendLastMessage(value);
+
           /*
           CHECK IF THIS USER EXIST IN CONTACT BOARD
           */
@@ -99,7 +100,7 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
                 (fm.receiverId === value.senderId && fm.senderId === value.receiverId)
             )
           ) {
-            // this.messageStore.friendsMessages.unshift(value);
+            this.messageStore.friendsMessages.unshift(value);
           }
         },
         error: err => console.error(err)
@@ -181,8 +182,6 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
     }
   }
   handleContactClick({ chosenUser, messageId }: { chosenUser: IUser | undefined; messageId: number | undefined }): void {
-    console.log('click');
-    console.log({ chosenUser, messageId });
     if (chosenUser && messageId) {
       console.log('insiide');
       if (!this.messageStore.friendsMessages.find(fm => fm.id === messageId)?.isRead) this.handleMarkAsRead(messageId);
@@ -206,9 +205,9 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
   }
   handleFetchSearchFriend(keyword: string) {
     if (keyword.trim())
-      this.userService.searchUserFriend(this.userId, keyword).subscribe({
+      this.userService.searchFriends(this.userId, keyword).subscribe({
         next: value => {
-          this.messageStore.searchedFriends = value;
+          this.messageStore.searchedFriends = value.friends;
           this.messageStore.isSearching = false;
         },
         error: () => {
@@ -217,8 +216,8 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
       });
   }
 
-  handleClickSearchFriend(chosenUser: IUser) {
-    this.messageStore.chosenFriend = chosenUser;
+  handleClickSearchFriend(chosenUser: ISearchFriend) {
+    this.messageStore.chosenFriend = chosenUser as IUser;
     this.messageStore.searchedFriends = [];
 
     /* NEED GROUP */
