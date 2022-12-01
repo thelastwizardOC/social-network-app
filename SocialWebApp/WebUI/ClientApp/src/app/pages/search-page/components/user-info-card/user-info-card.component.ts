@@ -14,9 +14,9 @@ export class UserInfoCardComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onPress(id: number, relationship: number) {
+  handleOnButtonPress(user: ISearchUser, relationship: number) {
     if (relationship === 0) {
-      this.route.navigate(['profile/' + id]);
+      this.route.navigate(['profile/' + user.id]);
     }
   }
 }
