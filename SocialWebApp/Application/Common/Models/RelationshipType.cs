@@ -5,4 +5,5 @@ public enum RelationshipType
     Friend,
     NotFriend,
     Pending,
+    WAccept,
 }

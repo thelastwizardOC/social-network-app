@@ -1,12 +1,12 @@
 <div class="tui-container tui-container_fullwidth newsfeed-page-container">
   <div class="tui-row tui-row_adaptive">
-    <div class="tui-col_md-1 tui-col_lg-2">
+    <div class="tui-col_md-3 tui-col_lg-3 tui-col-offset_lg-2 user-container">
       <div class="info-card-container">
         <p class="tui-text_h6">Welcome, {{ loggedInUser?.firstName }} {{ loggedInUser?.lastName }}</p>
         <tui-avatar [avatarUrl]="loggedInUser?.avatar!" [rounded]="true"></tui-avatar>
       </div>
     </div>
-    <div class="tui-col_xs-12 tui-col_md-7 tui-col_lg-7">
+    <div class="tui-col_xs-12 tui-col_md-7 tui-col-offset_lg-3 tui-col_lg-7">
       <app-newsfeed
         [posts]="posts"
         [isLoading]="isLoading"
@@ -14,8 +14,8 @@
         (handleReloadPage)="handleReloadPage()"
       ></app-newsfeed>
     </div>
-    <div class="tui-col_md-4 tui-col_lg-3 friend-container">
-      <div>Friends are online</div>
+    <div class="tui-col_md-2 tui-col_lg-2 friend-container">
+      <div></div>
     </div>
   </div>
 </div>

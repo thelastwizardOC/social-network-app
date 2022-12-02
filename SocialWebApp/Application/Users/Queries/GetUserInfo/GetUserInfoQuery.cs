@@ -33,7 +33,8 @@ public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserDto
       if (user == null) throw new NotFoundException();
       
       var friends = await (from f in _appDb.UserFriends select new {f.SourceUserId, f.FriendId, f.Pending}).AsNoTracking().ToListAsync();
-
+      var notifications = await (from n in _appDb.Notification select new { n.TriggerUserId, n.UserId }).AsNoTracking()
+        .ToListAsync();
       var userDto = _mapper.Map<UserDto>(user);
       if (userDto.Id == request.LogInUserId)
       {
@@ -42,7 +43,14 @@ public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserDto
       else if (friends.FirstOrDefault(x =>
                  x.Pending && x.FriendId == userDto.Id && x.SourceUserId == request.LogInUserId) != default)
       {
-        userDto.Relationship = RelationshipType.Pending;
+        if (notifications.FirstOrDefault(x => x.UserId == request.LogInUserId && x.TriggerUserId == request.UserId) != default)
+        {
+          userDto.Relationship = RelationshipType.WAccept;
+        }
+        else
+        {
+          userDto.Relationship = RelationshipType.Pending;
+        }
       }
       else if (friends.FirstOrDefault(x =>
                  x.Pending == false && x.FriendId == userDto.Id && x.SourceUserId == request.LogInUserId) != default)

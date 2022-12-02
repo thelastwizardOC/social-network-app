@@ -157,6 +157,30 @@ export class PersonalContainerComponent implements OnInit {
           this.isLoadingFriendRequest = false;
         }
       });
+    } else if (this.userInfo?.relationship === 4) {
+      this.userService.handleFriendRequest(this.loggedInUserId, this.userInfo.id, true).subscribe({
+        next: res => {
+          this.fetchUserInfo();
+        },
+        error: err => {},
+        complete: () => {
+          this.isLoadingFriendRequest = false;
+        }
+      });
+    }
+  }
+
+  handleDeclineFriendRequest() {
+    if (this.userInfo?.relationship === 4) {
+      this.userService.handleFriendRequest(this.loggedInUserId, this.userInfo.id, false).subscribe({
+        next: res => {
+          this.fetchUserInfo();
+        },
+        error: err => {},
+        complete: () => {
+          this.isLoadingFriendRequest = false;
+        }
+      });
     }
   }
 

@@ -21,7 +21,7 @@ public class GetNotificationQueryHandler : IRequestHandler<GetNotificationQuery,
     }
     public async Task<List<NotificationDto>> Handle(GetNotificationQuery request, CancellationToken cancellationToken)
     {
-        var notifications = await _context.Notification.Where(u => u.UserId == request.UserId && u.Type == 0).Include(u => u.TriggerUser).ToListAsync();
+        var notifications = await _context.Notification.Where(u => u.UserId == request.UserId && u.Type == 0).Include(u => u.TriggerUser).OrderByDescending(n => n.CreatedAt).ToListAsync();
         return _mapper.Map<List<Notification>, List<NotificationDto>>(notifications);
     }
 }

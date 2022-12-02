@@ -43,6 +43,12 @@ public class AddFriendCommandHandler : IRequestHandler<AddFriendCommand, bool>
                 throw new NotFoundException(nameof(User), request.ReceiveUserId);
             }
 
+            var notification = _context.Notification.FirstOrDefault(n
+                => (n.TriggerUserId == request.SourceUserId && n.UserId == request.ReceiveUserId)
+                   || (n.TriggerUserId == request.ReceiveUserId && n.UserId == request.SourceUserId)
+            );
+            if (notification != null) return true;
+
             _context.UserFriends.Add(new UserFriends()
             {
                 CreatedAt = DateTime.Now,
