@@ -10,7 +10,7 @@
     tuiButton
     size="s"
     [appearance]="user.relationship > 1 ? 'primary' : 'secondary'"
-    class="btn"
+    class="btn-action"
     (click)="handleOnButtonPress()"
     [disabled]="user.relationship === 3"
     [showLoader]="isLoading"

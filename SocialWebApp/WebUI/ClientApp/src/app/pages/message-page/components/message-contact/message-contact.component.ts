@@ -7,21 +7,19 @@ import { IUser } from 'src/app/interface/user';
   templateUrl: './message-contact.component.html',
   styleUrls: ['./message-contact.component.scss']
 })
-export class MessageContactComponent implements OnInit, OnChanges {
+export class MessageContactComponent implements OnChanges {
   @Input() friendMessage!: IMessage;
   @Input() userId!: number;
   @Output() onContactClick = new EventEmitter<{ chosenUser: IUser | undefined; messageId: number | undefined }>();
   @Output() onHideMessage = new EventEmitter<number>();
-  isCurrentUserLastSend: boolean = false;
+  isLastSendFromCurrentUser: boolean = false;
   messageContentType = MessageContentType;
 
   constructor() {}
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log({ changes });
-  }
 
-  ngOnInit(): void {
-    if (this.friendMessage.receiverId === this.userId) this.isCurrentUserLastSend = false;
-    else this.isCurrentUserLastSend = true;
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log({ changes });
+    if (this.friendMessage.receiverId === this.userId) this.isLastSendFromCurrentUser = false;
+    else this.isLastSendFromCurrentUser = true;
   }
 }

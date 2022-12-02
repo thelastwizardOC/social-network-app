@@ -1,6 +1,6 @@
 @import '/node_modules/@taiga-ui/core/styles/mixins/mixins.scss';
 
-::ng-deep .container {
+.container {
   width: 100% !important;
   margin-top: 20px;
   border-radius: 10px;

@@ -1,20 +1,23 @@
 <div
   class="container"
   (click)="
-    onContactClick.emit({ chosenUser: !isCurrentUserLastSend ? friendMessage.sender : friendMessage.receiver, messageId: friendMessage.id })
+    onContactClick.emit({
+      chosenUser: !isLastSendFromCurrentUser ? friendMessage.sender : friendMessage.receiver,
+      messageId: friendMessage.id
+    })
   "
 >
   <div class="container-left">
     <tui-avatar
-      avatarUrl="{{ !isCurrentUserLastSend ? friendMessage.sender?.avatar : friendMessage.receiver!.avatar }}"
+      avatarUrl="{{ !isLastSendFromCurrentUser ? friendMessage.sender?.avatar : friendMessage.receiver?.avatar }}"
       [rounded]="true"
     ></tui-avatar>
     <div>
       <p class="user-name">
         {{
-          !isCurrentUserLastSend
-            ? friendMessage.sender!.firstName + ' ' + friendMessage.sender!.lastName
-            : friendMessage.receiver!.firstName + ' ' + friendMessage.receiver!.lastName
+          !isLastSendFromCurrentUser
+            ? friendMessage.sender?.firstName + ' ' + friendMessage.sender?.lastName
+            : friendMessage.receiver?.firstName + ' ' + friendMessage.receiver?.lastName
         }}
       </p>
       <p
@@ -40,7 +43,10 @@
   <div class="container-right">
     <tui-svg class="btn-more" src="tuiIconMoreHorLarge" [tuiHint]="tooltip" tuiHintDirection="right" tui></tui-svg>
     <ng-template #tooltip>
-      <strong (click)="onHideMessage.emit(!isCurrentUserLastSend ? friendMessage.senderId : friendMessage.receiverId)" class="btn-clear">
+      <strong
+        (click)="onHideMessage.emit(!isLastSendFromCurrentUser ? friendMessage.senderId : friendMessage.receiverId)"
+        class="btn-clear"
+      >
         Hide conversation
       </strong>
     </ng-template>

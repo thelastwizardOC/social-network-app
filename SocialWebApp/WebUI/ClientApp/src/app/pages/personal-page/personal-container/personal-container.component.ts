@@ -164,7 +164,7 @@ export class PersonalContainerComponent implements OnInit {
 
   onMessageClick() {
     if (this.userInfo) {
-      this.messageStore.navigateFriendInfo = this.userInfo;
+      this.messageStore.chosenFriend = this.userInfo;
       this.router.navigate(['/message']);
     }
   }
