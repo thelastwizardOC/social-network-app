@@ -13,6 +13,9 @@ export class AccessGuard implements CanActivate {
 
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return true;
+    } else if (token === null) {
+      this.router.navigate(['auth/login']);
+      return false;
     }
 
     return new Promise((resolve, reject) => {

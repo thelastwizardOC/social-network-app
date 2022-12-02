@@ -61,14 +61,11 @@ public class AddMessageCommandHandler : IRequestHandler<AddMessageCommand, UserM
           */
         var checkMessageHide = await _appDb.UserFriends.FirstOrDefaultAsync(uf =>
             uf.SourceUserId == request.ReceiverId && uf.FriendId == request.SenderId && !uf.IsHide);
+        var messageDto = _mapper.Map<UserMessageDto>(addMessage);
         if (checkMessageHide == null)
         {
-            return null;
+            messageDto.IsTransmit = false;
         }
-
-
-        var messageDto = _mapper.Map<UserMessageDto>(addMessage);
-
         return messageDto;
     }
 }

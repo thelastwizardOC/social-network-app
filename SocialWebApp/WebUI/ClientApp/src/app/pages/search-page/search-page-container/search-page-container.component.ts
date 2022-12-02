@@ -65,6 +65,8 @@ export class SearchPageContainerComponent implements OnInit {
     }
   }
   handleNavigateMessage(userInfo: IUser) {
+    console.log(userInfo);
+
     if (userInfo) {
       this.messageStore.chosenFriend = userInfo;
       this.router.navigate(['/message']);

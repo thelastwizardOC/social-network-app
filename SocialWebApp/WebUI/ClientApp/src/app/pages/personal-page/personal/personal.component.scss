@@ -66,7 +66,7 @@
 }
 
 ::ng-deep .btn-relationship {
-  width: 200px;
+  max-width: 200px;
   margin-right: 20px;
   &._disabled {
     color: var(--tui-base-01);
@@ -86,4 +86,8 @@
       color: var(--tui-base-01);
     }
   }
+}
+
+.decline-btn {
+  margin-right: 20px;
 }

@@ -157,7 +157,7 @@ export class NavigationBarComponent implements OnInit, OnChanges {
       next: res => {
         var itemIndex = this.notificationStore.notifications.indexOf(item);
         this.notificationStore.notifications.splice(itemIndex, 1);
-        this.notificationService.showSuccess(`Now, You and ${item.triggerUser.firstName + item.triggerUser.lastName} is the friend`);
+        this.notificationService.showSuccess(`Now, You and ${item.triggerUser.firstName + ' ' + item.triggerUser.lastName} is the friend`);
       },
       error: err => {},
       complete: () => {}

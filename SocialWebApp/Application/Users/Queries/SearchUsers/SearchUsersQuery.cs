@@ -38,7 +38,9 @@ public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, SearchU
             var searchUsersResult = _mapper.Map<List<User>, List<SearchUserDto>>(userList);
 
             var friends = await (from f in _context.UserFriends select new {f.SourceUserId, f.FriendId, f.Pending}).AsNoTracking().ToListAsync();
-            
+            var notifications = await (from n in _context.Notification select new { n.TriggerUserId, n.UserId })
+                .AsNoTracking().ToListAsync();
+
             searchUsersResult.ForEach(i =>
             {
                 if (i.Id == request.UserId)
@@ -51,7 +53,15 @@ public class SearchUsersQueryHandler : IRequestHandler<SearchUsersQuery, SearchU
                 }
                 else if (friends.FirstOrDefault(x => x.FriendId == i.Id && x.SourceUserId == request.UserId && x.Pending == true) != default)
                 {
-                    i.Relationship = RelationshipType.Pending;
+                    if (notifications.FirstOrDefault(x =>
+                            x.UserId == request.UserId && x.TriggerUserId == i.Id) != default)
+                    {
+                        i.Relationship = RelationshipType.WAccept;
+                    }
+                    else
+                    {
+                        i.Relationship = RelationshipType.Pending;
+                    }
                 }
                 else
                 {

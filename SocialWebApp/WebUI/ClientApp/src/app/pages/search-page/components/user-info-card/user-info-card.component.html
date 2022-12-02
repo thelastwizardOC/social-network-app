@@ -17,4 +17,8 @@
   >
     <p class="tui-text_body-m">{{ user.relationship | buttonRelationship }}</p>
   </button>
+
+  <button class="btn" tuiButton size="s" *ngIf="user.relationship === 4" (click)="onDeclineFriendRequest()">
+    <p class="tui-text_body-m">Decline</p>
+  </button>
 </div>

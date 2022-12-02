@@ -49,6 +49,9 @@
     >
       {{ userInfo?.relationship | profileButtonRelationship }}
     </button>
+    <button *ngIf="userInfo?.relationship === 4" tuiButton size="s" class="decline-btn" (click)="handleDeclineFriendRequest.emit()">
+      Decline
+    </button>
     <button
       tuiButton
       size="s"

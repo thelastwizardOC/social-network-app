@@ -23,6 +23,7 @@ export class PersonalComponent {
   @Output() handleDeletePost = new EventEmitter();
   @Output() handleOnActionPress = new EventEmitter();
   @Output() onMessageClick = new EventEmitter();
+  @Output() handleDeclineFriendRequest = new EventEmitter();
   activeItemIndex: number = 0;
   mockImg: string = environment.mockImg;
   uploadType!: 'avatar' | 'cover';

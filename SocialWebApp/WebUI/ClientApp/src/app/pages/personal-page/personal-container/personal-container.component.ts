@@ -128,9 +128,7 @@ export class PersonalContainerComponent implements OnInit {
   }
   handleUpdatePostLike(postId: number, status: LikeStatus): void {
     this.postService.likePost(postId, this.userId, status).subscribe({
-      next: value => {
-        console.log({ value });
-      },
+      next: value => {},
       error: err => {
         console.log({ err });
       }
@@ -151,6 +149,30 @@ export class PersonalContainerComponent implements OnInit {
       });
     } else if (this.userInfo?.relationship === 1) {
       this.userService.unfriendRequest(this.loggedInUserId, this.userInfo.id).subscribe({
+        next: res => {
+          this.fetchUserInfo();
+        },
+        error: err => {},
+        complete: () => {
+          this.isLoadingFriendRequest = false;
+        }
+      });
+    } else if (this.userInfo?.relationship === 4) {
+      this.userService.handleFriendRequest(this.loggedInUserId, this.userInfo.id, true).subscribe({
+        next: res => {
+          this.fetchUserInfo();
+        },
+        error: err => {},
+        complete: () => {
+          this.isLoadingFriendRequest = false;
+        }
+      });
+    }
+  }
+
+  handleDeclineFriendRequest() {
+    if (this.userInfo?.relationship === 4) {
+      this.userService.handleFriendRequest(this.loggedInUserId, this.userInfo.id, false).subscribe({
         next: res => {
           this.fetchUserInfo();
         },

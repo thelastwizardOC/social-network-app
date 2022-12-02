@@ -5,6 +5,7 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Messages.Commands.AddFile;
     
@@ -53,6 +54,12 @@ public class AddFileCommandHandler : IRequestHandler<AddFileCommand, UserMessage
         addMessage.Receiver = await _appDb.User.FindAsync(addMessage.ReceiverId);
         addMessage.Sender = await _appDb.User.FindAsync(addMessage.SenderId);
         var messageDto = _mapper.Map<UserMessageDto>(addMessage);
+        var checkMessageHide = await _appDb.UserFriends.FirstOrDefaultAsync(uf =>
+            uf.SourceUserId == request.ReceiverId && uf.FriendId == request.SenderId && !uf.IsHide);
+        if (checkMessageHide == null)
+        {
+            messageDto.IsTransmit = false;
+        }
         return messageDto;
     }
 }
