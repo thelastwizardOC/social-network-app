@@ -70,8 +70,11 @@
             <tui-avatar [avatarUrl]="item.triggerUser.avatar" [rounded]="true" [size]="'m'"></tui-avatar>
           </a>
           <div class="info-container">
-            <p class="tui-text_body-m username">{{ item.triggerUser.firstName }} {{ item.triggerUser.lastName }}</p>
-            <div class="btn-container">
+            <div style="display: flex; flex-direction: row; align-items: center">
+              <p class="tui-text_body-m username" style="flex: 1">{{ item.triggerUser.firstName }} {{ item.triggerUser.lastName }}</p>
+              <p>{{ item.date | messageTime }}</p>
+            </div>
+            <div class="btn-container tui-space_top-1">
               <button tuiButton size="s" class="confirm-btn" (click)="onConfirmFriendRequest(item)">Accept</button>
               <button tuiButton size="s" class="decline-btn" appearance="secondary" (click)="onDeclineFriendRequest(item)">Decline</button>
             </div>

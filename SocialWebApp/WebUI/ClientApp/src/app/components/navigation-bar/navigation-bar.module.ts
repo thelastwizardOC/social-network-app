@@ -1,4 +1,3 @@
-import { TuiAvatarModule } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -11,6 +10,8 @@ import {
   TuiLoaderModule,
   TuiSvgModule
 } from '@taiga-ui/core';
+import { TuiAvatarModule } from '@taiga-ui/kit';
+import { SharedModule } from 'src/app/pages/shared.module';
 import { RelationshipPipe } from 'src/app/pipes/relationship.pipe';
 import { NavigationBarComponent } from './navigation-bar.component';
 
@@ -26,7 +27,8 @@ import { NavigationBarComponent } from './navigation-bar.component';
     TuiButtonModule,
     TuiDialogModule,
     TuiDropdownModule,
-    TuiAvatarModule
+    TuiAvatarModule,
+    SharedModule
   ],
   exports: [NavigationBarComponent]
 })

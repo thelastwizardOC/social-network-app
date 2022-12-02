@@ -14,14 +14,7 @@ import { MessageContainerComponent } from './message-container/message-container
 import { MessageComponent } from './message/message.component';
 
 @NgModule({
-  declarations: [
-    MessageComponent,
-    MessageContainerComponent,
-    MessageContactComponent,
-    UserMessageComponent,
-    MessageInputComponent,
-    MessageTimePipe
-  ],
+  declarations: [MessageComponent, MessageContainerComponent, MessageContactComponent, UserMessageComponent, MessageInputComponent],
   imports: [
     CommonModule,
     MessagePageRoute,
