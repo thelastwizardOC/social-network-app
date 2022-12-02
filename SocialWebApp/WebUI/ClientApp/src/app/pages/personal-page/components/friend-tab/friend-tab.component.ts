@@ -34,7 +34,14 @@ export class FriendTabComponent implements OnInit {
   onSearchInputChange() {
     this.friendList = [];
     this.isLoading = true;
-    this.handleSearchFriend(false);
+    if (trim(this.searchInput.nativeElement.value) === '') {
+      setTimeout(() => {
+        this.friendList = [];
+        this.isLoading = false;
+      }, 500);
+    } else {
+      this.handleSearchFriend(false);
+    }
   }
 
   handleSearchFriend(isScrolling: boolean) {
