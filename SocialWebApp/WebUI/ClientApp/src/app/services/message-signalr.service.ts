@@ -3,7 +3,6 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { MessagePackHubProtocol } from '@microsoft/signalr-protocol-msgpack';
 import { environment } from 'src/environments/environment';
 import { IMessage, IMessageHub, MessageContentType } from '../interface/message';
-import { IUser } from '../interface/user';
 import { messageHubParser } from '../utils/parser';
 import { MessageStoreService } from './message-store.service';
 import { MessageService } from './message.service';
@@ -79,20 +78,13 @@ export class SignalrService {
       });
   }
   public updateFriendLastMessage(lastMessage: IMessage) {
-    console.log({ lastMessage });
     this.messageStore.friendsMessages = this.messageStore.friendsMessages.map(i => {
       if (
         (i.senderId === lastMessage.senderId && i.receiverId === lastMessage.receiverId) ||
         (i.receiverId === lastMessage.senderId && i.senderId === lastMessage.receiverId)
       ) {
-        i.id = lastMessage.id;
-        i.content = lastMessage.content;
-        i.type = lastMessage.type;
-        i.isRead = lastMessage.isRead;
-        i.senderId = lastMessage.senderId;
-        i.receiverId = lastMessage.receiverId;
+        return lastMessage;
       }
-
       return i;
     });
   }
@@ -102,10 +94,22 @@ export class SignalrService {
       console.log({ data });
       const parsedData = messageHubParser(data);
       console.log({ parsedData });
-
-      if (parsedData.senderId === this.messageStore.chosenFriend?.id)
-        this.messageStore.messages = [messageHubParser(data), ...this.messageStore.messages];
-      this.updateFriendLastMessage(parsedData);
+      /*
+        CASE: FIRST TIME RECEIVE FROM THIS USER
+     */
+      if (
+        !this.messageStore.friendsMessages.find(
+          fm =>
+            (fm.receiverId === parsedData.senderId && fm.senderId === parsedData.receiverId) ||
+            (fm.receiverId === parsedData.receiverId && fm.senderId === parsedData.senderId)
+        )
+      ) {
+        this.messageStore.friendsMessages.unshift(parsedData);
+      } else {
+        if (parsedData.senderId === this.messageStore.chosenFriend?.id)
+          this.messageStore.messages = [messageHubParser(data), ...this.messageStore.messages];
+        this.updateFriendLastMessage(parsedData);
+      }
     });
 
     this.hubConnection.on('newUserConnected', async _ => {

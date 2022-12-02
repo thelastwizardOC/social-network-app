@@ -27,6 +27,7 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.signalRService.disconnect();
     this.messageStore.resetStore();
+    this.messageStore.chosenFriend = undefined;
   }
 
   ngOnInit(): void {
@@ -53,19 +54,19 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
       });
   }
   getFriendsMessages(): void {
+    const showHide = !!this.messageStore.chosenFriend;
     this.messageStore.isLoading = true;
-    this.messageService.getFriendsMessages(this.userId).subscribe({
+
+    this.messageService.getFriendsMessages(this.userId, showHide).subscribe({
       next: value => {
         if (value.length > 0) {
           /* CASE: NAVIGATE FROM PROFILE PAGE */
-          if (this.messageStore.navigateFriendInfo) {
-            this.messageStore.chosenFriend = this.messageStore.navigateFriendInfo;
-          } else {
-            const latestMessage: IMessage = value[0];
-            this.messageStore.chosenFriend = (
-              latestMessage.senderId === this.userId ? latestMessage.receiver : latestMessage.sender
-            ) as IUser;
+          if (!this.messageStore.chosenFriend) {
           }
+          const latestMessage: IMessage = value[0];
+          this.messageStore.chosenFriend = (
+            latestMessage.senderId === this.userId ? latestMessage.receiver : latestMessage.sender
+          ) as IUser;
           this.messageStore.friendsMessages = value;
           this.getMessage();
         }
@@ -188,7 +189,6 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
   }
   handleContactClick({ chosenUser, messageId }: { chosenUser: IUser | undefined; messageId: number | undefined }): void {
     if (chosenUser && messageId) {
-      console.log('insiide');
       if (!this.messageStore.friendsMessages.find(fm => fm.id === messageId)?.isRead) this.handleMarkAsRead(messageId);
 
       if (chosenUser.id === this.messageStore.chosenFriend?.id) return;
@@ -205,11 +205,11 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
   }
   handleSearchFriend(keyword: string) {
     this.messageStore.searchedFriends = [];
-    this.messageStore.isSearching = true;
     this.handleFetchSearchFriend(keyword);
   }
   handleFetchSearchFriend(keyword: string) {
-    if (keyword.trim())
+    if (keyword.trim()) {
+      this.messageStore.isSearching = true;
       this.userService.searchFriends(this.userId, keyword).subscribe({
         next: value => {
           this.messageStore.searchedFriends = value.friends;
@@ -219,18 +219,20 @@ export class MessageContainerComponent implements OnInit, OnDestroy {
           this.messageStore.isSearching = false;
         }
       });
+    }
   }
 
   handleClickSearchFriend(chosenUser: ISearchFriend) {
     this.messageStore.chosenFriend = chosenUser as IUser;
     this.messageStore.searchedFriends = [];
 
-    /* NEED GROUP */
+    /* NEED ENHANCE */
     this.messageStore.offset = 0;
     this.messageStore.messages = [];
     this.getMessage();
   }
   handleHideMessage(friendId: number) {
+    const userID = this.userId;
     this.messageService.hideFriendMessage(this.userId, friendId).subscribe({
       error: err => {
         console.log({ err });

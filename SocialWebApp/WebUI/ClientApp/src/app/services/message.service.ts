@@ -29,8 +29,8 @@ export class MessageService {
   public updateReadStatus(messageId: number) {
     return this.http.put(this.messageBaseApiUrl, {}, { params: { messageId } });
   }
-  public getFriendsMessages(userId: number): Observable<IMessage[]> {
-    return this.http.get<IMessage[]>(this.messageBaseApiUrl + '/users', { params: { userId } });
+  public getFriendsMessages(userId: number, showHide: boolean = false): Observable<IMessage[]> {
+    return this.http.get<IMessage[]>(this.messageBaseApiUrl + '/users', { params: { userId, showHide } });
   }
   public hideFriendMessage(userId: number, friendId: number) {
     return this.http.put(this.messageBaseApiUrl + '/hide', { userId, friendId });
