@@ -7,10 +7,11 @@
     [tuiAutoFocus]="true"
     [maxLength]="1000"
     [expandable]="true"
-    class="status-container no-shadow"
-    >What do you think?</tui-text-area
+    class="status-container no-shadow tui-space_bottom-2"
   >
-
+    What do you think?
+    <textarea tuiTextfield maxlength="1000" placeholder="Write a few words about yourself"></textarea>
+  </tui-text-area>
   <ng-container *ngIf="files.length > 0">
     <app-carousel [imageUrls]="files" [disableButton]="true"></app-carousel>
   </ng-container>

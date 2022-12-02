@@ -3,6 +3,7 @@
   [multiple]="true"
   [formControl]="control"
   (reject)="onReject($event)"
+  [maxFileSize]="2200000"
   (ngModelChange)="control.markAsTouched()"
 ></tui-input-files>
 
