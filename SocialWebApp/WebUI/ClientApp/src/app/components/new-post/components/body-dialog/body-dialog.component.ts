@@ -15,6 +15,7 @@ export class BodyDialogComponent implements OnInit {
   @Output() handleOpenDialog = new EventEmitter();
   @Output() handlePostSucceeded = new EventEmitter();
   isSendingData: boolean = false;
+  disablePosting = true;
   files: string[] = [];
   value = '';
   userId!: number;
@@ -32,6 +33,9 @@ export class BodyDialogComponent implements OnInit {
   ngOnInit(): void {
     this.userId = +this.jwtHelper.decodeToken(localStorage.getItem('jwt') as string).sub;
     this.onImagesUploaded();
+    this.postForm.statusChanges.subscribe(res => {
+      this.disablePosting = this.postForm.value.postStatusValue?.trim() == '' && (this.newPostService.getRawImages() as never[]).length < 1;
+    });
   }
 
   onPostSummited() {
@@ -42,9 +46,8 @@ export class BodyDialogComponent implements OnInit {
     this.postForm.value.imageUrlsValue?.forEach(image => {
       formData.append(`files`, image);
     });
-    formData.append('status', this.postForm.value.postStatusValue as string);
+    formData.append('status', this.postForm.value.postStatusValue || '');
     formData.append('userId', this.userId.toString());
-
     this.postService.createPost(formData).subscribe({
       next: res => {
         if (res) {
@@ -62,12 +65,14 @@ export class BodyDialogComponent implements OnInit {
 
   onImagesUploaded() {
     this.files = this.newPostService.getImages();
-    if (this.files.length > 0) this.postForm.markAsDirty();
+    if (this.files.length > 0) {
+      this.postForm.markAsDirty();
+      this.disablePosting = false;
+    }
   }
 }
 
 export function statusValidator(field: AbstractControl): Validators | null {
-  if (!field.value) return null;
-  if (field.value.split(' ').length > 1000) return { other: `The maximum length of uploaded status is 1000 words. Please try again.` };
+  if (field.value.length > 1000) return { other: `The maximum length of uploaded status is 1000 characters. Please try again.` };
   return null;
 }

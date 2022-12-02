@@ -8,21 +8,18 @@ import { TuiDialogService } from '@taiga-ui/core';
 })
 export class DeleteComponent {
   dropdownOpen = false;
+  isDialogOpened: boolean = false;
+
   @Output() handlePostDeleted = new EventEmitter();
 
   constructor(@Inject(TuiDialogService) private readonly dialogService: TuiDialogService) {}
 
   deletePost(): void {
-    this.dialogService
-      .open(`Are you sure you want to delete this post?`, {
-        dismissible: true,
-        label: 'Delete the post'
-      })
-      .subscribe({
-        complete: () => {
-          this.handlePostDeleted.emit();
-          this.dropdownOpen = false;
-        }
-      });
+    this.handlePostDeleted.emit();
+    this.dropdownOpen = false;
+  }
+
+  handleOpenDialog() {
+    this.isDialogOpened = true;
   }
 }

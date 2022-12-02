@@ -23,6 +23,7 @@ export class UserCommentComponent implements OnInit {
   size: TuiSizeM | TuiSizeS = `m`;
   commentValue = new FormControl(``, [commentValidator]);
   isSent: boolean = false;
+  disablePost: boolean = false;
 
   constructor(
     private postService: PostService,
@@ -33,6 +34,9 @@ export class UserCommentComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchUserInfo();
+    this.commentValue.statusChanges.subscribe(res => {
+      this.disablePost = this.commentValue.value === '';
+    });
   }
 
   fetchUserInfo(): void {
@@ -48,11 +52,12 @@ export class UserCommentComponent implements OnInit {
 
   onPostComment() {
     const commentText: string | null = this.commentValue.value;
-    this.isSent = true;
     if (commentText?.trim() === '') {
       this.commentValue.setErrors({ other: 'Comment has no value' });
       return;
     }
+    this.isSent = true;
+    this.disablePost = true;
     this.postService.commentPost(this.postId, this.currentPostService.getUserId(), commentText! || '.').subscribe({
       next: value => {
         this.commentValue.setValue('');
@@ -70,6 +75,6 @@ export class UserCommentComponent implements OnInit {
 
 export function commentValidator(field: AbstractControl): Validators | null {
   if (!field.value) return null;
-  if (field.value.split(' ').length > 100) return { other: `The maximum length of your comment is 100 words. Please try again.` };
+  if (field.value.length > 100) return { other: `The maximum length of your comment is 100 characters. Please try again.` };
   return null;
 }

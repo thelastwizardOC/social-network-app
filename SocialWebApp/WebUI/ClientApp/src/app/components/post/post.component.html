@@ -1,6 +1,6 @@
 <div class="tui-container_adaptive tui-space_vertical-5 post-container">
   <div class="post-header">
-    <div class="post-header-left">
+    <div class="post-header-left mouse-pointer" (click)="handleNavigateAccount(post.user.id)">
       <tui-avatar class="tui-space_right-2" [size]="'m'" [rounded]="true" [avatarUrl]="post.user.avatar || mockImg"></tui-avatar>
       <div>
         <p class="post-user tui-text_body-m">{{ post.user.firstName }} {{ post.user.lastName }}</p>

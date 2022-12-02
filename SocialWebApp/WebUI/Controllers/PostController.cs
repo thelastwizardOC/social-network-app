@@ -69,7 +69,7 @@ public class PostController : ApiControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<bool>> CreatePost([FromForm] ICollection<IFormFile> files,[FromForm]string status,[FromForm]int userId)
+    public async Task<ActionResult<bool>> CreatePost([FromForm] ICollection<IFormFile> files,[FromForm]int userId,[FromForm]string? status="")
     {
         try
         {

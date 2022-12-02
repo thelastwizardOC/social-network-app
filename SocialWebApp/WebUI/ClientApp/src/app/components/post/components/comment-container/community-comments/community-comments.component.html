@@ -1,7 +1,12 @@
 <div class="tui-col_12 tui-space_top-4">
   <div *ngFor="let userInfo of userCommentList; index as i">
-    <div *ngIf="i < 2" class="user-comment-container tui-row_align_start tui-space_top-3">
-      <tui-avatar [size]="'m'" [rounded]="true" [avatarUrl]="userInfo.user?.avatar! || mockImg"></tui-avatar>
+    <div *ngIf="i < 2" class="user-comment-container mouse-pointer tui-row_align_start tui-space_top-3">
+      <tui-avatar
+        [size]="'m'"
+        (click)="handleNavigateAccount(userInfo.user.id)"
+        [rounded]="true"
+        [avatarUrl]="userInfo.user?.avatar || mockImg"
+      ></tui-avatar>
 
       <div class="input-comment tui-space_left-2">
         <div class="comment community-comment__box">
@@ -18,8 +23,13 @@
   <div *ngIf="userCommentList.length > 2">
     <tui-expand [expanded]="expanded">
       <div *ngFor="let userInfo of userCommentList; index as i">
-        <div *ngIf="i > 1" class="user-comment-container tui-row_align_start tui-space_top-3">
-          <tui-avatar [size]="'m'" [rounded]="true" [avatarUrl]="userInfo.user?.avatar!"></tui-avatar>
+        <div *ngIf="i > 1" class="user-comment-container mouse-pointer tui-row_align_start tui-space_top-3">
+          <tui-avatar
+            [size]="'m'"
+            (click)="handleNavigateAccount(userInfo.user.id)"
+            [rounded]="true"
+            [avatarUrl]="userInfo.user?.avatar || mockImg"
+          ></tui-avatar>
 
           <div class="input-comment tui-space_left-2">
             <div class="comment community-comment__box">
