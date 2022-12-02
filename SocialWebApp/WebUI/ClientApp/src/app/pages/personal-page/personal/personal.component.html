@@ -81,7 +81,7 @@
 <div class="tui-container-fixed" [ngSwitch]="activeItemIndex">
   <div *ngSwitchCase="'0'" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="this.onScroll.emit()">
     <div class="tui-space_top-4">
-      <app-new-post (handlePostSucceeded)="handlePostSucceeded.emit()"></app-new-post>
+      <app-new-post *ngIf="userInfo?.id === loggedInUserId" (handlePostSucceeded)="handlePostSucceeded.emit()"></app-new-post>
     </div>
     <app-post *ngFor="let post of personalPosts" [post]="post" (onDeletePost)="handleDeletePost.emit()"></app-post>
 

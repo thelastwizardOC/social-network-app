@@ -19,9 +19,10 @@
   align-items: center;
   position: fixed;
   top: 100px;
-  left: 30px;
+  left: 70px;
   justify-content: space-evenly;
   border-radius: 10px;
   overflow: hidden;
+  cursor: pointer;
   @include shadow(1);
 }
