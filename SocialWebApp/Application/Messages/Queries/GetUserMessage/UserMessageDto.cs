@@ -15,4 +15,6 @@ public class UserMessageDto
 
     public int ReceiverId { get; set; }
     public UserDto Receiver { get; set; }
+
+    public bool IsTransmit { get; set; } = true;
 }

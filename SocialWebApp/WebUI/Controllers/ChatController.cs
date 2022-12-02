@@ -64,7 +64,7 @@ public class ChatController : ApiControllerBase
         try
         {
             var message = await Mediator.Send(command);
-            if (message != null)
+            if (message.IsTransmit)
             {
                 await hubContext.Clients.Group(command.ReceiverId.ToString())
                     .SendAsync("messageReceivedFromApi", message);
@@ -89,8 +89,12 @@ public class ChatController : ApiControllerBase
         try
         {
             var messageDto = await Mediator.Send(command);
-            await hubContext.Clients.Group(command.ReceiverId.ToString())
-                .SendAsync("messageReceivedFromApi", messageDto);
+            if (messageDto.IsTransmit)
+            {
+                await hubContext.Clients.Group(command.ReceiverId.ToString())
+                    .SendAsync("messageReceivedFromApi", messageDto);
+
+            }
             return Ok(messageDto);
         }
         catch (ValidationException e)
