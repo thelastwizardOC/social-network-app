@@ -1,6 +1,6 @@
 <div class="tui-col_12">
   <div class="user-comment-container tui-row_align_start">
-    <tui-avatar [size]="'m'" [rounded]="true" [avatarUrl]="userInfo?.avatar! || mockImage"></tui-avatar>
+    <tui-avatar [size]="'m'" [rounded]="true" [avatarUrl]="userInfo?.avatar || mockImage"></tui-avatar>
 
     <div class="input-comment tui-space_left-2">
       <tui-text-area
@@ -22,7 +22,7 @@
         iconRight="tuiIconCheckLarge"
         class="tui-space_left-3 confirm_button"
         size="m"
-        [disabled]="!(commentValue.valid && commentValue.dirty)"
+        [disabled]="!(commentValue.valid && commentValue.dirty) || disablePost"
         shape="rounded"
         (click)="onPostComment()"
       >

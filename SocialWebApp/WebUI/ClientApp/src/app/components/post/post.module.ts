@@ -4,6 +4,7 @@ import { SharedModule } from 'src/app/pages/shared.module';
 import {
   TuiButtonModule,
   TuiDataListModule,
+  TuiDialogModule,
   TuiErrorModule,
   TuiExpandModule,
   TuiGroupModule,
@@ -55,7 +56,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TuiPrimitiveTextfieldModule,
     TuiActionModule,
     SharedModule,
-    TuiProgressModule
+    TuiProgressModule,
+    TuiDialogModule
   ],
   exports: [PostComponent]
 })

@@ -55,3 +55,15 @@ tui-input-password {
 .t-message-text {
   white-space: pre-line !important;
 }
+
+.tui-form__buttons {
+  margin-top: 0.25rem;
+  .confirm_button {
+    width: 100%;
+    &._disabled {
+      > div {
+        background: var(--tui-base-05);
+      }
+    }
+  }
+}

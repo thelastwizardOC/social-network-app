@@ -1,14 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewPostComponent } from './new-post.component';
-import {
-  TuiActionModule,
-  TuiAvatarModule,
-  TuiFieldErrorPipeModule,
-  TuiInputFilesModule,
-  TuiIslandModule,
-  TuiTextAreaModule
-} from '@taiga-ui/kit';
+import { TuiAvatarModule, TuiFieldErrorPipeModule, TuiInputFilesModule, TuiIslandModule, TuiTextAreaModule } from '@taiga-ui/kit';
 import { TuiButtonModule, TuiDialogModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { HeaderDialogComponent } from './components/header-dialog/header-dialog.component';
 import { BodyDialogComponent } from './components/body-dialog/body-dialog.component';
@@ -27,7 +20,6 @@ import { CarouselModule } from '../carousel/carousel.module';
     TuiIslandModule,
     TuiButtonModule,
     TuiSvgModule,
-    TuiActionModule,
     TuiDialogModule,
     ReactiveFormsModule,
     TuiAvatarModule,

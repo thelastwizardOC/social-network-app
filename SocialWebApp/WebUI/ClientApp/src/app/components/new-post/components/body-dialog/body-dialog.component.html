@@ -1,12 +1,18 @@
 <form [formGroup]="postForm" (ngSubmit)="onPostSummited()">
   <app-user-info></app-user-info>
 
-  <tui-text-area formControlName="postStatusValue" [tuiAutoFocus]="true" [expandable]="true" class="status-container no-shadow"
+  <tui-text-area
+    formControlName="postStatusValue"
+    [tuiTextfieldLabelOutside]="true"
+    [tuiAutoFocus]="true"
+    [maxLength]="1000"
+    [expandable]="true"
+    class="status-container no-shadow"
     >What do you think?</tui-text-area
   >
 
   <ng-container *ngIf="files.length > 0">
-    <app-carousel [imageUrls]="files"></app-carousel>
+    <app-carousel [imageUrls]="files" [disableButton]="true"></app-carousel>
   </ng-container>
 
   <tui-island class="tui-space_vertical-4" size="s">
@@ -18,7 +24,7 @@
           type="submit"
           [showLoader]="isSendingData"
           size="m"
-          [disabled]="!(postForm.valid && postForm.dirty)"
+          [disabled]="!(postForm.valid && postForm.dirty) || disablePosting"
           class="confirm_button"
         >
           Post

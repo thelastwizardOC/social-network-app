@@ -7,6 +7,7 @@ import { GlobalErrorHandler } from '../../services/error-handler.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrentPostService } from './current-post.service';
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -36,7 +37,8 @@ export class PostComponent implements OnChanges, OnInit {
     private postService: PostService,
     private notification: NotificationService,
     private errorHandler: GlobalErrorHandler,
-    private currentPostService: CurrentPostService
+    private currentPostService: CurrentPostService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -106,5 +108,9 @@ export class PostComponent implements OnChanges, OnInit {
 
   canPostDeleted(): boolean {
     return this.post.user.id === this.currentPostService.getUserId();
+  }
+
+  handleNavigateAccount(userId: number) {
+    this.route.navigateByUrl(`/profile/${userId}`, { skipLocationChange: false }).then(() => {});
   }
 }

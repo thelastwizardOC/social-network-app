@@ -11,23 +11,13 @@ public class CreatePostCommandValidator:AbstractValidator<CreatePostCommand>
         RuleFor(p => p.Files).Must(FileArrayLength)
             .WithMessage("The maximum number of uploaded photo is 10 photos. Please try again").Must(IsValidContentType)
             .WithMessage("Invalid file type. '.jpg', '.jpeg', '.png' files are allowed");
-        RuleFor(p => p.Status).Must(StatusLength)
+        RuleFor(p => p.Status).MaximumLength(1000)
             .WithMessage("The maximum length of uploaded status is 1000 characters. Please try again");
     }
     
     private bool FileArrayLength(ICollection<FileDto> files)
     { 
         if (files.Count > 10)
-        {
-            return false;
-        }
-        return true;
-    }
-    
-    private bool StatusLength(string status)
-    {
-        var statusTextArray = status.Split(" ");
-        if (statusTextArray.Length > 1000)
         {
             return false;
         }
